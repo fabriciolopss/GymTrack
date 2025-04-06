@@ -103,19 +103,50 @@ Nesse momento, vamos transformar os insights e validações obtidos em soluçõe
 
 Com base na análise das personas foram identificadas as seguintes histórias de usuários:
 
-| EU COMO...`PERSONA` | QUERO/PRECISO ...`FUNCIONALIDADE`      | PARA ...`MOTIVO/VALOR`                 |
-| ------------------- | -------------------------------------- | -------------------------------------- |
-| Usuário do sistema  | Registrar minhas tarefas ⚠️ EXEMPLO ⚠️ | Não esquecer de fazê-las               |
-| Administrador       | Alterar permissões ⚠️ EXEMPLO ⚠️       | Permitir que possam administrar contas |
+| EU COMO... `PERSONA`         | QUERO/PRECISO ...`FUNCIONALIDADE`      | PARA ...`MOTIVO/VALOR`                 |
+| ---------------------------- | -------------------------------------- | -------------------------------------- |
+| Aposentado                   | Exercícios personalizados              | Treinar de forma adequada à idade      |
+| Buscando manter-me saudável  | Acompanhamento profissional de treino  | Treinar de forma segura e eficaz       |
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Apresente aqui as histórias de usuário que são relevantes para o projeto de sua solução. As Histórias de Usuário consistem em uma ferramenta poderosa para a compreensão e elicitação dos requisitos funcionais e não funcionais da sua aplicação. Se possível, agrupe as histórias de usuário por contexto, para facilitar consultas recorrentes à essa parte do documento.
->
-> **Orientações**:
->
-> - [Histórias de usuários com exemplos e template](https://www.atlassian.com/br/agile/project-management/user-stories)
-> - [Como escrever boas histórias de usuário (User Stories)](https://medium.com/vertice/como-escrever-boas-users-stories-hist%C3%B3rias-de-usu%C3%A1rios-b29c75043fac)
+| EU COMO... `PERSONA`         | QUERO/PRECISO ...`FUNCIONALIDADE`   | PARA ...`MOTIVO/VALOR`                 |
+| ---------------------------- | ----------------------------------- | -------------------------------------- |
+| Atleta de basquete           | Acompanhamento de progresso         | Melhorar desempenho no esporte         |
+| Universitária                | Feedback técnico                    | Evitar lesões                          |
+
+| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`          | PARA ...`MOTIVO/VALOR`                 |
+| ------------------------- | ------------------------------------------ | -------------------------------------- |
+| Estudante                 | Plano de nutrição adequado para iniciantes | Desenvolver melhor forma física        |
+| Fisiculturista iniciante  | Plano de treino adequado para iniciantes   | Construir confiança                    |
+
+| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`                 | PARA ...`MOTIVO/VALOR`                       |
+| ------------------------- | ------------------------------------------------- | -------------------------------------------- |
+| Aposentado                | Lembrete de horários de exercícios                | Manter uma rotina organizada                 |
+| Deseja manter-se ativo    | Lembrete de horários de consultas médicas         | Não esquecer de cuidar da saúde              |
+
+| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`                 | PARA ...`MOTIVO/VALOR`                       |
+| ------------------------- | ------------------------------------------------- | -------------------------------------------- |
+| Jogadora de basquete      | Espaço para registrar meus treinos                | Acompanhar minha evolução                    |
+| Universitária             | Espaço para registrar estatísticas de desempenho  | Ajustar minha preparação conforme necessário |
+
+| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`     | PARA ...`MOTIVO/VALOR`                       |
+| ------------------------- | ------------------------------------- | -------------------------------------------- |
+| Adolescente               | Dicas simples sobre alimentação       | Montar refeições adequadas ao biotipo        |
+| Interessado em nutrição   | Receitas balanceadas                  | Montar refeições adequadas ao treino         |
+
+| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`                 | PARA ...`MOTIVO/VALOR`                       |
+| ------------------------- | ------------------------------------------------- | -------------------------------------------- |
+| Idoso                     | Contéudos educativos sobre saúde na 3ª idade      | Entender como me manter saudável             |
+| Gosta de ler e aprender   | Contéudos educativos sobre bem-estar na 3ª idade  | Buscar a longevidade através do conhecimento |
+
+| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`                 | PARA ...`MOTIVO/VALOR` |
+| ------------------------- | ------------------------------------------------- | ---------------------- |
+| Atleta                    | Recomendações de exercícios de resistência        | Ter perfomance melhor  |
+| Competitivas              | Recomendações de exercícios de agilidade          | Ganhar mais jogos      |
+
+| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`     | PARA ...`MOTIVO/VALOR`     |
+| ------------------------- | ------------------------------------- | -------------------------- |
+| Jovem                     | Ambiente de treino motivador          | Ganhar confiança           |
+| Inseguro com o corpo      | Ambiente de treino inclusivo          | Me sentir bem comigo mesmo |
 
 ## Proposta de Valor
 
@@ -143,7 +174,7 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 ### Requisitos não Funcionais
 
 | ID      | Descrição do Requisito                                                          | Prioridade |
-| ------- | ------------------------------------------------------------------------------- | ---------- |
+| ------- | -------------------------------------------------------------------------------- | ---------- |
 | RNF-001 | O sistema deve ser responsivo para rodar em um dispositivos móvel ⚠️ EXEMPLO ⚠️ | MÉDIA      |
 | RNF-002 | Deve processar requisições do usuário em no máximo 3s ⚠️ EXEMPLO ⚠️             | BAIXA      |
 
