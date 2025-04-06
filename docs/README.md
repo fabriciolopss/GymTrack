@@ -138,10 +138,10 @@ Com base na análise das personas foram identificadas as seguintes histórias de
 | Idoso                     | Contéudos educativos sobre saúde na 3ª idade      | Entender como me manter saudável             |
 | Gosta de ler e aprender   | Contéudos educativos sobre bem-estar na 3ª idade  | Buscar a longevidade através do conhecimento |
 
-| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`                 | PARA ...`MOTIVO/VALOR` |
-| ------------------------- | ------------------------------------------------- | ---------------------- |
-| Atleta                    | Recomendações de exercícios de resistência        | Ter perfomance melhor  |
-| Competitivas              | Recomendações de exercícios de agilidade          | Ganhar mais jogos      |
+| EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`                 | PARA ...`MOTIVO/VALOR`     |
+| ------------------------- | ------------------------------------------------- | -------------------------- |
+| Atleta                    | Recomendações de exercícios de resistência        | Ter perfomance melhor      |
+| Competitiva               | Recomendações de exercícios de agilidade          | Ganhar mais jogos          |
 
 | EU COMO... `PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`     | PARA ...`MOTIVO/VALOR`     |
 | ------------------------- | ------------------------------------- | -------------------------- |
@@ -170,33 +170,33 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 ### Requisitos Funcionais
 
-| ID     | Descrição do Requisito                                | Prioridade |
-| ------ | ----------------------------------------------------- | ---------- |
-| RF-001 | Permitir que o usuário cadastre tarefas ⚠️ EXEMPLO ⚠️ | ALTA       |
-| RF-002 | Emitir um relatório de tarefas no mês ⚠️ EXEMPLO ⚠️   | MÉDIA      |
+| ID     | Descrição do Requisito                                                                 | Prioridade |
+|--------|-----------------------------------------------------------------------------------------|------------|
+| RF-001 | Permitir que o aluno registre seus treinos realizados diariamente                      | ALTA       |
+| RF-002 | Permitir que o aluno visualize sua evolução ao longo do tempo em gráficos ou relatórios | ALTA       |
+| RF-003 | Permitir que o aluno crie, edite e compartilhe planos de treino                        | MÉDIA      |
+| RF-004 | Emitir alertas ou lembretes para incentivar a regularidade dos treinos                 | MÉDIA      |
+| RF-005 | Permitir ao aluno registrar dificuldades ou feedbacks após o treino                    | BAIXA      |
+| RF-006 | Adaptar os treinos de acordo com o nível do aluno (iniciante, intermediário ou avançado) | ALTA     |
+| RF-007 | Disponibilizar um histórico de treinos anteriores                                      | MÉDIA      |
+| RF-008 | Permitir o registro de motivação do aluno em cada treino (emojis, notas, etc.)         | BAIXA      |
+| RF-009 | Sugerir ajustes no planejamento caso o aluno esteja com baixa regularidade             | MÉDIA      |
+| RF-010 | Permitir que o aluno visualize sua rotina semanal de treinos em uma agenda             | ALTA       |
 
 ### Requisitos não Funcionais
 
-| ID      | Descrição do Requisito                                                          | Prioridade |
-| ------- | -------------------------------------------------------------------------------- | ---------- |
-| RNF-001 | O sistema deve ser responsivo para rodar em um dispositivos móvel ⚠️ EXEMPLO ⚠️ | MÉDIA      |
-| RNF-002 | Deve processar requisições do usuário em no máximo 3s ⚠️ EXEMPLO ⚠️             | BAIXA      |
-
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Os requisitos de um projeto são classificados em dois grupos:
->
-> - [Requisitos Funcionais (RF)](https://pt.wikipedia.org/wiki/Requisito_funcional):
->   correspondem a uma funcionalidade que deve estar presente na plataforma (ex: cadastro de usuário).
-> - [Requisitos Não Funcionais (RNF)](https://pt.wikipedia.org/wiki/Requisito_n%C3%A3o_funcional):
->   correspondem a uma característica técnica, seja de usabilidade, desempenho, confiabilidade, segurança ou outro (ex: suporte a dispositivos iOS e Android).
->
-> Lembre-se que cada requisito deve corresponder à uma e somente uma característica alvo da sua solução. Além disso, certifique-se de que todos os aspectos capturados nas Histórias de Usuário foram cobertos.
->
-> **Orientações**:
->
-> - [O que são Requisitos Funcionais e Requisitos Não Funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
+| ID      | Descrição do Requisito                                                                                                   | Prioridade |
+|---------|---------------------------------------------------------------------------------------------------------------------------|------------|
+| RNF-001 | O sistema deverá estar disponível 24 horas por dia, 7 dias por semana.                                                    | ALTA       |
+| RNF-002 | O sistema deverá ser responsivo e funcionar adequadamente em dispositivos móveis e desktops.                              | ALTA       |
+| RNF-003 | O tempo de carregamento das páginas não deve ultrapassar 3 segundos.                                                      | MÉDIA      |
+| RNF-004 | O sistema deverá garantir a segurança dos dados dos alunos, com autenticação e criptografia.                             | ALTA       |
+| RNF-005 | O sistema deverá armazenar os dados dos treinos no local storage dentro de um JSON.                                       | ALTA      |
+| RNF-006 | O sistema deverá possuir uma interface amigável e intuitiva para facilitar o uso por pessoas com pouca experiência digital. | ALTA       |
+| RNF-007 | O sistema deverá suportar um grande número de usuários simultâneos sem perda de desempenho.                              | MÉDIA      |
+| RNF-008 | O sistema deverá utilizar puramente HTML, CSS e JavaScript no front-end.                                                  | ALTA      |
+| RNF-009 | O sistema deverá estar hospedado em um ambiente online de acesso público (ex: Vercel, Netlify, Heroku).                  | MÉDIA      |
+| RNF-010 | O sistema deverá permitir fácil manutenção e atualização do conteúdo e funcionalidades.                                  | ALTA       |
 
 ## Projeto de Interface
 
