@@ -2,13 +2,16 @@
 
 Informações básicas do projeto.
 
-- **Projeto:** [NOME DO PROJETO]
-- **Repositório GitHub:** [LINK PARA O REPOSITÓRIO NO GITHUB]
+- **Projeto:** GymTrack
+- **Repositório GitHub:** [Link GitHub](https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti1-0387100-controle-de-treino-de-academia)
 - **Membros da equipe:**
 
-  - [Fulano](https://github.com/fulano) ⚠️ EXEMPLO ⚠️
-  - [Beltrano](https://github.com/beltrano) ⚠️ EXEMPLO ⚠️
-  - [Cicrano](https://github.com/cicrano) ⚠️ EXEMPLO ⚠️
+  - [Camille Baeta](https://github.com/camillebaeta)
+  - [Fabricio Lopes](https://github.com/fabriciolopss)
+  - [Gabriel Amaro](https://github.com/gabrielsnamaro)
+  - [Gabriel Rocha](https://github.com/Gabrielrocha812)
+  - [Henrique Xavier](https://github.com/henriquexvr)
+  - [Samuel Rebula](https://github.com/samuelrebula)
 
 A documentação do projeto é estruturada da seguinte forma:
 
@@ -20,7 +23,7 @@ A documentação do projeto é estruturada da seguinte forma:
 6. Solução
 7. Referências Bibliográficas
 
-✅ [Documentação de Design Thinking (MIRO)](files/processo-dt.pdf)
+[Documentação de Design Thinking (MIRO)](concepcao/ProcessoDesignThinking.pdf)
 
 # Contexto
 
@@ -220,15 +223,15 @@ Detalhes sobre a organização do grupo e o ferramental empregado.
 
 Relação de ferramentas empregadas pelo grupo durante o projeto.
 
-| Ambiente                      | Plataforma            | Link de acesso                                                                                          |
-| ----------------------------- | --------------------- | ------------------------------------------------------------------------------------------------------- |
-| Processo de Design Thinking   | Miro                  | https://miro.com/app/board/uXjVIReugUE=/                                                                |
-| Repositório de código         | GitHub                | https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti1-0387100-controle-de-treino-de-academia.git |
-| Ferramenta de Desenvolvimento | Visual Studio Code    | -                                                                                                       |
-| Hospedagem do site            | (Preenchido ao final) | (Preenchido ao final)                                                                                   |
-| Protótipo Interativo          | MarvelApp             | https://marvelapp.com/prototype/803g512/screen/97004127                                                 |
-| Ferramenta de Comunicação     | WhatsApp - Discord    | -                                                                                                       |
-| Ferramenta Scrum              | Trello                | -                                                                                                       |
+| Ambiente                      | Plataforma            | Link de acesso                                                                                      |
+| ----------------------------- | --------------------- | --------------------------------------------------------------------------------------------------- |
+| Processo de Design Thinking   | Miro                  | https://miro.com/app/board/uXjVIReugUE=/                                                            |
+| Repositório de código         | GitHub                | https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti1-0387100-controle-de-treino-de-academia |
+| Ferramenta de Desenvolvimento | Visual Studio Code    | -                                                                                                   |
+| Hospedagem do site            | (Preenchido ao final) | (Preenchido ao final)                                                                               |
+| Protótipo Interativo          | MarvelApp             | https://marvelapp.com/prototype/803g512/screen/97004127                                             |
+| Ferramenta de Comunicação     | WhatsApp - Discord    | -                                                                                                   |
+| Ferramenta Scrum              | Trello                | -                                                                                                   |
 
 ## Gerenciamento do Projeto
 
