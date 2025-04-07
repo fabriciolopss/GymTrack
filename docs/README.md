@@ -45,13 +45,9 @@ O objetivo geral deste projeto é desenvolver uma aplicação web que auxilie al
 Objetivos específicos
 
 - Implementar funcionalidades que permitam o registro diário de treinos, com dados como tipo de exercício, carga, repetições e observações adicionais.
-
 - Criar mecanismos de visualização da evolução do usuário, como gráficos e relatórios simples, com base nas informações registradas.
-
 - Desenvolver uma interface responsiva e intuitiva, com foco na usabilidade em dispositivos móveis.
-
 - Utilizar armazenamento local via localStorage para salvar os dados do usuário, respeitando as restrições técnicas do projeto.
-
 - Explorar recursos interativos, como lembretes de treino e feedback pós-treino, para incentivar a constância e engajamento do usuário.
 
 ## Justificativa
@@ -65,9 +61,7 @@ A aplicação é voltada principalmente para alunos de academias que desejam org
 Perfis de usuários:
 
 - Praticantes iniciantes: indivíduos que estão começando na academia, com pouca experiência no planejamento de treinos. Em geral, possuem conhecimento básico de tecnologia e utilizam o celular como principal meio de acesso à internet.
-
 - Praticantes intermediários ou avançados: usuários com rotina de treino estabelecida, que já têm familiaridade com tipos de exercícios, mas desejam melhorar o acompanhamento da evolução e otimizar sua organização. Esses usuários tendem a buscar funcionalidades mais analíticas, como gráficos e relatórios.
-
 - Usuários de dispositivos digitais (celular ou computador): pessoas que utilizam dispositivos digitais em seu dia a dia para navegar na internet ou acessar ferramentas online, incluindo alunos com diferentes níveis de familiaridade com tecnologia. A interface da aplicação busca atender tanto usuários experientes quanto aqueles com baixa afinidade digital, oferecendo uma navegação simples, clara e intuitiva.
 
 A aplicação foi pensada para ser utilizada prioritariamente em dispositivos móveis, considerando o comportamento de uso típico dos frequentadores de academias — que preferem acessar recursos diretamente pelo celular durante ou após o treino. Por esse motivo, a interface deve ser responsiva, com foco em usabilidade e acessibilidade.
@@ -103,31 +97,64 @@ Nesse momento, vamos transformar os insights e validações obtidos em soluçõe
 
 Com base na análise das personas foram identificadas as seguintes histórias de usuários:
 
-| EU COMO...`PERSONA` | QUERO/PRECISO ...`FUNCIONALIDADE`      | PARA ...`MOTIVO/VALOR`                 |
-| ------------------- | -------------------------------------- | -------------------------------------- |
-| Usuário do sistema  | Registrar minhas tarefas ⚠️ EXEMPLO ⚠️ | Não esquecer de fazê-las               |
-| Administrador       | Alterar permissões ⚠️ EXEMPLO ⚠️       | Permitir que possam administrar contas |
+| EU COMO...`PERSONA`         | QUERO/PRECISO ...`FUNCIONALIDADE`     | PARA ...`MOTIVO/VALOR`            |
+| --------------------------- | ------------------------------------- | --------------------------------- |
+| Aposentado                  | Exercícios personalizados             | Treinar de forma adequada à idade |
+| Buscando manter-me saudável | Acompanhamento profissional de treino | Treinar de forma segura e eficaz  |
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Apresente aqui as histórias de usuário que são relevantes para o projeto de sua solução. As Histórias de Usuário consistem em uma ferramenta poderosa para a compreensão e elicitação dos requisitos funcionais e não funcionais da sua aplicação. Se possível, agrupe as histórias de usuário por contexto, para facilitar consultas recorrentes à essa parte do documento.
->
-> **Orientações**:
->
-> - [Histórias de usuários com exemplos e template](https://www.atlassian.com/br/agile/project-management/user-stories)
-> - [Como escrever boas histórias de usuário (User Stories)](https://medium.com/vertice/como-escrever-boas-users-stories-hist%C3%B3rias-de-usu%C3%A1rios-b29c75043fac)
+| EU COMO...`PERSONA` | QUERO/PRECISO ...`FUNCIONALIDADE` | PARA ...`MOTIVO/VALOR`         |
+| ------------------- | --------------------------------- | ------------------------------ |
+| Atleta de basquete  | Acompanhamento de progresso       | Melhorar desempenho no esporte |
+| Universitária       | Feedback técnico                  | Evitar lesões                  |
+
+| EU COMO...`PERSONA`      | QUERO/PRECISO ...`FUNCIONALIDADE`          | PARA ...`MOTIVO/VALOR`          |
+| ------------------------ | ------------------------------------------ | ------------------------------- |
+| Estudante                | Plano de nutrição adequado para iniciantes | Desenvolver melhor forma física |
+| Fisiculturista iniciante | Plano de treino adequado para iniciantes   | Construir confiança             |
+
+| EU COMO...`PERSONA`    | QUERO/PRECISO ...`FUNCIONALIDADE`         | PARA ...`MOTIVO/VALOR`          |
+| ---------------------- | ----------------------------------------- | ------------------------------- |
+| Aposentado             | Lembrete de horários de exercícios        | Manter uma rotina organizada    |
+| Deseja manter-se ativo | Lembrete de horários de consultas médicas | Não esquecer de cuidar da saúde |
+
+| EU COMO...`PERSONA`  | QUERO/PRECISO ...`FUNCIONALIDADE`                | PARA ...`MOTIVO/VALOR`                       |
+| -------------------- | ------------------------------------------------ | -------------------------------------------- |
+| Jogadora de basquete | Espaço para registrar meus treinos               | Acompanhar minha evolução                    |
+| Universitária        | Espaço para registrar estatísticas de desempenho | Ajustar minha preparação conforme necessário |
+
+| EU COMO...`PERSONA`     | QUERO/PRECISO ...`FUNCIONALIDADE` | PARA ...`MOTIVO/VALOR`                |
+| ----------------------- | --------------------------------- | ------------------------------------- |
+| Adolescente             | Dicas simples sobre alimentação   | Montar refeições adequadas ao biotipo |
+| Interessado em nutrição | Receitas balanceadas              | Montar refeições adequadas ao treino  |
+
+| EU COMO...`PERSONA`     | QUERO/PRECISO ...`FUNCIONALIDADE`                | PARA ...`MOTIVO/VALOR`                       |
+| ----------------------- | ------------------------------------------------ | -------------------------------------------- |
+| Idoso                   | Contéudos educativos sobre saúde na 3ª idade     | Entender como me manter saudável             |
+| Gosta de ler e aprender | Contéudos educativos sobre bem-estar na 3ª idade | Buscar a longevidade através do conhecimento |
+
+| EU COMO...`PERSONA` | QUERO/PRECISO ...`FUNCIONALIDADE`          | PARA ...`MOTIVO/VALOR` |
+| ------------------- | ------------------------------------------ | ---------------------- |
+| Atleta              | Recomendações de exercícios de resistência | Ter perfomance melhor  |
+| Competitiva         | Recomendações de exercícios de agilidade   | Ganhar mais jogos      |
+
+| EU COMO...`PERSONA`  | QUERO/PRECISO ...`FUNCIONALIDADE` | PARA ...`MOTIVO/VALOR`     |
+| -------------------- | --------------------------------- | -------------------------- |
+| Jovem                | Ambiente de treino motivador      | Ganhar confiança           |
+| Inseguro com o corpo | Ambiente de treino inclusivo      | Me sentir bem comigo mesmo |
 
 ## Proposta de Valor
 
-**✳️✳️✳️ APRESENTE O DIAGRAMA DA PROPOSTA DE VALOR PARA CADA PERSONA ✳️✳️✳️**
+##### Proposta para Elias Meyer
 
-##### Proposta para Persona XPTO ⚠️ EXEMPLO ⚠️
+![Proposta de Valor - Elias Meyer](images/proposta-eliasmeyer.png)
 
-![Exemplo de proposta de valor](images/exemplo-proposta-valor.png)
+##### Proposta para Julia Barbosa
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> O mapa da proposta de valor é uma ferramenta que nos ajuda a definir qual tipo de produto ou serviço melhor atende às personas definidas anteriormente.
+![Proposta de Valor - Julia Barbosa](images/proposta-juliabarbosa.png)
+
+##### Proposta para Julia Barbosa
+
+![Proposta de Valor - João Victor](images/proposta-joaovictor.png)
 
 ## Requisitos
 
@@ -135,33 +162,33 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 ### Requisitos Funcionais
 
-| ID     | Descrição do Requisito                                | Prioridade |
-| ------ | ----------------------------------------------------- | ---------- |
-| RF-001 | Permitir que o usuário cadastre tarefas ⚠️ EXEMPLO ⚠️ | ALTA       |
-| RF-002 | Emitir um relatório de tarefas no mês ⚠️ EXEMPLO ⚠️   | MÉDIA      |
+| ID     | Descrição do Requisito                                                                   | Prioridade |
+| ------ | ---------------------------------------------------------------------------------------- | ---------- |
+| RF-001 | Permitir que o aluno registre seus treinos realizados diariamente                        | ALTA       |
+| RF-002 | Permitir que o aluno visualize sua evolução ao longo do tempo em gráficos ou relatórios  | ALTA       |
+| RF-003 | Permitir que o aluno crie, edite e compartilhe planos de treino                          | MÉDIA      |
+| RF-004 | Emitir alertas ou lembretes para incentivar a regularidade dos treinos                   | MÉDIA      |
+| RF-005 | Permitir ao aluno registrar dificuldades ou feedbacks após o treino                      | BAIXA      |
+| RF-006 | Adaptar os treinos de acordo com o nível do aluno (iniciante, intermediário ou avançado) | ALTA       |
+| RF-007 | Disponibilizar um histórico de treinos anteriores                                        | MÉDIA      |
+| RF-008 | Permitir o registro de motivação do aluno em cada treino (emojis, notas, etc.)           | BAIXA      |
+| RF-009 | Sugerir ajustes no planejamento caso o aluno esteja com baixa regularidade               | MÉDIA      |
+| RF-010 | Permitir que o aluno visualize sua rotina semanal de treinos em uma agenda               | ALTA       |
 
 ### Requisitos não Funcionais
 
-| ID      | Descrição do Requisito                                                          | Prioridade |
-| ------- | ------------------------------------------------------------------------------- | ---------- |
-| RNF-001 | O sistema deve ser responsivo para rodar em um dispositivos móvel ⚠️ EXEMPLO ⚠️ | MÉDIA      |
-| RNF-002 | Deve processar requisições do usuário em no máximo 3s ⚠️ EXEMPLO ⚠️             | BAIXA      |
-
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Os requisitos de um projeto são classificados em dois grupos:
->
-> - [Requisitos Funcionais (RF)](https://pt.wikipedia.org/wiki/Requisito_funcional):
->   correspondem a uma funcionalidade que deve estar presente na plataforma (ex: cadastro de usuário).
-> - [Requisitos Não Funcionais (RNF)](https://pt.wikipedia.org/wiki/Requisito_n%C3%A3o_funcional):
->   correspondem a uma característica técnica, seja de usabilidade, desempenho, confiabilidade, segurança ou outro (ex: suporte a dispositivos iOS e Android).
->
-> Lembre-se que cada requisito deve corresponder à uma e somente uma característica alvo da sua solução. Além disso, certifique-se de que todos os aspectos capturados nas Histórias de Usuário foram cobertos.
->
-> **Orientações**:
->
-> - [O que são Requisitos Funcionais e Requisitos Não Funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
+| ID      | Descrição do Requisito                                                                                                      | Prioridade |
+| ------- | --------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| RNF-001 | O sistema deverá estar disponível 24 horas por dia, 7 dias por semana.                                                      | ALTA       |
+| RNF-002 | O sistema deverá ser responsivo e funcionar adequadamente em dispositivos móveis e desktops.                                | ALTA       |
+| RNF-003 | O tempo de carregamento das páginas não deve ultrapassar 3 segundos.                                                        | MÉDIA      |
+| RNF-004 | O sistema deverá garantir a segurança dos dados dos alunos, com autenticação e criptografia.                                | ALTA       |
+| RNF-005 | O sistema deverá armazenar os dados dos treinos no local storage dentro de um JSON.                                         | ALTA       |
+| RNF-006 | O sistema deverá possuir uma interface amigável e intuitiva para facilitar o uso por pessoas com pouca experiência digital. | ALTA       |
+| RNF-007 | O sistema deverá suportar um grande número de usuários simultâneos sem perda de desempenho.                                 | MÉDIA      |
+| RNF-008 | O sistema deverá utilizar puramente HTML, CSS e JavaScript no front-end.                                                    | ALTA       |
+| RNF-009 | O sistema deverá estar hospedado em um ambiente online de acesso público (ex: Vercel, Netlify, Heroku).                     | MÉDIA      |
+| RNF-010 | O sistema deverá permitir fácil manutenção e atualização do conteúdo e funcionalidades.                                     | ALTA       |
 
 ## Projeto de Interface
 
