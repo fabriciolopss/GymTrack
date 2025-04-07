@@ -226,7 +226,7 @@ Relação de ferramentas empregadas pelo grupo durante o projeto.
 | Repositório de código         | GitHub                | https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti1-0387100-controle-de-treino-de-academia.git |
 | Ferramenta de Desenvolvimento | Visual Studio Code    | -                                                                                                       |
 | Hospedagem do site            | (Preenchido ao final) | (Preenchido ao final)                                                                                   |
-| Protótipo Interativo          | MarvelApp             | hhttps://marvelapp.com/prototype/803g512/screen/97004127                                                |
+| Protótipo Interativo          | MarvelApp             | https://marvelapp.com/prototype/803g512/screen/97004127                                                 |
 | Ferramenta de Comunicação     | WhatsApp - Discord    | -                                                                                                       |
 
 ## Gerenciamento do Projeto
