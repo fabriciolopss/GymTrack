@@ -2,7 +2,7 @@
 
 Informações básicas do projeto.
 
-- **Projeto:** [NOME DO PROJETO]
+- **Projeto:** GymTrack
 - **Repositório GitHub:** [Link GitHub](https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti1-0387100-controle-de-treino-de-academia)
 - **Membros da equipe:**
 
