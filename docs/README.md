@@ -228,6 +228,7 @@ Relação de ferramentas empregadas pelo grupo durante o projeto.
 | Hospedagem do site            | (Preenchido ao final) | (Preenchido ao final)                                                                                   |
 | Protótipo Interativo          | MarvelApp             | https://marvelapp.com/prototype/803g512/screen/97004127                                                 |
 | Ferramenta de Comunicação     | WhatsApp - Discord    | -                                                                                                       |
+| Ferramenta Scrum              | Trello                | -                                                                                                       |
 
 ## Gerenciamento do Projeto
 
