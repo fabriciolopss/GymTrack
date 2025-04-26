@@ -1,9 +1,38 @@
 class LayoutManager {
   constructor() {
     this.headerItems = document.querySelectorAll(".header-item");
-    this.activeItem = "Dashboard";
+    this.activeItem = null;
 
+    this.setActiveHeaderFromURL();
     this.addEventListeners();
+  }
+
+  setActiveHeaderFromURL() {
+    const path = window.location.pathname;
+    const fileName = path.split("/").pop();
+
+    let sectionName = "Dashboard";
+
+    if (fileName && fileName !== "index.html" && fileName !== "") {
+      sectionName = fileName.replace(".html", "").replace(/-/g, " ");
+      sectionName = this.capitalizeEachWord(sectionName);
+    }
+
+    this.activeItem = sectionName;
+
+    this.headerItems.forEach((headerItem) => {
+      if (
+        headerItem.innerText.trim().toLowerCase() === sectionName.toLowerCase()
+      ) {
+        headerItem.classList.add("active");
+      } else {
+        headerItem.classList.remove("active");
+      }
+    });
+  }
+
+  capitalizeEachWord(str) {
+    return str.replace(/\b\w/g, (c) => c.toUpperCase());
   }
 
   addEventListeners() {
@@ -21,16 +50,15 @@ class LayoutManager {
       headerItem.classList.remove("active");
     });
     item.classList.add("active");
-    this.loadSection(item.innerText);
+    this.redirectToSection(item.innerText);
   }
 
-  async loadSection(section) {
-    const response = await fetch(`./sections/${section}.html`);
-    if (!response.ok) {
-      console.error("Error loading section:", response.statusText);
-      return;
+  redirectToSection(section) {
+    if (section.toLowerCase() === "dashboard") {
+      window.location.href = `/codigo/index.html`;
+    } else {
+      let fileName = section.toLowerCase().replace(/\s+/g, "-") + ".html";
+      window.location.href = `/codigo/sections/${fileName}`;
     }
-    const html = await response.text();
-    document.querySelector("#main-content").innerHTML = html;
   }
 }
