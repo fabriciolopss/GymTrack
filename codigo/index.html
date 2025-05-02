@@ -14,6 +14,61 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+
+    <div class="modal fade" id="checkinTreino" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <i class="fa-solid fa-dumbbell"></i>
+              <h5 class="modal-title" id="exampleModalLabel">Registrar treino</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label">Plano de treino</label>
+                      <select class="form-select" id="training-plans" aria-label="Default select example">
+                        <option selected>Selecionar o plano de treino realizado</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="exampleInputPassword1" class="form-label">Treino realizado</label>
+                      <select class="form-select" id="training-days"aria-label="Default select example" disabled>
+                        <option selected>Selecionar dia do treino realizado</option>
+                      </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="exampleInputPassword1" class="form-label">Data do treino</label>
+                        <input type="date" class="form-control" id="date-checkin">
+                    </div>
+                    
+
+                    <div class="xp-gain mb-3">
+                        <div class="d-flex flex-row justify-content-between mb-2">
+                            <span id="xp-gain">+0 XP</span>
+                            <span id="xp-porcentagem">0%</span>
+                            <span id="level">Nível 0</span>
+                        </div>
+                        <div class="custom-progress-wrapper mb-1">
+                          <div class="real-progress-bar"></div>
+                          <div class="future-progress-bar"></div>
+                        </div>
+                        <div class="d-flex flex-row justify-content-between">
+                            <span id="xp-low-limit">1320XP</span>
+                            <span id="xp-high-limit">5000XP</span>
+                        </div>
+                      </div>
+
+
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
     <div class="content-wrapper">
         <header>
             <div class="d-flex flex-row header">
@@ -23,6 +78,7 @@
                 <div class="header-item">Progresso</div>
                 <div class="header-item"><i data-lucide="bookmark"></i></div>
                 <div class="header-item"><i data-lucide="bell-dot"></i></div>
+                <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#checkinTreino">Registrar treino</button>
             </div>
         </header>
 
@@ -30,8 +86,9 @@
             <div class="dashboard-wrapper">
                 <div class="dashboard-header">
                     <p class="dashboard-subtitle">Bem vindo de volta, <span id="user-name"></span>👋</p>
-                    <p class="dashboard-title">Um breve resumo dos seus treinos!</p>
+                    <p class="dashboard-title">Um breve resumo dos seus treinos!</p>[
                 </div>
+
 
                 <div class="dashboard-body">
                     <div class="grid-stack">
@@ -71,10 +128,12 @@
             edited_trainings: [
                 {
                     id: 1,
+                    name: "Treino de inferiores",
                     category: "Pernas",
                     type: "Ficha iniciante",
                     days: [
                         {
+                            name: "Dia 1 - Gluteos e Posterior de Coxa",
                             day: [
                                 { exercise: "Supino reto", series: 4, repetitions: "8-12" },
                                 { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
@@ -82,6 +141,31 @@
                             ]
                         },
                         {
+                            name: "Dia 2 - Quadriceps e Panturrilha",
+                            day: [
+                                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
+                                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
+                                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    name: "Treino de superiores",
+                    category: "Superiores",
+                    type: "Ficha iniciante",
+                    days: [
+                        {
+                            name: "Dia 1 - Costas",
+                            day: [
+                                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
+                                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
+                                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
+                            ]
+                        },
+                        {
+                            name: "Dia 2 - Ombro",
                             day: [
                                 { exercise: "Supino reto", series: 4, repetitions: "8-12" },
                                 { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
@@ -93,12 +177,9 @@
             ]
         };
 
-        if (!localStorage.getItem('gymAppData')) {
-            localStorage.setItem('gymAppData', JSON.stringify(initialData));
-            console.log("Dados iniciais criados no localStorage!");
-        } else {
-            console.log("Dados já existentes encontrados no localStorage.");
-        }
+
+        localStorage.setItem('gymAppData', JSON.stringify(initialData));
+
     });
 
     document.addEventListener("DOMContentLoaded", function() {
@@ -106,5 +187,6 @@
     });
 </script>
 
+<script src="scripts/checkinModal.js"></script>
 <script src="scripts/layout.js"></script>
 <script src="scripts/dashboard.js"></script>
