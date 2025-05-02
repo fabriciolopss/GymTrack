@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://kit.fontawesome.com/64b9a24b58.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="content-wrapper">
+        <header>
+            <div class="d-flex flex-row header">
+                <div class="header-item" redirect-session-name="perfil"><i data-lucide="user"></i></div>
+                <div class="header-item" redirect-session-name="index">Dashboard</div>
+                <div class="header-item" redirect-session-name="consultar-fichas">Consultar fichas</div>
+                <div class="header-item" redirect-session-name="progresso">Progresso</div>
+                <div class="header-item" redirect-session-name="historico"><i class="fa-solid fa-clock-rotate-left"></i></div>
+                <div class="header-item" redirect-session-name="notificacoes"><i data-lucide="bell-dot"></i></div>
+                <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#checkinTreino">Registrar treino</button>
+            </div>
+        </header>
+
+        <div id="main-content">
+            <h1></h1>
+        </div>
+    </div>
+</body>
+</html>
+
+<script>
+    lucide.createIcons();
+
+    document.addEventListener("DOMContentLoaded", function() {
+        new LayoutManager();
+    });
+</script>
+
+<script src="../scripts/layout.js"></script>
