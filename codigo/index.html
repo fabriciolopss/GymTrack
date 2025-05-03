@@ -44,11 +44,67 @@
                         <label for="exampleInputPassword1" class="form-label">Data do treino</label>
                         <input type="date" class="form-control" id="date-checkin">
                     </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Tempo de treino</label>
+                      
+                        <div class="d-flex gap-3 mt-2">
+                          <div class="w-50">
+                            <label for="hours-trained" class="form-label">Horas</label>
+                            <div class="input-group">
+                              <button class="btn btn-outline-secondary" id="decrement-hours" type="button">
+                                <i class="fa-solid fa-minus"></i>
+                              </button>
+                              <input 
+                                type="number" 
+                                id="hours-trained" 
+                                class="form-control text-center" 
+                                value="0" 
+                                min="0" 
+                                max="3">
+                              <button class="btn btn-outline-secondary" id="increment-hours" type="button">
+                                <i class="fa-solid fa-plus"></i>
+                              </button>
+                            </div>
+                          </div>
+                      
+                          <div class="w-50">
+                            <label for="minutes-trained" class="form-label">Minutos</label>
+                            <div class="input-group">
+                              <button class="btn btn-outline-secondary" id="decrement-minutes" type="button">
+                                <i class="fa-solid fa-minus"></i>
+                              </button>
+                              <input 
+                                type="number" 
+                                id="minutes-trained" 
+                                class="form-control text-center" 
+                                value="30" 
+                                min="0" 
+                                max="59">
+                              <button class="btn btn-outline-secondary" id="increment-minutes" type="button">
+                                <i class="fa-solid fa-plus"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
                     
 
                     <div class="xp-gain mb-3">
+                        <label class="form-label titulo-modal">Experiencia ganha</label>
                         <div class="d-flex flex-row justify-content-between mb-2">
-                            <span id="xp-gain">+0 XP</span>
+                            <div class="d-flex flex-row align-items-center"                            
+                            data-bs-toggle="tooltip"
+                              data-bs-placement="top"
+                            title="O ganho de XP é baseado na duração do treino e no plano escolhido.">
+                            <span id="xp-gain">+0 XP
+                            </span>
+                            <i 
+                            class="fa-solid fa-circle-info ms-2 "
+                            >
+                          </i>
+                            </div>
                             <span id="xp-porcentagem">0%</span>
                             <span id="level">Nível 0</span>
                         </div>
@@ -56,6 +112,8 @@
                           <div class="real-progress-bar"></div>
                           <div class="future-progress-bar"></div>
                         </div>
+
+
                         <div class="d-flex flex-row justify-content-between">
                             <span id="xp-low-limit">1320XP</span>
                             <span id="xp-high-limit">5000XP</span>
@@ -63,7 +121,7 @@
                       </div>
 
 
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">Registrar treino</button>
                   </form>
             </div>
           </div>
@@ -79,7 +137,7 @@
                 <div class="header-item" redirect-session-name="progresso">Progresso</div>
                 <div class="header-item" redirect-session-name="historico"><i class="fa-solid fa-clock-rotate-left"></i></div>
                 <div class="header-item" redirect-session-name="notificacoes"><i data-lucide="bell-dot"></i></div>
-                <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#checkinTreino">Registrar treino</button>
+                <button class="btn btn-primary abrir-modal"  data-bs-toggle="modal" data-bs-target="#checkinTreino">Registrar treino</button>
             </div>
         </header>
 
@@ -99,6 +157,16 @@
             </div>
         </div>
     </div>
+
+    <div id="toast-template" class="toast align-items-center border-0 text-white d-none" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+      <div class="toast-body">Mensagem padrão</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+    
+    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1055;"></div>
+    </div>
 </body>
 </html>
 
@@ -114,14 +182,24 @@
             registered_trainings: [
                 {
                     training_id: 1,
-                    date: "23/05/2025",
-                    day_index: 0
+                    date: "2025-05-03",
+                    day_index: 1,
+                    duration : {
+                      hours: 0,
+                      minutes: 30
+                    },
+                    xpGain: 50,
                 },
                 {
                     training_id: 1,
-                    date: "24/05/2025",
-                    day_index: 1
-                }
+                    date: "2025-05-03",
+                    day_index: 2,
+                    duration : {
+                        hours: 1,
+                        minutes: 30
+                    },
+                    xpGain: 100,
+                },
             ],
             default_trainings: {
                 ids: [1, 2, 3]
@@ -134,6 +212,8 @@
                     type: "Ficha iniciante",
                     days: [
                         {
+                            id : 1,
+                            xp: 100,
                             name: "Dia 1 - Gluteos e Posterior de Coxa",
                             day: [
                                 { exercise: "Supino reto", series: 4, repetitions: "8-12" },
@@ -142,6 +222,8 @@
                             ]
                         },
                         {
+                            id: 2,
+                            xp: 150,
                             name: "Dia 2 - Quadriceps e Panturrilha",
                             day: [
                                 { exercise: "Supino reto", series: 4, repetitions: "8-12" },
@@ -155,9 +237,11 @@
                     id: 2,
                     name: "Treino de superiores",
                     category: "Superiores",
-                    type: "Ficha iniciante",
+                    type: "Ficha intermediária",
                     days: [
                         {
+                            id: 1,
+                            xp: 50,
                             name: "Dia 1 - Costas",
                             day: [
                                 { exercise: "Supino reto", series: 4, repetitions: "8-12" },
@@ -166,6 +250,8 @@
                             ]
                         },
                         {
+                            id: 2,
+                            xp: 75,
                             name: "Dia 2 - Ombro",
                             day: [
                                 { exercise: "Supino reto", series: 4, repetitions: "8-12" },
@@ -178,16 +264,25 @@
             ]
         };
 
+        if(!localStorage.getItem('gymAppData')) {
+            localStorage.setItem('gymAppData', JSON.stringify(initialData));
+        } else {
 
-        localStorage.setItem('gymAppData', JSON.stringify(initialData));
+        }
+
 
     });
 
     document.addEventListener("DOMContentLoaded", function() {
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
         new LayoutManager();
     });
 </script>
 
-<script src="scripts/checkinModal.js"></script>
+<script src="scripts/checkinModal.js" type="module"></script>
 <script src="scripts/layout.js"></script>
 <script src="scripts/dashboard.js"></script>
+<script src="scripts/level.js" type="module"></script>

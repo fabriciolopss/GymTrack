@@ -80,3 +80,67 @@ body {
     margin-top: 100px;
 
 }
+
+.table-treinos th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+  
+.table-treinos th:hover {
+background-color: #e9ecef;
+cursor: default;
+}
+
+.table-treinos td, 
+.table-treinos th {
+padding: 1rem;
+vertical-align: middle;
+}
+
+.table-treinos tbody tr:hover {
+background-color: #f1f3f5;
+transition: background-color 0.3s ease;
+}
+
+.table-treinos {
+border-collapse: separate;
+border-spacing: 0;
+overflow: hidden;
+border-radius: 0.75rem;
+}
+
+.custom-progress-wrapper{
+    position: relative;
+    height: 16px;
+    background-color: #E0E0E0;
+    border-radius: 5px;
+    overflow: hidden;
+    border-radius: 50px;
+}
+
+.real-progress-bar{
+    position: absolute;
+    height: 100%;
+    background-color: #2196F3;
+    width: 85%;
+    transition: width 0.5s ease-in-out;
+    border-radius: 50px;
+    z-index:3;
+}
+
+.future-progress-bar{
+    position: absolute;
+    height: 100%;
+    background-color: rgba(33, 150, 243, 0.5);
+    width: 0%;
+    transition: width 0.5s ease-in-out;
+    border-radius: 50px;
+    z-index:2;
+}
+
+.titulo-modal{
+    font-weight: bold;
+}

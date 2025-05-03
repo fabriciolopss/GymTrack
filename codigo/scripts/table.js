@@ -1,35 +1,54 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const historico = document.getElementById("tabela-historico");
 
-document.addEventListener("DOMContentLoaded", function(){
+  const gymDataString = localStorage.getItem("gymAppData");
+  if (!gymDataString) return;
 
+  const gymData = JSON.parse(gymDataString);
 
-    const historico = document.getElementById("tabela-historico");
+  function parseDateBRtoISO(dateStr) {
+    if (dateStr.includes("-")) return new Date(dateStr);
+    const [dia, mes, ano] = dateStr.split("/");
+    return new Date(`${ano}-${mes}-${dia}`);
+  }
 
-    const gymDataString = localStorage.getItem("gymAppData");
+  const treinosOrdenados = gymData.registered_trainings.sort((a, b) => {
+    return parseDateBRtoISO(b.date) - parseDateBRtoISO(a.date);
+  });
 
-    const gymData = JSON.parse(gymDataString);
+  treinosOrdenados.forEach((treino) => {
+    const training = gymData.edited_trainings.find(
+      (plan) => plan.id == treino.training_id
+    );
+    if (!training) return;
 
-    gymData.registered_trainings.forEach(treino => {
+    const day = training.days[treino.day_index - 1];
+    if (!day) return;
 
-    
-        
-        var row = historico.insertRow(0);
-        var data = row.insertCell(0);
-        var membros = row.insertCell(1);
-        var tipoDetreino = row.insertCell(2);
-        var categoria = row.insertCell(3);
-        let dataformatada = new Date(treino.date).toLocaleDateString("pt-BR")
+    const row = historico.insertRow(0);
+    const data = row.insertCell(0);
+    const membros = row.insertCell(1);
+    const tipoDetreino = row.insertCell(2);
+    const categoria = row.insertCell(3);
+    const duracao = row.insertCell(4);
+    const xp = row.insertCell(5);
 
+    const dataFormatada = parseDateBRtoISO(treino.date).toLocaleDateString(
+      "pt-BR"
+    );
 
+    const h = treino.duration?.hours || 0;
+    const m = treino.duration?.minutes || 0;
+    let duracaoFormatada = "";
+    if (h > 0) duracaoFormatada += `${h}h `;
+    if (m > 0) duracaoFormatada += `${m}min`;
+    duracaoFormatada = duracaoFormatada.trim() || "0min";
 
-        data.innerHTML = dataformatada;
-        membros.innerHTML = treino.day_index;
-        tipoDetreino.innerHTML = gymData.edited_trainings[treino.training_id].type;
-        categoria.innerHTML = gymData.edited_trainings[treino.training_id].category;
-
-
-
-    });
-
-
-
-})
+    data.innerHTML = dataFormatada;
+    membros.innerHTML = day.name;
+    tipoDetreino.innerHTML = training.type;
+    categoria.innerHTML = training.category;
+    duracao.innerHTML = duracaoFormatada;
+    xp.innerHTML = "+" + treino.xpGain;
+  });
+});
