@@ -46,18 +46,16 @@ export function mudarXpGanha(newXP) {
 
 export function calcularXpPorTipoETempo(tipo, horas, minutos) {
   const xpMultipliers = {
-    "Ficha iniciante": 50, // por hora
-    "Ficha intermediária": 100, // por hora
-    "Ficha avançada": 150, // por hora
+    "Ficha iniciante": 50, 
+    "Ficha intermediária": 100, 
+    "Ficha avançada": 150, 
   };
 
   const multiplier = xpMultipliers[tipo] || 10;
   const tempoEmHoras = horas + minutos / 60;
-  console.log(tempoEmHoras * multiplier);
   return Math.round(tempoEmHoras * multiplier);
 }
 
-// Atualiza modal de XP ao abrir
 export function xpModalCheckin() {
   const gymData = JSON.parse(localStorage.getItem("gymAppData"));
   if (!gymData) return;

@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const treinosOrdenados = gymData.registered_trainings.sort((a, b) => {
-    return parseDateBRtoISO(b.date) - parseDateBRtoISO(a.date);
+    return parseDateBRtoISO(a.date) - parseDateBRtoISO(b.date);
   });
 
   treinosOrdenados.forEach((treino) => {
@@ -46,9 +46,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     data.innerHTML = dataFormatada;
     membros.innerHTML = day.name;
-    tipoDetreino.innerHTML = training.type;
+    tipoDetreino.innerHTML = `<span class="badge-custom ${typeToClass(training.type)}">${training.type}</span>`;
     categoria.innerHTML = training.category;
     duracao.innerHTML = duracaoFormatada;
     xp.innerHTML = "+" + treino.xpGain;
   });
 });
+
+
+function typeToClass(type){
+  switch(type){
+    case "Ficha iniciante":
+      return "badge-iniciante";
+    case "Ficha intermediária":
+      return "badge-intermediario";
+    case "Ficha avançada":
+      return "badge-avancado";
+  }
+}

@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   dateCheckin.value = new Date().toISOString().split("T")[0];
+  dateCheckin.max = new Date().toISOString().split("T")[0];
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -153,7 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!selectedPlan) return;
 
     const xp = calcularXpPorTipoETempo(selectedPlan.type, hours, minutes);
-    console.log(xp);
     mudarXpGanha(xp);
   }
 });
