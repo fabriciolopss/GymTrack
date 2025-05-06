@@ -9,8 +9,6 @@ class DashboardManager {
   }
 
   getUserName() {
-    console.log(document.getElementById("user-name"));
-    console.log(document.getElementById("dashboard-wrapper"));
     document.getElementById("user-name").innerText =
       this.gymData.profile.name || "Usuário desconhecido";
   }

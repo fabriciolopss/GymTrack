@@ -47,9 +47,25 @@ class LayoutManager {
   }
 
   redirectToSection(session) {
-    let fileName = session.toLowerCase().replace(/\s+/g, "-") + ".html";
-    window.location.href = `/codigo${
-      session === "index" ? "" : "/sections"
-    }/${fileName}`;
+    const fileName = session.toLowerCase().replace(/\s+/g, "-") + ".html";
+
+    const pathParts = window.location.pathname.split("/");
+
+    pathParts.pop();
+
+    const isInSections = pathParts.includes("sections");
+
+    if (isInSections) {
+      pathParts.pop();
+    }
+
+    const basePath = pathParts.join("/");
+
+    const targetPath =
+      session === "index"
+        ? `${basePath}/index.html`
+        : `${basePath}/sections/${fileName}`;
+
+    window.location.href = targetPath;
   }
 }
