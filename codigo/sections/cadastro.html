@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../styles/style.css" />
+    <link rel="stylesheet" href="../styles/cadastro.css" />
     <title>Cadastro Academia</title>
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -16,202 +17,324 @@
     <script src="https://unpkg.com/lucide@latest"></script>
   </head>
   <body>
-    <div class="content-wrapper">
+    <main class="content-wrapper">
       <div id="main-content" class="container mt-4 mb-5">
-        <h1 class="mb-4">Cadastro</h1>
+        <h1 class="text-center">Cadastre-se no GymTrack!</h1>
 
-        <form id="student-form">
-          <!-- Dados Pessoais -->
-          <fieldset class="mb-4 p-3 border rounded">
-            <legend class="w-auto px-2 h5">Dados Pessoais</legend>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="name" class="form-label">Nome Completo</label>
-                <input type="text" class="form-control" id="name" required />
-              </div>
-              <div class="col-md-6">
-                <label for="birth" class="form-label">Data Nascimento</label>
-                <input type="date" class="form-control" id="birth" required />
-              </div>
-              <div class="col-md-4">
-                <label for="gender" class="form-label">Gênero</label>
-                <select id="gender" class="form-select" required>
-                  <option value="" disabled selected>Selecione...</option>
-                  <option value="female">Feminino</option>
-                  <option value="male">Masculino</option>
-                  <option value="nonbinary">Não binário</option>
-                  <option value="other">Outro</option>
-                  <option value="not-informed">Prefiro não informar</option>
-                </select>
-              </div>
-              <div class="col-md-4">
-                <label for="height" class="form-label">Altura (cm)</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="height"
-                  min="100"
-                  max="250"
-                  required
-                />
-              </div>
-              <div class="col-md-4">
-                <label for="weight" class="form-label">Peso (kg)</label>
-                <input
-                  type="number"
-                  class="form-control"
-                  id="weight"
-                  min="30"
-                  max="300"
-                  step="0.1"
-                  required
-                />
-              </div>
-              <div class="col-md-6">
-                <label for="phone" class="form-label">Telefone</label>
-                <input type="tel" class="form-control" id="phone" required />
-              </div>
-              <div class="col-md-6">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" required />
-              </div>
-            </div>
-          </fieldset>
+        <!-- Indicador de Passos -->
+        <nav
+          id="step-indicator"
+          class="d-flex justify-content-center mb-4"
+          aria-label="Progresso do cadastro"
+        >
+          <div class="step-item active" data-step="1" aria-current="step">
+            <span class="step-number">1</span>
+            <span class="step-label">Dados Pessoais</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-item" data-step="2">
+            <span class="step-number">2</span>
+            <span class="step-label">Objetivos</span>
+          </div>
+          <div class="step-connector"></div>
+          <div class="step-item" data-step="3">
+            <span class="step-number">3</span>
+            <span class="step-label">Finalizar</span>
+          </div>
+        </nav>
 
-          <!-- Objetivos e Treino -->
-          <fieldset class="mb-4 p-3 border rounded">
-            <legend class="w-auto px-2 h5">Objetivos</legend>
-            <div class="row g-3">
-              <div class="col-md-6">
-                <label for="main-goal" class="form-label"
-                  >Objetivo principal</label
-                >
-                <select id="main-goal" class="form-select" required>
-                  <option value="" disabled selected>Selecione...</option>
-                  <option value="weight-loss">Perda de peso</option>
-                  <option value="muscle-gain">Ganho de massa muscular</option>
-                  <option value="fitness">Condicionamento físico</option>
-                  <option value="health">Saúde e bem-estar</option>
-                </select>
+        <form id="student-form" novalidate role="form" autocomplete="on">
+          <!-- Passo 1: Dados Pessoais -->
+          <div
+            class="form-step active"
+            id="step-1"
+            aria-labelledby="legend-pessoal"
+          >
+            <fieldset class="mb-4 p-3 border rounded">
+              <legend id="legend-pessoal" class="w-auto px-2 h5">
+                Dados Pessoais
+              </legend>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="nome_completo" class="form-label"
+                    >Nome Completo</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="nome_completo"
+                    name="nome_completo"
+                    required
+                    autocomplete="name"
+                  />
+                  <div class="invalid-feedback">Informe seu nome completo.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="data_nascimento" class="form-label"
+                    >Data de Nascimento</label
+                  >
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="data_nascimento"
+                    name="data_nascimento"
+                    required
+                    autocomplete="bday"
+                  />
+                  <div class="invalid-feedback">
+                    Informe sua data de nascimento.
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <label for="genero" class="form-label">Gênero</label>
+                  <select
+                    id="genero"
+                    name="genero"
+                    class="form-select"
+                    required
+                  >
+                    <option value="" selected hidden>Selecione...</option>
+                    <option value="Feminino">Feminino</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Não binário">Não binário</option>
+                    <option value="Outro">Outro</option>
+                    <option value="Prefiro não informar">
+                      Prefiro não informar
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">Selecione seu gênero.</div>
+                </div>
+                <div class="col-md-4">
+                  <label for="altura_cm" class="form-label">Altura (cm)</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="altura_cm"
+                    name="altura_cm"
+                    min="100"
+                    max="250"
+                    required
+                    autocomplete="off"
+                  />
+                  <div class="invalid-feedback">Informe uma altura válida.</div>
+                </div>
+                <div class="col-md-4">
+                  <label for="peso_kg" class="form-label">Peso (kg)</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="peso_kg"
+                    name="peso_kg"
+                    min="30"
+                    max="700"
+                    step="0.1"
+                    required
+                    autocomplete="off"
+                  />
+                  <div class="invalid-feedback">Informe um peso válido.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="telefone" class="form-label">Telefone</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="telefone"
+                    name="telefone"
+                    required
+                    autocomplete="tel"
+                    pattern="\(?\d{2}\)? ?9?\d{4}-?\d{4}"
+                    placeholder="(99) 91234-5678"
+                  />
+                  <div class="invalid-feedback">
+                    Informe um telefone válido.
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <label for="email" class="form-label">E-mail</label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required
+                    autocomplete="email"
+                    placeholder="exemplo@email.com"
+                  />
+                  <div class="invalid-feedback">Digite um e-mail válido.</div>
+                </div>
               </div>
-              <div class="col-md-6">
-                <label for="frequency" class="form-label"
-                  >Frequência semanal</label
-                >
-                <select id="frequency" class="form-select" required>
-                  <option value="" disabled selected>Selecione...</option>
-                  <option value="2-3">2-3 vezes</option>
-                  <option value="3-4">3-4 vezes</option>
-                  <option value="5+">5+ vezes</option>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <label for="experience" class="form-label"
-                  >Experiência prévia</label
-                >
-                <select id="experience" class="form-select" required>
-                  <option value="" disabled selected>Selecione...</option>
-                  <option value="beginner">Iniciante</option>
-                  <option value="intermediate">Intermediário</option>
-                  <option value="advanced">Avançado</option>
-                </select>
-              </div>
-              <div class="col-md-6">
-                <label for="training-type" class="form-label"
-                  >Tipo de treino preferido</label
-                >
-                <select id="training-type" class="form-select" required>
-                  <option value="" disabled selected>Selecione...</option>
-                  <option value="strength">Musculação</option>
-                  <option value="functional">Funcional</option>
-                  <option value="cardio">Cardio</option>
-                </select>
-              </div>
-            </div>
-          </fieldset>
-
-          <!-- Termos -->
-          <div class="form-check mb-4">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              id="terms"
-              required
-            />
-            <label class="form-check-label" for="terms">
-              Declaro que as informações são verdadeiras e estou ciente dos
-              riscos da atividade física
-            </label>
+            </fieldset>
           </div>
 
-          <button type="submit" class="btn btn-primary btn-lg w-100">
-            <i data-lucide="save" class="me-2"></i>Salvar Cadastro
-          </button>
+          <!-- Passo 2: Objetivos -->
+          <div class="form-step" id="step-2" aria-labelledby="legend-objetivos">
+            <fieldset class="mb-4 p-3 border rounded">
+              <legend id="legend-objetivos" class="w-auto px-2 h5">
+                Objetivos
+              </legend>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="objetivo_principal" class="form-label"
+                    >Objetivo principal</label
+                  >
+                  <select
+                    id="objetivo_principal"
+                    name="objetivo_principal"
+                    class="form-select"
+                    required
+                  >
+                    <option value="" selected hidden>Selecione...</option>
+                    <option value="Perda de peso">Perda de peso</option>
+                    <option value="Ganho de massa muscular">
+                      Ganho de massa muscular
+                    </option>
+                    <option value="Condicionamento físico">
+                      Condicionamento físico
+                    </option>
+                    <option value="Saúde e bem-estar">Saúde e bem-estar</option>
+                  </select>
+                  <div class="invalid-feedback">Escolha um objetivo.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="quencia_semanal" class="form-label"
+                    >Frequência semanal</label
+                  >
+                  <select
+                    id="frequencia_semanal"
+                    name="frequencia_semanal"
+                    class="form-select"
+                    required
+                  >
+                    <option value="" selected hidden>Selecione...</option>
+                    <option value="2-3 vezes">2-3 vezes</option>
+                    <option value="3-4 vezes">3-4 vezes</option>
+                    <option value="5+ vezes">5+ vezes</option>
+                  </select>
+                  <div class="invalid-feedback">Informe a frequência.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="experiencia_previa" class="form-label"
+                    >Experiência prévia</label
+                  >
+                  <select
+                    id="experiencia_previa"
+                    name="experiencia_previa"
+                    class="form-select"
+                    required
+                  >
+                    <option value="" selected hidden>Selecione...</option>
+                    <option value="Iniciante">Iniciante</option>
+                    <option value="Intermediário">Intermediário</option>
+                    <option value="Avançado">Avançado</option>
+                  </select>
+                  <div class="invalid-feedback">Informe sua experiência.</div>
+                </div>
+                <div class="col-md-6">
+                  <label for="tipo_treino" class="form-label"
+                    >Tipo de treino preferido</label
+                  >
+                  <select
+                    id="tipo_treino"
+                    name="tipo_treino"
+                    class="form-select"
+                    required
+                  >
+                    <option value="" selected hidden>Selecione...</option>
+                    <option value="Musculação">Musculação</option>
+                    <option value="Funcional">Funcional</option>
+                    <option value="Cardio">Cardio</option>
+                  </select>
+                  <div class="invalid-feedback">Escolha um tipo de treino.</div>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+
+          <!-- Passo 3: Termos -->
+          <div class="form-step" id="step-3" aria-labelledby="legend-termos">
+            <fieldset class="mb-4 p-3 border rounded">
+              <legend id="legend-termos" class="w-auto px-2 h5">
+                Termos e Condições
+              </legend>
+              <div class="form-check mb-4">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="termos"
+                  name="termos"
+                  required
+                  aria-describedby="termsHelp"
+                />
+                <label class="form-check-label" for="termos">
+                  Declaro que as informações são verdadeiras e estou ciente dos
+                  riscos da atividade física.
+                </label>
+                <div class="invalid-feedback">Você deve aceitar os termos.</div>
+              </div>
+            </fieldset>
+          </div>
+
+          <!-- Botões de Navegação -->
+          <div class="d-flex justify-content-between mt-4">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              id="prev-btn"
+              style="display: none"
+              aria-label="Passo anterior"
+            >
+              <i data-lucide="arrow-left" class="me-1"></i> Anterior
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              id="next-btn"
+              aria-label="Próximo passo"
+            >
+              Próximo <i data-lucide="arrow-right" class="ms-1"></i>
+            </button>
+            <button
+              type="submit"
+              class="btn btn-success btn-lg"
+              id="submit-btn"
+              style="display: none"
+              aria-label="Salvar Cadastro"
+            >
+              <i data-lucide="save" class="me-2"></i>Salvar Cadastro
+            </button>
+          </div>
         </form>
+
+        <!-- Confirmação -->
+        <div
+          id="confirmation-screen"
+          class="text-center mt-5"
+          style="display: none"
+          aria-live="polite"
+        >
+          <svg
+            xmlns="http://www.w3.org2000/svg"
+            width="80"
+            height="80"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="lucide lucide-thumbs-up text-success mb-3"
+          >
+            <path d="M7 10v12" />
+            <path
+              d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a2.41 2.41 0 0 1 2 1.11L15 5.88z"
+            />
+          </svg>
+          <p class="h4 mt-3">Cadastro realizado com sucesso!</p>
+        </div>
       </div>
-    </div>
+    </main>
 
-    <script>
-      lucide.createIcons();
-
-      document.addEventListener("DOMContentLoaded", function () {
-        // Inicializa o Gerenciador de Layout
-        new LayoutManager();
-
-        // Manipula o Envio do Formulário
-        const form = document.getElementById("student-form");
-        if (form) {
-          form.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            // Calcula o IMC
-            const height = parseFloat(document.getElementById("height").value);
-            const weight = parseFloat(document.getElementById("weight").value);
-            const bmi =
-              height && weight
-                ? (weight / (height / 100) ** 2).toFixed(1)
-                : null;
-
-            // Prepara o objeto de dados
-            const studentData = {
-              personal: {
-                name: document.getElementById("name").value,
-                birth: document.getElementById("birth").value,
-                gender: document.getElementById("gender").value,
-                phone: document.getElementById("phone").value,
-                email: document.getElementById("email").value,
-                height: height,
-                weight: weight,
-                bmi: bmi,
-              },
-              goals: {
-                main: document.getElementById("main-goal").value,
-                frequency: document.getElementById("frequency").value,
-                experience: document.getElementById("experience").value,
-                trainingType: document.getElementById("training-type").value,
-              },
-              termsAccepted: document.getElementById("terms").checked,
-              registrationDate: new Date().toISOString(),
-            };
-
-            // Salva no localStorage
-            try {
-              let gymData =
-                JSON.parse(localStorage.getItem("gymStudents")) || [];
-              gymData.push(studentData);
-              localStorage.setItem("gymStudents", JSON.stringify(gymData));
-
-              alert("Cadastro salvo com sucesso!");
-              form.reset();
-            } catch (error) {
-              console.error("Erro ao salvar:", error);
-              alert("Erro ao salvar cadastro. Por favor, tente novamente.");
-            }
-          });
-        }
-      });
-    </script>
-
+    <script src="../scripts/cadastro.js"></script>
     <script src="../scripts/layout.js"></script>
   </body>
 </html>
