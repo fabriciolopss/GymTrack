@@ -248,6 +248,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+  // Validação dinâmica para data
+  var today = new Date();
+  var yyyy = today.getFullYear();
+  var mm = String(today.getMonth() + 1).padStart(2, "0");
+  var dd = String(today.getDate()).padStart(2, "0");
+  var maxDate = yyyy + "-" + mm + "-" + dd;
+
+  var inputData = document.getElementById("data_nascimento");
+  if (inputData) {
+    inputData.setAttribute("max", maxDate);
+  }
+
   // Inicialização
   showStep(currentStep);
 
