@@ -137,7 +137,7 @@
 }
 
 /* Foco visível para acessibilidade */
-input:focus,
+input:not([type="checkbox"]):not([type="radio"]):focus,
 select:focus,
 textarea:focus {
   outline: 2px solid var(--primary-color);
@@ -146,27 +146,11 @@ textarea:focus {
   background-color: var(--white) !important;
 }
 
-button:focus {
+/* Botões */
+button:focus,
+.btn:focus {
   outline: 2px solid var(--primary-color);
   box-shadow: 0 0 0 0.19rem rgba(13, 110, 253, 0.19);
-}
-
-/* Autofill Chrome/Safari/Edge */
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--white) inset;
-  box-shadow: 0 0 0 1000px var(--white) inset;
-  background-color: var(--white) !important;
-}
-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 1000px var(--white) inset,
-    0 0 0 0.18rem rgba(13, 110, 253, 0.18);
-  box-shadow: 0 0 0 1000px var(--white) inset,
-    0 0 0 0.18rem rgba(13, 110, 253, 0.18);
-}
-/* Autofill Firefox */
-input:-moz-autofill {
-  box-shadow: 0 0 0 1000px var(--white) inset !important;
-  background-color: var(--white) !important;
 }
 
 /* Validação Bootstrap customizada */
@@ -192,12 +176,6 @@ input:-moz-autofill {
   font-size: 0.93em;
   margin-top: 0.25rem;
   width: 100%;
-}
-
-/* Botões */
-.btn:focus {
-  outline: 2px solid var(--primary-color);
-  box-shadow: 0 0 0 0.19rem rgba(13, 110, 253, 0.19);
 }
 
 /* Responsividade aprimorada */
