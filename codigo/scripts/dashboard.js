@@ -6,14 +6,36 @@ class DashboardManager {
   constructor() {
     this.gymData = JSON.parse(localStorage.getItem("gymAppData")) || {};
     this.getUserName();
+    this.hideCadastroIfProfileExists();
   }
 
   getUserName() {
     document.getElementById("user-name").innerText =
       this.gymData.profile.name || "Usuário desconhecido";
   }
-}
 
+  hideCadastroIfProfileExists() {
+    const profile = this.gymData.profile;
+
+    function isEmptyProfile(profile) {
+      return (
+        !profile ||
+        typeof profile !== "object" ||
+        Array.isArray(profile) ||
+        Object.keys(profile).length === 0
+      );
+    }
+
+    if (!isEmptyProfile(profile)) {
+      const cadastroMenuItem = document.querySelector(
+        '[redirect-session-name="cadastro"]'
+      );
+      if (cadastroMenuItem) {
+        cadastroMenuItem.style.display = "none";
+      }
+    }
+  }
+}
 class Dashboard {
   constructor() {
     this.grid = null;
@@ -41,10 +63,10 @@ class Dashboard {
         id: 1,
         x: 0,
         y: 0,
-        width: 6, 
-        height: 4, 
+        width: 6,
+        height: 4,
         title: "Progresso Semanal",
-        type: "chart", 
+        type: "chart",
         chartData: {
           labels: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"],
           datasets: [
