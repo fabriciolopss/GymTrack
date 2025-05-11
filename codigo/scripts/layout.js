@@ -2,9 +2,27 @@ class LayoutManager {
   constructor() {
     this.headerItems = document.querySelectorAll(".header-item");
     this.activeItem = null;
+    this.sidebar = document.querySelector('.sidebar');
+    this.sidebarToggle = document.getElementById('sidebarToggle');
 
     this.setActiveHeaderFromURL();
     this.addEventListeners();
+    this.initializeSidebar();
+  }
+
+  initializeSidebar() {
+    // Check if sidebar state is saved in localStorage
+    const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    if (isCollapsed) {
+      this.sidebar.classList.add('collapsed');
+    }
+
+    // Add click event to toggle button
+    this.sidebarToggle.addEventListener('click', () => {
+      this.sidebar.classList.toggle('collapsed');
+      // Save state to localStorage
+      localStorage.setItem('sidebarCollapsed', this.sidebar.classList.contains('collapsed'));
+    });
   }
 
   getAttributeFromItem(item) {
@@ -48,6 +66,7 @@ class LayoutManager {
 
   redirectToSection(session) {
     const fileName = session.toLowerCase().replace(/\s+/g, "-") + ".html";
+
 
     const pathParts = window.location.pathname.split("/");
 

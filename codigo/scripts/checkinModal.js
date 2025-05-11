@@ -3,6 +3,7 @@ import {
   xpModalCheckin,
   calcularXpPorTipoETempo,
 } from "./level.js";
+import { createNotification } from "./notifications.js";
 import { showToast } from "./utils/toast.js";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -81,9 +82,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const hours = parseInt(hoursInput.value) || 0;
     const minutes = parseInt(minutesInput.value) || 0;
 
+    //todo: corrigir logica de procurar o treino ela funciona pela ordem estar igual ao id, mas quando escalar pode dar errado, fazer igual o selectedPlan
+
     const selectedPlan = gymData.edited_trainings.find(
       (plan) => plan.id == submitPlanId
     );
+    const selectedDay = selectedPlan.days.find((day) => day.id == submitDayTrainedId);
     const xpGanho = calcularXpPorTipoETempo(selectedPlan.type, hours, minutes);
 
     gymData.profile.xp += xpGanho;
@@ -107,6 +111,11 @@ document.addEventListener("DOMContentLoaded", function () {
       background: "text-bg-success",
       delay: 4000,
     });
+
+    createNotification({title: "Treino registrado com sucesso!", 
+      description: `O dia de ${selectedDay.name} da ficha ${selectedPlan.name}`,
+      type: "Creation"
+    })
   });
 
   btnDecHours.addEventListener("click", () => {
