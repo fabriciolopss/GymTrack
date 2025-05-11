@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
     };
   }).filter(item => item !== null);
 
-  // Initialize DataTable
   const table = $('#tabela-historico').DataTable({
     data: tableData,
     columns: [
@@ -60,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
     language: {
       url: '//cdn.datatables.net/plug-ins/2.0.0/i18n/pt-BR.json'
     },
-    order: [[0, 'desc']], // Sort by date column descending
+    order: [[0, 'desc']],
     pageLength: 10,
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
     dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
