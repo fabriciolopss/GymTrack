@@ -26,13 +26,13 @@ class DashboardManager {
       );
     }
 
-    if (!isEmptyProfile(profile)) {
-      const cadastroMenuItem = document.querySelector(
-        '[redirect-session-name="cadastro"]'
-      );
-      if (cadastroMenuItem) {
-        cadastroMenuItem.style.display = "none";
-      }
+    const cadastroMenuItem = document.querySelector(
+      '[redirect-session-name="cadastro"]'
+    );
+    if (cadastroMenuItem) {
+      cadastroMenuItem.style.display = isEmptyProfile(profile)
+        ? "flex"
+        : "none";
     }
   }
 }
