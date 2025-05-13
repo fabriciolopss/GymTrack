@@ -1,22 +1,20 @@
-.dashboard-wrapper{
+.dashboard-wrapper {}
 
-}
-
-.dashboard-header{
+.dashboard-header {
     display: flex;
     flex-direction: column;
-    gap:8px;
-    margin-top:128px;
+    gap: 8px;
 }
 
-.dashboard-title{
+
+.dashboard-title {
     font-size: 40px;
     font-weight: 500;
     color: #333;
     margin-bottom: 1rem;
 }
 
-.dashboard-subtitle{
+.dashboard-subtitle {
     margin-bottom: 0;
     font-size: 20px;
     font-weight: 400;
