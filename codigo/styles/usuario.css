@@ -1,0 +1,9 @@
+header {
+    display: none;
+}
+
+#main-content {
+    height: fit-content;
+
+    border-radius: 10px;
+}
