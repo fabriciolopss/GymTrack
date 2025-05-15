@@ -7,3 +7,8 @@ header {
 
     border-radius: 10px;
 }
+
+button:hover {
+    background-color: black;
+    color: white;
+}
