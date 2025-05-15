@@ -33,7 +33,7 @@
       <div id="main-content" class="container bg-light">
         <div id="dados"></div>
         <button id="editar">Editar perfil</button>
-        <button id="concluir-edicao">Concluir</button>
+        <button id="concluir-edicao" style="display: none">Concluir</button>
       </div>
     </div>
   </body>
@@ -48,9 +48,11 @@
 
   const dadosUsuarioRaw = JSON.parse(localStorage.getItem("gymAppData")).profile;
   let dadosUsuario = JSON.parse(localStorage.getItem("gymAppData")).profile;
+  let dadosEdit = JSON.parse(localStorage.getItem("gymAppData")).profile;
 
   const divDados = document.querySelector("#dados");
   const botaoEditar = document.querySelector("#editar");
+  const botaoConcluirEdit = document.querySelector("#concluir-edicao");
 
   function traducaoDados() {
     let anoNascimento = dadosUsuarioRaw.pessoal.data_nascimento.substring(0, 4);
@@ -82,29 +84,32 @@
   </ul>`;
 
   botaoEditar.addEventListener("click", e => {
+    botaoEditar.style = "display: none";
+    botaoConcluirEdit.style = "display: block";
+
     e.preventDefault();
     divDados.innerHTML = `<ul class="list-unstyled row">
       <h1 class="fs-1 text-secondary mt-3 col-12">Dados pessoais</h1>
       <li class="col-4" id="nome">
-        Nome completo: <input type="text" value="${dadosUsuario.pessoal.nome_completo}">
+        Nome completo: <input id="input-nome" type="text" value="${dadosUsuario.pessoal.nome_completo}">
       </li>
       <li class="col-4" id="nascimento">
-        Data de nascimento: <input type="date" value="${dadosUsuarioRaw.pessoal.data_nascimento}">
+        Data de nascimento: <input id="input-nasc" type="date" value="${dadosUsuarioRaw.pessoal.data_nascimento}">
       </li>
       <li class="col-4" id="genero">
         Gênero: <strong>${dadosUsuario.pessoal.genero}</strong>
       </li>
       <li class="col-12" id="email">
-        Email: <input type="email" value="${dadosUsuario.pessoal.email}">
+        Email: <input id="input-email" type="email" value="${dadosUsuario.pessoal.email}">
       </li>
       <li class="col-4" id="altura">
-        Altura (cm): <input type="number" value="${dadosUsuario.pessoal.altura_cm}">
+        Altura (cm): <input id="input-altura" type="number" value="${dadosUsuario.pessoal.altura_cm}">
       </li>
       <li class="col-4" id="peso">
-        Peso (kg): <input type="number" value="${dadosUsuario.pessoal.peso_kg}">
+        Peso (kg): <input id="input-peso" type="number" value="${dadosUsuario.pessoal.peso_kg}">
       </li>
       <li class="col-4" id="telefone">
-        Telefone: <input type="tel" value="${dadosUsuario.pessoal.telefone}">
+        Telefone: <input id="input-tel" type="tel" value="${dadosUsuario.pessoal.telefone}">
       </li>
     </ul>
     <ul class="list-unstyled">
@@ -126,9 +131,8 @@
     let liGenero = document.querySelector("#genero");
     switch (dadosUsuario.pessoal.genero) {
       case "Masculino":
-        liGenero.innerHTML = `<label for="genero">Gênero:</label>
-        <select name="genero" required>
-          <option value="" hidden>Selecione</option>
+        liGenero.innerHTML = `<label for="input-genero">Gênero:</label>
+        <select id="input-genero" name="genero" required>
           <option value="Masculino" selected>Masculino</option>
           <option value="Feminino">Feminino</option>
           <option value="Não binário">Não binário</option>
@@ -137,9 +141,8 @@
         break;
 
       case "Feminino":
-        liGenero.innerHTML = `<label for="genero">Gênero:</label>
-        <select name="genero" required>
-          <option value="" hidden>Selecione</option>
+        liGenero.innerHTML = `<label for="input-genero">Gênero:</label>
+        <select id="input-genero" name="genero" required>
           <option value="Masculino">Masculino</option>
           <option value="Feminino" selected>Feminino</option>
           <option value="Não binário">Não binário</option>
@@ -148,9 +151,8 @@
         break;
 
       case "Não binário":
-        liGenero.innerHTML = `<label for="genero">Gênero:</label>
-        <select name="genero" required>
-          <option value="" hidden>Selecione</option>
+        liGenero.innerHTML = `<label for="input-genero">Gênero:</label>
+        <select id="input-genero" name="genero" required>
           <option value="Masculino">Masculino</option>
           <option value="Feminino">Feminino</option>
           <option value="Não binário" selected>Não binário</option>
@@ -159,9 +161,8 @@
         break;
 
       case "Prefiro não informar":
-        liGenero.innerHTML = `<label for="genero">Gênero:</label>
-        <select name="genero" required>
-          <option value="">Selecione</option>
+        liGenero.innerHTML = `<label for="input-genero">Gênero:</label>
+        <select id="input-genero" name="genero" required>
           <option value="Masculino">Masculino</option>
           <option value="Feminino">Feminino</option>
           <option value="Não binário">Não binário</option>
@@ -173,9 +174,8 @@
     let liExper = document.querySelector("#experiencia");
     switch (dadosUsuario.objetivos.experiencia_previa) {
       case "Iniciante":
-        liExper.innerHTML = `<label for="experiencia">Experiência:</label>
-        <select name="experiencia" required>
-          <option value="" hidden>Selecione</option>
+        liExper.innerHTML = `<label for="input-experiencia">Experiência:</label>
+        <select id="input-experiencia" name="experiencia" required>
           <option value="Iniciante" selected>Iniciante</option>
           <option value="Intermediário">Intermediário</option>
           <option value="Avançado">Avançado</option>
@@ -183,9 +183,8 @@
         break;
 
       case "Intermediário":
-        liExper.innerHTML = `<label for="experiencia">Experiência:</label>
-        <select name="experiencia" required>
-          <option value="" hidden>Selecione</option>
+        liExper.innerHTML = `<label for="input-experiencia">Experiência:</label>
+        <select id="input-experiencia" name="experiencia" required>
           <option value="Iniciante">Iniciante</option>
           <option value="Intermediário" selected>Intermediário</option>
           <option value="Avançado">Avançado</option>
@@ -193,9 +192,8 @@
         break;
 
       case "Avançado":
-        liExper.innerHTML = `<label for="experiencia">Experiência:</label>
-        <select name="experiencia" required>
-          <option value="" hidden>Selecione</option>
+        liExper.innerHTML = `<label for="input-experiencia">Experiência:</label>
+        <select id="input-experiencia" name="experiencia" required>
           <option value="Iniciante">Iniciante</option>
           <option value="Intermediário">Intermediário</option>
           <option value="Avançado" selected>Avançado</option>
@@ -206,9 +204,8 @@
     let liFreq = document.querySelector("#frequencia");
     switch (dadosUsuario.objetivos.frequencia_semanal) {
       case "2-3 vezes":
-        liFreq.innerHTML = `<label for="frequencia">Frequência:</label>
-        <select name="frequencia" required>
-          <option value="" hidden>Selecione...</option>
+        liFreq.innerHTML = `<label for="input-frequencia">Frequência:</label>
+        <select id="input-frequencia" name="frequencia" required>
           <option value="2-3 vezes" selected>2-3 vezes</option>
           <option value="3-4 vezes">3-4 vezes</option>
           <option value="5+ vezes">5+ vezes</option>
@@ -216,9 +213,8 @@
         break;
 
       case "3-4 vezes":
-        liFreq.innerHTML = `<label for="frequencia">Frequência:</label>
-        <select name="frequencia" required>
-          <option value="" hidden>Selecione...</option>
+        liFreq.innerHTML = `<label for="input-frequencia">Frequência:</label>
+        <select id="input-frequencia" name="frequencia" required>
           <option value="2-3 vezes">2-3 vezes</option>
           <option value="3-4 vezes" selected>3-4 vezes</option>
           <option value="5+ vezes">5+ vezes</option>
@@ -226,9 +222,8 @@
         break;
 
       case "5+ vezes":
-        liFreq.innerHTML = `<label for="frequencia">Frequência:</label>
-        <select name="frequencia" required>
-          <option value="" hidden>Selecione...</option>
+        liFreq.innerHTML = `<label for="input-frequencia">Frequência:</label>
+        <select id="input-frequencia" name="frequencia" required>
           <option value="2-3 vezes">2-3 vezes</option>
           <option value="3-4 vezes">3-4 vezes</option>
           <option value="5+ vezes" selected>5+ vezes</option>
@@ -239,8 +234,8 @@
     let liObj = document.querySelector("#objetivo");
     switch (dadosUsuario.objetivos.objetivo_principal) {
       case "Perda de peso":
-        liObj.innerHTML = `<label for="objetivo">Objetivo principal:</label>
-        <select name="objetivo" required>
+        liObj.innerHTML = `<label for="input-objetivo">Objetivo principal:</label>
+        <select id="input-objetivo" name="objetivo" required>
           <option value="Perda de peso" selected>Perda de peso</option>
           <option value="Ganho de massa muscular">Ganho de massa muscular</option>
           <option value="Condicionamento físico">Condicionamento físico</option>
@@ -248,8 +243,8 @@
         </select>`;
         break;
       case "Ganho de massa muscular":
-        liObj.innerHTML = `<label for="objetivo">Objetivo principal:</label>
-        <select name="objetivo" required>
+        liObj.innerHTML = `<label for="input-objetivo">Objetivo principal:</label>
+        <select id="input-objetivo" name="objetivo" required>
           <option value="Perda de peso">Perda de peso</option>
           <option value="Ganho de massa muscular" selected>Ganho de massa muscular</option>
           <option value="Condicionamento físico">Condicionamento físico</option>
@@ -257,8 +252,8 @@
         </select>`;
         break;
       case "Condicionamento físico":
-        liObj.innerHTML = `<label for="objetivo">Objetivo principal:</label>
-        <select name="objetivo" required>
+        liObj.innerHTML = `<label for="input-objetivo">Objetivo principal:</label>
+        <select id="input-objetivo" name="objetivo" required>
           <option value="Perda de peso">Perda de peso</option>
           <option value="Ganho de massa muscular">Ganho de massa muscular</option>
           <option value="Condicionamento físico" selected>Condicionamento físico</option>
@@ -266,8 +261,8 @@
         </select>`;
         break;
       case "Saúde e bem-estar":
-        liObj.innerHTML = `<label for="objetivo">Objetivo principal:</label>
-        <select name="objetivo" required>
+        liObj.innerHTML = `<label for="input-objetivo">Objetivo principal:</label>
+        <select id="input-objetivo" name="objetivo" required>
           <option value="Perda de peso">Perda de peso</option>
           <option value="Ganho de massa muscular">Ganho de massa muscular</option>
           <option value="Condicionamento físico">Condicionamento físico</option>
@@ -279,30 +274,42 @@
     let liAtiv = document.querySelector("#atividade");
     switch (dadosUsuario.objetivos.tipo_treino) {
       case "Musculação":
-        liAtiv.innerHTML = `<label for="objetivo">Objetivo principal:</label>
-        <select name="objetivo" required>
+        liAtiv.innerHTML = `<label for="input-atividade">Atividade:</label>
+        <select id="input-atividade" name="atividade" required>
             <option value="Musculação" selected>Musculação</option>
             <option value="Funcional">Funcional</option>
             <option value="Cardio">Cardio</option>
         </select>`;
         break;
       case "Funcional":
-        liAtiv.innerHTML = `<label for="objetivo">Objetivo principal:</label>
-        <select name="objetivo" required>
+        liAtiv.innerHTML = `<label for="input-atividade">Atividade:</label>
+        <select id="input-atividade" name="atividade" required>
             <option value="Musculação">Musculação</option>
             <option value="Funcional" selected>Funcional</option>
             <option value="Cardio">Cardio</option>
         </select>`;
         break;
       case "Cardio":
-        liAtiv.innerHTML = `<label for="objetivo">Objetivo principal:</label>
-        <select name="objetivo" required>
+        liAtiv.innerHTML = `<label for="input-atividade">Atividade:</label>
+        <select id="input-atividade" name="atividade" required>
             <option value="Musculação">Musculação</option>
             <option value="Funcional">Funcional</option>
             <option value="Cardio" selected>Cardio</option>
         </select>`;
         break;
     }
+  });
+
+  botaoConcluirEdit.addEventListener("click", e => {
+    e.preventDefault();
+
+    dadosEdit.pessoal.nome_completo = (document.querySelector("#input-nome")).value;
+    dadosEdit.pessoal.data_nascimento = (document.querySelector("#input-nasc")).value;
+    dadosEdit.pessoal.genero = (document.querySelector("#input-genero")).value;
+    dadosEdit.pessoal.email = (document.querySelector("#input-email")).value;
+    dadosEdit.pessoal.peso_kg = (document.querySelector("#input-peso")).value;
+    dadosEdit.pessoal.altura_cm = (document.querySelector("#input-altura")).value;
+    dadosEdit.pessoal.telefone = (document.querySelector("#input-tel")).value;
   });
 </script>
 
