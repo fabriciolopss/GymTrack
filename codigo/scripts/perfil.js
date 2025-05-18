@@ -25,20 +25,20 @@
 
   divDados.innerHTML = `<ul class="list-unstyled row">
     <h1 class="fs-1 text-secondary mt-3 col-12">Dados pessoais</h1>
-    <li class="col-4">Nome completo: <strong>${dadosUsuario.pessoal.nome_completo}</strong></li>
-    <li class="col-4">Data de nascimento: <strong>${dadosUsuario.pessoal.data_nascimento}</strong></li>
-    <li class="col-4">Gênero: <strong>${dadosUsuario.pessoal.genero}</strong></li>
-    <li class="col-4">Altura (cm): <strong>${dadosUsuario.pessoal.altura_cm}</strong></li>
-    <li class="col-4">Peso (kg): <strong>${dadosUsuario.pessoal.peso_kg}</strong></li>
-    <li class="col-4">Telefone: <strong>${dadosUsuario.pessoal.telefone}</strong></li>
+    <li class="col-xl-4 col-lg-12">Nome completo: <strong>${dadosUsuario.pessoal.nome_completo}</strong></li>
+    <li class="col-lg-4 col-md-6">Data de nascimento: <strong>${dadosUsuario.pessoal.data_nascimento}</strong></li>
+    <li class="col-lg-4 col-md-6">Gênero: <strong>${dadosUsuario.pessoal.genero}</strong></li>
+    <li class="col-lg-4 col-md-6">Altura (cm): <strong>${dadosUsuario.pessoal.altura_cm}</strong></li>
+    <li class="col-lg-4 col-md-6">Peso (kg): <strong>${dadosUsuario.pessoal.peso_kg}</strong></li>
+    <li class="col-lg-4 col-md-6">Telefone: <strong>${dadosUsuario.pessoal.telefone}</strong></li>
     <li class="col-12">Email: <strong>${dadosUsuario.pessoal.email}</strong></li>
   </ul>
   <ul class="list-unstyled row">
     <h1 class="fs-1 text-secondary">Objetivos</h1>
-    <li>Experiência: <strong>${dadosUsuario.objetivos.experiencia_previa}</strong></li>
-    <li>Frequência semanal: <strong>${dadosUsuario.objetivos.frequencia_semanal}</strong></li>
-    <li>Objetivo principal: <strong>${dadosUsuario.objetivos.objetivo_principal}</strong></li>
-    <li>Tipo de atividade: <strong>${dadosUsuario.objetivos.tipo_treino}</strong></li>
+    <li class="col-lg-4 col-md-6">Experiência: <strong>${dadosUsuario.objetivos.experiencia_previa}</strong></li>
+    <li class="col-lg-4 col-md-6">Frequência semanal: <strong>${dadosUsuario.objetivos.frequencia_semanal}</strong></li>
+    <li class="col-lg-4 col-md-6">Objetivo principal: <strong>${dadosUsuario.objetivos.objetivo_principal}</strong></li>
+    <li class="col-lg-4 col-md-6">Tipo de atividade: <strong>${dadosUsuario.objetivos.tipo_treino}</strong></li>
   </ul>`;
 
   botaoEditar.addEventListener("click", e => {
@@ -48,43 +48,44 @@
     e.preventDefault();
     divDados.innerHTML = `<ul class="list-unstyled row">
       <h1 class="fs-1 text-secondary mt-3 col-12">Dados pessoais</h1>
-      <li class="col-4" id="nome">
-        Nome completo: <input id="input-nome" type="text" value="${dadosUsuario.pessoal.nome_completo}">
+      <li class="col-xl-4 col-xl-12" id="nome">
+        Nome completo: <input id="input-nome" class="w-lg-50" type="text" value="${dadosUsuario.pessoal.nome_completo}">
       </li>
-      <li class="col-4" id="nascimento">
+      <li class="col-xl-4 col-lg-6" id="nascimento">
         Data de nascimento: <input id="input-nasc" type="date" value="${dadosUsuarioRaw.pessoal.data_nascimento}">
       </li>
-      <li class="col-4" id="genero">
+      <li class="col-xl-4 col-lg-6" id="genero">
         Gênero: <strong>${dadosUsuario.pessoal.genero}</strong>
       </li>
-      <li class="col-4" id="altura">
+      <li class="col-xl-4 col-lg-6" id="altura">
         Altura (cm): <input id="input-altura" type="number" value="${dadosUsuario.pessoal.altura_cm}">
       </li>
-      <li class="col-4" id="peso">
+      <li class="col-xl-4 col-lg-6" id="peso">
         Peso (kg): <input id="input-peso" type="number" value="${dadosUsuario.pessoal.peso_kg}">
       </li>
-      <li class="col-4" id="telefone">
+      <li class="col-xl-4 col-lg-6" id="telefone">
         Telefone: <input id="input-tel" type="tel" value="${dadosUsuario.pessoal.telefone}">
       </li>
       <li class="col-12" id="email">
-        Email: <input id="input-email" type="email" value="${dadosUsuario.pessoal.email}">
+        Email: <input id="input-email" style="width: 80%;" type="email" value="${dadosUsuario.pessoal.email}">
       </li>
     </ul>
     <ul class="list-unstyled row">
       <h1 class="fs-1 text-secondary">Objetivos</h1>
-      <li id="experiencia">
+      <li id="experiencia" class="col-xl-4 col-lg-6">
         Experiência: <strong>${dadosUsuario.objetivos.experiencia_previa}</strong>
       </li>
-      <li id="frequencia">
+      <li id="frequencia" class="col-xl-4 col-lg-6">
         Frequência semanal:<strong>${dadosUsuario.objetivos.frequencia_semanal}</strong>
       </li>
-      <li id="objetivo">
+      <li id="objetivo" class="col-xl-4 col-lg-6">
         Objetivo principal:<strong>${dadosUsuario.objetivos.objetivo_principal}</strong>
       </li>
-      <li id="atividade">
+      <li id="atividade" class="col-xl-4 col-lg-6">
         Tipo de atividade: <strong>${dadosUsuario.objetivos.tipo_treino}</strong>
       </li>
     </ul>`;
+
 
     let liGenero = document.querySelector("#genero");
     liGenero.innerHTML = `
