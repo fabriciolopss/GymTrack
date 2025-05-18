@@ -28,12 +28,12 @@
     <li class="col-4">Nome completo: <strong>${dadosUsuario.pessoal.nome_completo}</strong></li>
     <li class="col-4">Data de nascimento: <strong>${dadosUsuario.pessoal.data_nascimento}</strong></li>
     <li class="col-4">Gênero: <strong>${dadosUsuario.pessoal.genero}</strong></li>
-    <li class="col-12">Email: <strong>${dadosUsuario.pessoal.email}</strong></li>
     <li class="col-4">Altura (cm): <strong>${dadosUsuario.pessoal.altura_cm}</strong></li>
     <li class="col-4">Peso (kg): <strong>${dadosUsuario.pessoal.peso_kg}</strong></li>
     <li class="col-4">Telefone: <strong>${dadosUsuario.pessoal.telefone}</strong></li>
+    <li class="col-12">Email: <strong>${dadosUsuario.pessoal.email}</strong></li>
   </ul>
-  <ul class="list-unstyled">
+  <ul class="list-unstyled row">
     <h1 class="fs-1 text-secondary">Objetivos</h1>
     <li>Experiência: <strong>${dadosUsuario.objetivos.experiencia_previa}</strong></li>
     <li>Frequência semanal: <strong>${dadosUsuario.objetivos.frequencia_semanal}</strong></li>
@@ -57,9 +57,6 @@
       <li class="col-4" id="genero">
         Gênero: <strong>${dadosUsuario.pessoal.genero}</strong>
       </li>
-      <li class="col-12" id="email">
-        Email: <input id="input-email" type="email" value="${dadosUsuario.pessoal.email}">
-      </li>
       <li class="col-4" id="altura">
         Altura (cm): <input id="input-altura" type="number" value="${dadosUsuario.pessoal.altura_cm}">
       </li>
@@ -69,8 +66,11 @@
       <li class="col-4" id="telefone">
         Telefone: <input id="input-tel" type="tel" value="${dadosUsuario.pessoal.telefone}">
       </li>
+      <li class="col-12" id="email">
+        Email: <input id="input-email" type="email" value="${dadosUsuario.pessoal.email}">
+      </li>
     </ul>
-    <ul class="list-unstyled">
+    <ul class="list-unstyled row">
       <h1 class="fs-1 text-secondary">Objetivos</h1>
       <li id="experiencia">
         Experiência: <strong>${dadosUsuario.objetivos.experiencia_previa}</strong>
@@ -130,7 +130,7 @@
     
     let liAtiv = document.querySelector("#atividade");
     liAtiv.innerHTML = `
-      <label for="input-atividade">Atividade:</label>
+      <label for="input-atividade">Tipo de atividade:</label>
       <select id="input-atividade" name="atividade" required>
         <option value="Musculação" ${dadosUsuario.objetivos.tipo_treino == "Musculação" ? "selected" : ""}>Musculação</option>
         <option value="Funcional" ${dadosUsuario.objetivos.tipo_treino == "Funcional" ? "selected" : ""}>Funcional</option>

@@ -18,22 +18,32 @@
   </head>
 
   <body>
-    <div class="content-wrapper">
-      <header class="header">
+    <div class="content-wrapper d-flex flex-column">
+      <header>
         <div class="d-flex flex-row header">
-          <div class="header-item"><i data-lucide="user"></i></div>
-          <div class="header-item" onclick="">Dashboard</div>
-          <div class="header-item">Consultar fichas</div>
-          <div class="header-item">Progresso</div>
-          <div class="header-item"><i data-lucide="bookmark"></i></div>
-          <div class="header-item"><i data-lucide="bell-dot"></i></div>
+          <div class="header-item" redirect-session-name="perfil">
+            <i data-lucide="user"></i>
+          </div>
+          <div class="header-item" redirect-session-name="index">Dashboard</div>
+          <div class="header-item" redirect-session-name="consultar-fichas">
+            Consultar fichas
+          </div>
+          <div class="header-item" redirect-session-name="progresso">
+            Progresso
+          </div>
+          <div class="header-item" redirect-session-name="salvos">
+            <i data-lucide="bookmark"></i>
+          </div>
+          <div class="header-item" redirect-session-name="notificacoes">
+            <i data-lucide="bell-dot"></i>
+          </div>
         </div>
       </header>
 
-      <div id="main-content" class="container bg-light">
+      <div id="main-content" class="container bg-light mt-5">
         <div id="dados"></div>
-        <button id="editar">Editar perfil</button>
-        <button id="concluir-edicao" style="display: none">Concluir</button>
+        <button id="editar" class="mb-3">Editar perfil</button>
+        <button id="concluir-edicao" style="display: none" class="mb-3">Concluir</button>
       </div>
     </div>
   </body>
