@@ -36,8 +36,8 @@
   <ul class="list-unstyled">
     <h1 class="fs-1 text-secondary">Objetivos</h1>
     <li>Experiência: <strong>${dadosUsuario.objetivos.experiencia_previa}</strong></li>
-    <li>Frequência semanal:<strong>${dadosUsuario.objetivos.frequencia_semanal}</strong></li>
-    <li>Objetivo principal:<strong>${dadosUsuario.objetivos.objetivo_principal}</strong></li>
+    <li>Frequência semanal: <strong>${dadosUsuario.objetivos.frequencia_semanal}</strong></li>
+    <li>Objetivo principal: <strong>${dadosUsuario.objetivos.objetivo_principal}</strong></li>
     <li>Tipo de atividade: <strong>${dadosUsuario.objetivos.tipo_treino}</strong></li>
   </ul>`;
 
@@ -87,175 +87,57 @@
     </ul>`;
 
     let liGenero = document.querySelector("#genero");
-    switch (dadosUsuario.pessoal.genero) {
-      case "Masculino":
-        liGenero.innerHTML = `<label for="input-genero">Gênero:</label>
-        <select id="input-genero" name="genero" required>
-          <option value="Masculino" selected>Masculino</option>
-          <option value="Feminino">Feminino</option>
-          <option value="Não binário">Não binário</option>
-          <option value="Prefiro não informar">Prefiro não identificar</option>
-        </select>`;
-        break;
+    liGenero.innerHTML = `
+      <label for="input-genero">Gênero:</label>
+      <select id="input-genero" name="genero" required>
+          <option value="Masculino" ${dadosUsuario.pessoal.genero == "Masculino" ? "selected" : ""}>Masculino</option>
+          <option value="Feminino" ${dadosUsuario.pessoal.genero == "Feminino" ? "selected" : ""}>Feminino</option>
+          <option value="Não binário" ${dadosUsuario.pessoal.genero == "Não binário" ? "selected" : ""}>Não binário</option>
+          <option value="Prefiro não informar" ${dadosUsuario.pessoal.genero == "Prefiro não informar" ? "selected" : ""}>Prefiro não identificar</option>
+      </select>
+    `;
 
-      case "Feminino":
-        liGenero.innerHTML = `<label for="input-genero">Gênero:</label>
-        <select id="input-genero" name="genero" required>
-          <option value="Masculino">Masculino</option>
-          <option value="Feminino" selected>Feminino</option>
-          <option value="Não binário">Não binário</option>
-          <option value="Prefiro não informar">Prefiro não identificar</option>
-        </select>`;
-        break;
-
-      case "Não binário":
-        liGenero.innerHTML = `<label for="input-genero">Gênero:</label>
-        <select id="input-genero" name="genero" required>
-          <option value="Masculino">Masculino</option>
-          <option value="Feminino">Feminino</option>
-          <option value="Não binário" selected>Não binário</option>
-          <option value="Prefiro não informar">Prefiro não identificar</option>
-        </select>`;
-        break;
-
-      case "Prefiro não informar":
-        liGenero.innerHTML = `<label for="input-genero">Gênero:</label>
-        <select id="input-genero" name="genero" required>
-          <option value="Masculino">Masculino</option>
-          <option value="Feminino">Feminino</option>
-          <option value="Não binário">Não binário</option>
-          <option value="Prefiro não informar" selected>Prefiro não identificar</option>
-        </select>`;
-        break;
-    }
-  
     let liExper = document.querySelector("#experiencia");
-    switch (dadosUsuario.objetivos.experiencia_previa) {
-      case "Iniciante":
-        liExper.innerHTML = `<label for="input-experiencia">Experiência:</label>
-        <select id="input-experiencia" name="experiencia" required>
-          <option value="Iniciante" selected>Iniciante</option>
-          <option value="Intermediário">Intermediário</option>
-          <option value="Avançado">Avançado</option>
-        </select>`;
-        break;
-
-      case "Intermediário":
-        liExper.innerHTML = `<label for="input-experiencia">Experiência:</label>
-        <select id="input-experiencia" name="experiencia" required>
-          <option value="Iniciante">Iniciante</option>
-          <option value="Intermediário" selected>Intermediário</option>
-          <option value="Avançado">Avançado</option>
-        </select>`;
-        break;
-
-      case "Avançado":
-        liExper.innerHTML = `<label for="input-experiencia">Experiência:</label>
-        <select id="input-experiencia" name="experiencia" required>
-          <option value="Iniciante">Iniciante</option>
-          <option value="Intermediário">Intermediário</option>
-          <option value="Avançado" selected>Avançado</option>
-        </select>`;
-        break;
-    }
-      
-    let liFreq = document.querySelector("#frequencia");
-    switch (dadosUsuario.objetivos.frequencia_semanal) {
-      case "2-3 vezes":
-        liFreq.innerHTML = `<label for="input-frequencia">Frequência:</label>
-        <select id="input-frequencia" name="frequencia" required>
-          <option value="2-3 vezes" selected>2-3 vezes</option>
-          <option value="3-4 vezes">3-4 vezes</option>
-          <option value="5+ vezes">5+ vezes</option>
-        </select>`;
-        break;
-
-      case "3-4 vezes":
-        liFreq.innerHTML = `<label for="input-frequencia">Frequência:</label>
-        <select id="input-frequencia" name="frequencia" required>
-          <option value="2-3 vezes">2-3 vezes</option>
-          <option value="3-4 vezes" selected>3-4 vezes</option>
-          <option value="5+ vezes">5+ vezes</option>
-        </select>`;
-        break;
-
-      case "5+ vezes":
-        liFreq.innerHTML = `<label for="input-frequencia">Frequência:</label>
-        <select id="input-frequencia" name="frequencia" required>
-          <option value="2-3 vezes">2-3 vezes</option>
-          <option value="3-4 vezes">3-4 vezes</option>
-          <option value="5+ vezes" selected>5+ vezes</option>
-        </select>`;
-        break;
-    }
+    liExper.innerHTML = `
+      <label for="input-experiencia">Experiência:</label>
+      <select id="input-experiencia" name="experiencia" required>
+        <option value="Iniciante" ${dadosUsuario.objetivos.experiencia_previa == "Iniciante" ? "selected" : ""}>Iniciante</option>
+        <option value="Intermediário" ${dadosUsuario.objetivos.experiencia_previa == "Intermediário" ? "selected" : ""}>Intermediário</option>
+        <option value="Avançado" ${dadosUsuario.objetivos.experiencia_previa == "Avançado" ? "selected" : ""}>Avançado</option>
+      </select>
+    `;
     
+    let liFreq = document.querySelector("#frequencia");
+    liFreq.innerHTML = `
+      <label for="input-frequencia">Frequência:</label>
+      <select id="input-frequencia" name="frequencia" required>
+        <option value="2-3 vezes" ${dadosUsuario.objetivos.frequencia_semanal == "2-3 vezes" ? "selected" : ""}>2-3 vezes</option>
+        <option value="3-4 vezes" ${dadosUsuario.objetivos.frequencia_semanal == "3-4 vezes" ? "selected" : ""}>3-4 vezes</option>
+        <option value="5+ vezes" ${dadosUsuario.objetivos.frequencia_semanal == "5+ vezes" ? "selected" : ""}>5+ vezes</option>
+      </select>
+    `;
+      
     let liObj = document.querySelector("#objetivo");
-    switch (dadosUsuario.objetivos.objetivo_principal) {
-      case "Perda de peso":
-        liObj.innerHTML = `<label for="input-objetivo">Objetivo principal:</label>
-        <select id="input-objetivo" name="objetivo" required>
-          <option value="Perda de peso" selected>Perda de peso</option>
-          <option value="Ganho de massa muscular">Ganho de massa muscular</option>
-          <option value="Condicionamento físico">Condicionamento físico</option>
-          <option value="Saúde e bem-estar">Saúde e bem-estar</option>
-        </select>`;
-        break;
-      case "Ganho de massa muscular":
-        liObj.innerHTML = `<label for="input-objetivo">Objetivo principal:</label>
-        <select id="input-objetivo" name="objetivo" required>
-          <option value="Perda de peso">Perda de peso</option>
-          <option value="Ganho de massa muscular" selected>Ganho de massa muscular</option>
-          <option value="Condicionamento físico">Condicionamento físico</option>
-          <option value="Saúde e bem-estar">Saúde e bem-estar</option>
-        </select>`;
-        break;
-      case "Condicionamento físico":
-        liObj.innerHTML = `<label for="input-objetivo">Objetivo principal:</label>
-        <select id="input-objetivo" name="objetivo" required>
-          <option value="Perda de peso">Perda de peso</option>
-          <option value="Ganho de massa muscular">Ganho de massa muscular</option>
-          <option value="Condicionamento físico" selected>Condicionamento físico</option>
-          <option value="Saúde e bem-estar">Saúde e bem-estar</option>
-        </select>`;
-        break;
-      case "Saúde e bem-estar":
-        liObj.innerHTML = `<label for="input-objetivo">Objetivo principal:</label>
-        <select id="input-objetivo" name="objetivo" required>
-          <option value="Perda de peso">Perda de peso</option>
-          <option value="Ganho de massa muscular">Ganho de massa muscular</option>
-          <option value="Condicionamento físico">Condicionamento físico</option>
-          <option value="Saúde e bem-estar" selected>Saúde e bem-estar</option>
-        </select>`;
-        break;
-    }
+    liObj.innerHTML = `
+      <label for="input-objetivo">Objetivo principal:</label>
+      <select id="input-objetivo" name="objetivo" required>
+        <option value="Perda de peso" ${dadosUsuario.objetivos.objetivo_principal == "Perda de peso" ? "selected" : ""}>Perda de peso</option>
+        <option value="Ganho de massa muscular" ${dadosUsuario.objetivos.objetivo_principal == "Ganho de massa muscular" ? "selected" : ""}>Ganho de massa muscular</option>
+        <option value="Condicionamento físico" ${dadosUsuario.objetivos.objetivo_principal == "Condicionamento físico" ? "selected" : ""}>Condicionamento físico</option>
+        <option value="Saúde e bem-estar" ${dadosUsuario.objetivos.objetivo_principal == "Saúde e bem-estar" ? "selected" : ""}>Saúde e bem-estar</option>
+      </select>
+    `;
     
     let liAtiv = document.querySelector("#atividade");
-    switch (dadosUsuario.objetivos.tipo_treino) {
-      case "Musculação":
-        liAtiv.innerHTML = `<label for="input-atividade">Atividade:</label>
-        <select id="input-atividade" name="atividade" required>
-            <option value="Musculação" selected>Musculação</option>
-            <option value="Funcional">Funcional</option>
-            <option value="Cardio">Cardio</option>
-        </select>`;
-        break;
-      case "Funcional":
-        liAtiv.innerHTML = `<label for="input-atividade">Atividade:</label>
-        <select id="input-atividade" name="atividade" required>
-            <option value="Musculação">Musculação</option>
-            <option value="Funcional" selected>Funcional</option>
-            <option value="Cardio">Cardio</option>
-        </select>`;
-        break;
-      case "Cardio":
-        liAtiv.innerHTML = `<label for="input-atividade">Atividade:</label>
-        <select id="input-atividade" name="atividade" required>
-            <option value="Musculação">Musculação</option>
-            <option value="Funcional">Funcional</option>
-            <option value="Cardio" selected>Cardio</option>
-        </select>`;
-        break;
-    }
+    liAtiv.innerHTML = `
+      <label for="input-atividade">Atividade:</label>
+      <select id="input-atividade" name="atividade" required>
+        <option value="Musculação" ${dadosUsuario.objetivos.tipo_treino == "Musculação" ? "selected" : ""}>Musculação</option>
+        <option value="Funcional" ${dadosUsuario.objetivos.tipo_treino == "Funcional" ? "selected" : ""}>Funcional</option>
+        <option value="Cardio" ${dadosUsuario.objetivos.tipo_treino == "Cardio" ? "selected" : ""}>Cardio</option>
+      </select>
+    `;
+
   });
 
   botaoConcluirEdit.addEventListener("click", e => {
@@ -269,6 +151,9 @@
     gymAppDataFull.profile.pessoal.altura_cm = (document.querySelector("#input-altura")).value;
     gymAppDataFull.profile.pessoal.telefone = (document.querySelector("#input-tel")).value;
     gymAppDataFull.profile.objetivos.experiencia_previa = (document.querySelector("#input-experiencia")).value;
+    gymAppDataFull.profile.objetivos.frequencia_semanal = (document.querySelector("#input-frequencia")).value;
+    gymAppDataFull.profile.objetivos.objetivo_principal = (document.querySelector("#input-objetivo")).value;
+    gymAppDataFull.profile.objetivos.tipo_treino = (document.querySelector("#input-atividade")).value;
 
     localStorage.setItem("gymAppData", JSON.stringify(gymAppDataFull));
 
