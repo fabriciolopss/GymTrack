@@ -26,6 +26,18 @@
 
       dadosUsuario.pessoal.data_nascimento =
         diaNascimento + "/" + mesNascimento + "/" + anoNascimento;
+
+      let telefone = dadosUsuario.pessoal.telefone;
+      if(telefone.length == 11) {
+      dadosUsuario.pessoal.telefone = 
+        "(" + telefone.substring(0, 2) + ") " + telefone.substring(2, 7) + "-" + telefone.substring(7, 11);
+      } else if(telefone.length == 10){
+      dadosUsuarioRaw.pessoal.telefone =
+        telefone.substring(0, 2) + "9" + telefone.substring(2, 10);
+      dadosUsuario.pessoal.telefone = 
+        "(" + telefone.substring(0, 2) + ") 9" + telefone.substring(2, 6) + "-" + telefone.substring(6, 10);
+
+      }
     }
 
     traducaoDados();
@@ -75,7 +87,7 @@
           Peso (kg): <input id="input-peso" type="number" value="${dadosUsuario.pessoal.peso_kg}">
         </li>
         <li class="col-xl-4 col-lg-6" id="telefone">
-          Telefone: <input id="input-tel" type="tel" value="${dadosUsuario.pessoal.telefone}">
+          Telefone: <input id="input-tel" type="tel" value="${dadosUsuarioRaw.pessoal.telefone}">
         </li>
         <li class="col-12" id="email">
           Email: <input id="input-email" type="email" value="${dadosUsuario.pessoal.email}">
@@ -96,7 +108,6 @@
           Tipo de atividade: <strong>${dadosUsuario.objetivos.tipo_treino}</strong>
         </li>
       </ul>`;
-
 
       let liGenero = document.querySelector("#genero");
       liGenero.innerHTML = `
@@ -155,6 +166,8 @@
     botaoConcluirEdit.addEventListener("click", e => {
       e.preventDefault();
 
+      if(((document.querySelector("#input-tel")).value).length == 11 || ((document.querySelector("#input-tel")).value).length == 10) {
+
       gymAppDataFull.profile.pessoal.nome_completo = (document.querySelector("#input-nome")).value;
       gymAppDataFull.profile.pessoal.data_nascimento = (document.querySelector("#input-nasc")).value;
       gymAppDataFull.profile.pessoal.genero = (document.querySelector("#input-genero")).value;
@@ -170,6 +183,10 @@
       localStorage.setItem("gymAppData", JSON.stringify(gymAppDataFull));
 
       location.reload();
+      } else {
+        document.querySelector("#input-tel").style.border = "1px solid red";
+        alert("Insira um número de telefone válido.");
+      }
     });
 
     botaoCancelarEdit.addEventListener("click", e => {
