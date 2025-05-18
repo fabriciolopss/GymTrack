@@ -11,6 +11,7 @@
   const divDados = document.querySelector("#dados");
   const botaoEditar = document.querySelector("#editar");
   const botaoConcluirEdit = document.querySelector("#concluir-edicao");
+  const botaoCancelarEdit = document.querySelector("#cancelar-edicao");
 
   function traducaoDados() {
     let anoNascimento = dadosUsuarioRaw.pessoal.data_nascimento.substring(0, 4);
@@ -26,11 +27,11 @@
   divDados.innerHTML = `<ul class="list-unstyled row">
     <h1 class="fs-1 text-secondary mt-3 col-12">Dados pessoais</h1>
     <li class="col-xl-4 col-lg-12">Nome completo: <strong>${dadosUsuario.pessoal.nome_completo}</strong></li>
-    <li class="col-lg-4 col-md-6">Data de nascimento: <strong>${dadosUsuario.pessoal.data_nascimento}</strong></li>
-    <li class="col-lg-4 col-md-6">Gênero: <strong>${dadosUsuario.pessoal.genero}</strong></li>
-    <li class="col-lg-4 col-md-6">Altura (cm): <strong>${dadosUsuario.pessoal.altura_cm}</strong></li>
-    <li class="col-lg-4 col-md-6">Peso (kg): <strong>${dadosUsuario.pessoal.peso_kg}</strong></li>
-    <li class="col-lg-4 col-md-6">Telefone: <strong>${dadosUsuario.pessoal.telefone}</strong></li>
+    <li class="col-xl-4 col-lg-6">Data de nascimento: <strong>${dadosUsuario.pessoal.data_nascimento}</strong></li>
+    <li class="col-xl-4 col-lg-6">Gênero: <strong>${dadosUsuario.pessoal.genero}</strong></li>
+    <li class="col-xl-4 col-lg-6">Altura (cm): <strong>${dadosUsuario.pessoal.altura_cm}</strong></li>
+    <li class="col-xl-4 col-lg-6">Peso (kg): <strong>${dadosUsuario.pessoal.peso_kg}</strong></li>
+    <li class="col-xl-4 col-lg-6">Telefone: <strong>${dadosUsuario.pessoal.telefone}</strong></li>
     <li class="col-12">Email: <strong>${dadosUsuario.pessoal.email}</strong></li>
   </ul>
   <ul class="list-unstyled row">
@@ -43,12 +44,13 @@
 
   botaoEditar.addEventListener("click", e => {
     botaoEditar.style = "display: none";
-    botaoConcluirEdit.style = "display: block";
+    botaoConcluirEdit.style = "display: inline";
+    botaoCancelarEdit.style = "display: inline";
 
     e.preventDefault();
     divDados.innerHTML = `<ul class="list-unstyled row">
       <h1 class="fs-1 text-secondary mt-3 col-12">Dados pessoais</h1>
-      <li class="col-xl-4 col-xl-12" id="nome">
+      <li class="col-xl-4 col-lg-12" id="nome">
         Nome completo: <input id="input-nome" class="w-lg-50" type="text" value="${dadosUsuario.pessoal.nome_completo}">
       </li>
       <li class="col-xl-4 col-lg-6" id="nascimento">
@@ -157,6 +159,12 @@
     gymAppDataFull.profile.objetivos.tipo_treino = (document.querySelector("#input-atividade")).value;
 
     localStorage.setItem("gymAppData", JSON.stringify(gymAppDataFull));
+
+    location.reload();
+  });
+
+  botaoCancelarEdit.addEventListener("click", e => {
+    e.preventDefault();
 
     location.reload();
   });
