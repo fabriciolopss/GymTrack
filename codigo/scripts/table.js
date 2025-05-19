@@ -1,3 +1,5 @@
+import { showToast } from "./utils/toast.js";
+
 document.addEventListener("DOMContentLoaded", function () {
   const gymDataString = localStorage.getItem("gymAppData");
   if (!gymDataString) return;
@@ -11,17 +13,17 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   const treinosOrdenados = gymData.registered_trainings.sort((a, b) => {
-    return parseDateBRtoISO(b.date) - parseDateBRtoISO(a.date); // Reverse order for newest first
+    return parseDateBRtoISO(b.date) - parseDateBRtoISO(a.date);
   });
 
-  const tableData = treinosOrdenados.map(treino => {
-    const training = gymData.edited_trainings.find(
-      (plan) => plan.id == treino.training_id
-    );
-    if (!training) return null;
+  const tableBody = document.querySelector('#tabela-historico tbody');
+
+  treinosOrdenados.forEach(treino => {
+    const training = gymData.edited_trainings.find(plan => plan.id == treino.training_id);
+    if (!training) return;
 
     const day = training.days[treino.day_index - 1];
-    if (!day) return null;
+    if (!day) return;
 
     const h = treino.duration?.hours || 0;
     const m = treino.duration?.minutes || 0;
@@ -30,80 +32,55 @@ document.addEventListener("DOMContentLoaded", function () {
     if (m > 0) duracaoFormatada += `${m}min`;
     duracaoFormatada = duracaoFormatada.trim() || "0min";
 
-    return {
-      data: parseDateBRtoISO(treino.date).toLocaleDateString("pt-BR"),
-      membros: day.name,
-      tipoTreino: `<span class="badge-custom ${typeToClass(training.type)}">${training.type}</span>`,
-      categoria: training.category,
-      duracao: duracaoFormatada,
-      xp: "+" + treino.xpGain
-    };
-  }).filter(item => item !== null);
-
-  const table = $('#tabela-historico').DataTable({
-    data: tableData,
-    columns: [
-      { data: 'data' },
-      { data: 'membros' },
-      { 
-        data: 'tipoTreino',
-        render: function(data) {
-          return data;
-        }
-      },
-      { data: 'categoria' },
-      { data: 'duracao' },
-      { data: 'xp' }
-    ],
-    responsive: true,
-    language: {
-      url: '//cdn.datatables.net/plug-ins/2.0.0/i18n/pt-BR.json'
-    },
-    order: [[0, 'desc']],
-    pageLength: 10,
-    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
-    dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6"f>>rtip',
-    initComplete: function() {
-      $('.dataTables_length select').addClass('form-select form-select-sm');
-      $('.dataTables_filter input').addClass('form-control form-control-sm');
-    }
-  });
-  
-  document.getElementById('exportExcel').addEventListener('click', function() {
-    const wb = XLSX.utils.book_new();
-    const ws = XLSX.utils.json_to_sheet(tableData.map(item => ({
-      'Data': item.data,
-      'Membros': item.membros,
-      'Tipo de Treino': item.tipoTreino.replace(/<[^>]*>/g, ''),
-      'Categoria': item.categoria,
-      'Duração': item.duracao,
-      'XP': item.xp
-    })));
-    XLSX.utils.book_append_sheet(wb, ws, "Histórico de Treinos");
-    XLSX.writeFile(wb, "historico_treinos.xlsx");
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${parseDateBRtoISO(treino.date).toLocaleDateString("pt-BR")}</td>
+      <td>${day.name}</td>
+      <td><span class="badge-custom ${typeToClass(training.type)}">${training.type}</span></td>
+      <td>${training.category}</td>
+      <td>${duracaoFormatada}</td>
+      <td>+${treino.xpGain}</td>
+      <td>
+        <button class="btn btn-sm btn-primary editar-treino" data-id="${treino.id}">Editar</button>
+        <button class="btn btn-sm btn-danger deletar-treino" data-id="${treino.id}">Excluir</button>
+      </td>
+    `;
+    tableBody.appendChild(row);
   });
 
-  // Export to PDF
-  document.getElementById('exportPDF').addEventListener('click', function() {
-    const doc = new jsPDF();
-    doc.autoTable({
-      html: '#tabela-historico',
-      theme: 'grid',
-      headStyles: { fillColor: [161, 79, 206] },
-      styles: { fontSize: 8 },
-      margin: { top: 20 }
+  document.querySelectorAll('.editar-treino').forEach((btn, index) => {
+    const id = index;
+    btn.addEventListener('click', function () {
+      const treino = gymData.registered_trainings[id];
+      if (!treino) return;
+
+      const novaData = prompt("Nova data (DD/MM/AAAA):", treino.date);
+      if (!novaData) return;
+
+      treino.date = novaData;
+      localStorage.setItem("gymAppData", JSON.stringify(gymData));
+      location.reload();
     });
-    doc.save('historico_treinos.pdf');
   });
-});
 
-function typeToClass(type) {
-  switch(type) {
-    case "Ficha iniciante":
-      return "badge-iniciante";
-    case "Ficha intermediária":
-      return "badge-intermediario";
-    case "Ficha avançada":
-      return "badge-avancado";
+  document.querySelectorAll('.deletar-treino').forEach((btn, index) => {
+    const id = index;
+    btn.addEventListener('click', function () {
+      if (gymData.registered_trainings[id] && confirm("Tem certeza que deseja excluir este treino?")) {
+        gymData.registered_trainings.splice(index, 1);
+        localStorage.setItem("gymAppData", JSON.stringify(gymData));
+        location.reload();
+        showToast({message: "Treino deletado com sucesso", delay: 2000})
+      }
+    });
+  });
+
+  function typeToClass(type) {
+    switch (type) {
+      case "Ficha iniciante": return "badge-iniciante";
+      case "Ficha intermediária": return "badge-intermediario";
+      case "Ficha avançada": return "badge-avancado";
+      default: return "";
+    }
   }
-}
+});
