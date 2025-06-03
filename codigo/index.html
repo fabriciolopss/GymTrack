@@ -189,10 +189,76 @@
     <main class="main-content">
       <div class="dashboard-wrapper">
         <div class="dashboard-header">
-          <p class="dashboard-subtitle">Bem vindo de volta, <span id="user-name"></span>👋</p>
-          <p class="dashboard-title">Um breve resumo dos seus treinos!</p>[
+          <p class="dashboard-subtitle">
+            Olá, <span id="user-name"></span>! 👋
+          </p>
+          <p class="dashboard-title">
+            Veja abaixo o resumo dos seus treinos e conquistas recentes!
+          </p>
         </div>
 
+        <!-- Dashboard Widgets -->
+        <div class="row g-4" id="dashboard-widgets-row">
+          <!-- Ficha Atual -->
+          <div class="col-md-4">
+            <div class="card h-100">
+              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ficha atual" class="ficha-img">
+              <div class="card-body">
+                <span id="ficha-atual-badge" class="badge badge-iniciante mb-2"></span>
+                <h5 id="ficha-atual-nome" class="card-title mb-1"></h5>
+                <div id="ficha-atual-categoria" class="text-muted mb-2"></div>
+                <small id="ficha-atual-duracao" class="text-secondary"></small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Última Ficha -->
+          <div class="col-md-4">
+            <div class="card h-100">
+              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Última ficha" class="ficha-img">
+              <div class="card-body">
+                <span id="ultima-ficha-badge" class="badge badge-iniciante mb-2"></span>
+                <h5 id="ultima-ficha-nome" class="card-title mb-1"></h5>
+                <div id="ultima-ficha-categoria" class="text-muted mb-2"></div>
+                <small id="ultima-ficha-duracao" class="text-secondary"></small>
+              </div>
+            </div>
+          </div>
+
+          <!-- Distribuição de Treinos -->
+          <div class="col-md-4">
+            <div class="card h-100 p-3 d-flex flex-column align-items-center justify-content-center">
+              <h6 class="mb-3 text-center">Distribuição de treinos</h6>
+              <canvas id="distribuicao-treinos" width="130" height="130"></canvas>
+              <div class="d-flex justify-content-around w-100 mt-3" id="distribuicao-legenda"></div>
+            </div>
+          </div>
+
+          <!-- Histórico de Treinos -->
+          <div class="col-md-8">
+            <div class="card h-100">
+              <div class="card-body">
+                <h6 class="mb-3">Histórico de treinos</h6>
+                <ul class="list-group" id="historico-treinos"></ul>
+                <div class="mt-3 text-end"><b id="total-treinos"></b> treinos no registro</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experiência do Usuário -->
+          <div class="col-md-4">
+            <div class="card h-100 d-flex flex-column align-items-center justify-content-center p-4">
+              <h6 class="mb-3 text-center">Perfil no GymTrack</h6>
+              <canvas id="xp-progress" class="xp-circle"></canvas>
+              <div class="text-center mt-3">
+                <div><b id="level-label"></b></div>
+                <div><span id="xp-percent"></span>%</div>
+                <div><span id="xp-current"></span>/<span id="xp-next"></span> XP</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /Dashboard Widgets -->
 
         <div class="dashboard-body d-none">
           <div class="grid-stack d-none">
@@ -346,6 +412,7 @@
 <script src="scripts/checkinModal.js" type="module"></script>
 <script src="scripts/layout.js"></script>
 <script src="scripts/dashboard.js"></script>
+<script src="scripts/dashboard-widgets.js"></script>
 <script src="scripts/notifications.js" type="module"></script>
 
 <script src="scripts/level.js" type="module"></script>
