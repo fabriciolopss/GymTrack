@@ -1,5 +1,3 @@
-
-
 function calcularXpConquista(tipo, valor) {
     if (tipo === "treinos") return valor * 10;
     if (tipo === "streak") return valor * 15;
@@ -59,6 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
     initCalendarioNavegavel(gymData);
     preencherCalendario(gymData);
     preencherRanking(gymData);
+    preencherHistoricoConquistas(gymData);
+    preencherSocialFeatures(gymData);
+    preencherDicasPersonalizadas(gymData);
 
     document.getElementById("form-nova-conquista").addEventListener("submit", function (e) {
         e.preventDefault();
@@ -156,9 +157,25 @@ document.addEventListener("DOMContentLoaded", function () {
             if (!gymData.profile) gymData.profile = { xp: 0 };
             gymData.profile.xp = (gymData.profile.xp || 0) + conquistasCustom[idx].xp;
             conquistasCustom[idx].resgatada = true;
+            conquistasCustom[idx].dataResgate = new Date().toISOString();
+            
+            // Adicionar à lista de conquistas recentes da comunidade
+            if (!gymData.community_achievements) gymData.community_achievements = [];
+            gymData.community_achievements.unshift({
+                usuario: 'Você',
+                conquista: conquistasCustom[idx].nome,
+                xp: conquistasCustom[idx].xp,
+                data: new Date().toISOString()
+            });
+            
+            // Manter apenas as 5 conquistas mais recentes
+            gymData.community_achievements = gymData.community_achievements.slice(0, 5);
+            
             gymData.custom_achievements = conquistasCustom;
             saveGymData(gymData);
             preencherConquistas(gymData);
+            preencherHistoricoConquistas(gymData);
+            preencherSocialFeatures(gymData);
             alert("Conquista resgatada! XP adicionado ao seu perfil.");
         }
     };
@@ -418,4 +435,185 @@ function getGymData() {
 }
 function saveGymData(gymData) {
     localStorage.setItem("gymAppData", JSON.stringify(gymData));
+}
+
+function preencherHistoricoConquistas(gymData) {
+    const timeline = document.getElementById("achievement-timeline");
+    const conquistas = gymData.custom_achievements || [];
+    
+    // Filtrar apenas conquistas resgatadas e ordenar por data
+    const conquistasResgatadas = conquistas
+        .filter(c => c.resgatada && c.dataResgate)
+        .sort((a, b) => new Date(b.dataResgate) - new Date(a.dataResgate));
+
+    if (conquistasResgatadas.length === 0) {
+        timeline.innerHTML = `
+            <div class="text-center text-muted py-3">
+                <i class="fa-solid fa-trophy mb-2" style="font-size: 2rem;"></i>
+                <p>Nenhuma conquista resgatada ainda.</p>
+            </div>
+        `;
+        return;
+    }
+
+    timeline.innerHTML = conquistasResgatadas.map(c => {
+        const data = new Date(c.dataResgate);
+        const dataFormatada = data.toLocaleDateString('pt-BR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+        
+        return `
+            <div class="achievement-item">
+                <div class="achievement-date">${dataFormatada}</div>
+                <div class="achievement-title">${c.nome}</div>
+                <div class="achievement-desc">${c.descricao}</div>
+                <div class="achievement-xp small text-success">+${c.xp} XP</div>
+            </div>
+        `;
+    }).join('');
+}
+
+function preencherSocialFeatures(gymData) {
+    const gruposLista = document.getElementById("grupos-lista");
+    const recentAchievements = document.getElementById("recent-achievements");
+    
+    // Grupos de treino
+    const grupos = gymData.training_groups || [];
+    if (grupos.length === 0) {
+        gruposLista.innerHTML = `
+            <div class="text-center text-muted py-3">
+                <p>Nenhum grupo de treino encontrado.</p>
+                <button class="btn btn-sm btn-outline-primary" onclick="criarNovoGrupo()">
+                    Criar Primeiro Grupo
+                </button>
+            </div>
+        `;
+    } else {
+        gruposLista.innerHTML = grupos.map(g => `
+            <div class="grupo-item">
+                <div class="grupo-nome">${g.nome}</div>
+                <div class="grupo-membros">${g.membros.length} membros</div>
+            </div>
+        `).join('');
+    }
+
+    // Conquistas recentes da comunidade
+    const conquistasRecentes = gymData.community_achievements || [];
+    if (conquistasRecentes.length === 0) {
+        recentAchievements.innerHTML = `
+            <div class="text-center text-muted py-3">
+                <p>Nenhuma conquista recente na comunidade.</p>
+            </div>
+        `;
+    } else {
+        recentAchievements.innerHTML = conquistasRecentes.map(c => `
+            <div class="achievement-card">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>${c.usuario}</strong>
+                        <div class="small text-muted">${c.conquista}</div>
+                    </div>
+                    <span class="badge bg-success">+${c.xp} XP</span>
+                </div>
+            </div>
+        `).join('');
+    }
+}
+
+function preencherDicasPersonalizadas(gymData) {
+    const tipsContainer = document.getElementById("personalized-tips");
+    const dicas = gerarDicasPersonalizadas(gymData);
+    
+    tipsContainer.innerHTML = dicas.map(dica => `
+        <div class="tip-card priority-${dica.prioridade}">
+            <div class="tip-header">
+                <div class="tip-icon">
+                    <i class="fa-solid ${dica.icone}"></i>
+                </div>
+                <h6 class="tip-title">${dica.titulo}</h6>
+            </div>
+            <p class="tip-content">${dica.conteudo}</p>
+        </div>
+    `).join('');
+}
+
+function gerarDicasPersonalizadas(gymData) {
+    const dicas = [];
+    const treinos = gymData.registered_trainings || [];
+    const streak = calcularStreak(treinos);
+    const totalTreinos = treinos.length;
+    const conquistas = gymData.custom_achievements || [];
+    const conquistasResgatadas = conquistas.filter(c => c.resgatada).length;
+
+    // Dica baseada no streak
+    if (streak < 3) {
+        dicas.push({
+            prioridade: 'high',
+            icone: 'fa-fire',
+            titulo: 'Mantenha sua sequência!',
+            conteudo: 'Complete mais 2 treinos para estabelecer uma sequência de 3 dias.'
+        });
+    }
+
+    // Dica baseada no total de treinos
+    if (totalTreinos < 10) {
+        dicas.push({
+            prioridade: 'medium',
+            icone: 'fa-dumbbell',
+            titulo: 'Próximo marco',
+            conteudo: `Complete mais ${10 - totalTreinos} treinos para atingir 10 treinos no total.`
+        });
+    }
+
+    // Dica baseada em conquistas
+    if (conquistasResgatadas < 5) {
+        dicas.push({
+            prioridade: 'medium',
+            icone: 'fa-trophy',
+            titulo: 'Novas conquistas',
+            conteudo: 'Crie novas conquistas personalizadas para ganhar mais XP.'
+        });
+    }
+
+    // Dica sobre horários de treino
+    const horarios = treinos.map(t => new Date(t.date).getHours());
+    const horarioMaisFrequente = encontrarHorarioMaisFrequente(horarios);
+    if (horarioMaisFrequente) {
+        dicas.push({
+            prioridade: 'low',
+            icone: 'fa-clock',
+            titulo: 'Horário ideal',
+            conteudo: `Seus treinos são mais frequentes às ${horarioMaisFrequente}h. Mantenha essa consistência!`
+        });
+    }
+
+    return dicas;
+}
+
+function encontrarHorarioMaisFrequente(horarios) {
+    if (!horarios.length) return null;
+    const frequencia = {};
+    horarios.forEach(h => frequencia[h] = (frequencia[h] || 0) + 1);
+    return Object.entries(frequencia)
+        .sort((a, b) => b[1] - a[1])[0][0];
+}
+
+function criarNovoGrupo() {
+    const nome = prompt("Digite o nome do novo grupo de treino:");
+    if (!nome) return;
+
+    let gymData = getGymData();
+    if (!gymData.training_groups) gymData.training_groups = [];
+    
+    gymData.training_groups.push({
+        id: Date.now(),
+        nome: nome,
+        membros: [],
+        dataCriacao: new Date().toISOString()
+    });
+
+    saveGymData(gymData);
+    preencherSocialFeatures(gymData);
 }
