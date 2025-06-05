@@ -11,6 +11,8 @@ class LayoutManager {
   }
 
   initializeSidebar() {
+    if (!this.sidebar || !this.sidebarToggle) return;
+    
     const isCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
     if (isCollapsed) {
       this.sidebar.classList.add('collapsed');

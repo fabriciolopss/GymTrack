@@ -184,7 +184,7 @@ body {
   transition: margin-left 0.3s ease;
 }
 
-.sidebar.collapsed + .main-content {
+.sidebar.collapsed+.main-content {
   margin-left: 80px;
 }
 
@@ -433,6 +433,7 @@ body {
 }
 
 @media (max-width: 768px) {
+
   .dataTables_wrapper .dataTables_length,
   .dataTables_wrapper .dataTables_filter {
     text-align: left;
@@ -587,4 +588,157 @@ body {
 
 .header-item[redirect-session-name="cadastro"] {
   display: none;
+}
+
+/* Achievement Timeline */
+.achievement-timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+.achievement-timeline::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #e0e0e0;
+}
+
+.achievement-item {
+  position: relative;
+  padding-bottom: 20px;
+}
+
+.achievement-item::before {
+  content: '';
+  position: absolute;
+  left: -34px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #4CAF50;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 2px #4CAF50;
+}
+
+.achievement-item:last-child {
+  padding-bottom: 0;
+}
+
+.achievement-date {
+  font-size: 0.8rem;
+  color: #666;
+  margin-bottom: 4px;
+}
+
+.achievement-title {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.achievement-desc {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Social Features */
+.grupos-lista {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.grupo-item {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #f8f9fa;
+}
+
+.grupo-item:hover {
+  background: #f0f0f0;
+}
+
+.grupo-nome {
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.grupo-membros {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.recent-achievements {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.achievement-card {
+  padding: 10px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+.achievement-card:hover {
+  background: #f8f9fa;
+}
+
+/* Personalized Tips */
+.personalized-tips {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.tip-card {
+  padding: 15px;
+  border-radius: 8px;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+}
+
+.tip-card.priority-high {
+  border-left: 4px solid #dc3545;
+}
+
+.tip-card.priority-medium {
+  border-left: 4px solid #ffc107;
+}
+
+.tip-card.priority-low {
+  border-left: 4px solid #28a745;
+}
+
+.tip-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tip-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: #e9ecef;
+}
+
+.tip-title {
+  font-weight: 600;
+  margin: 0;
+}
+
+.tip-content {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
 }
