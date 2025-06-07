@@ -91,3 +91,7 @@ select:hover {
     
     width: 100%;
 }
+
+#dados-treino p {
+    height: 38px;
+}

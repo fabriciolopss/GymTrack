@@ -40,23 +40,31 @@
         </div>
       </header>
 
-      <div id="main-content" class="container bg-light mt-5">
-        <label for="selecao" class="mt-2">Selecione o plano</label>
-        <select id="selecao" class="mb-2">
+      <div id="main-content" class="container bg-light mt-5 pb-3">
+        <label for="selecao-plano" class="mt-2">Selecione o plano:</label>
+        <select id="selecao-plano" class="mb-2">
           <option selected hidden>Selecionar...</option>
         </select>
 
-        <button>Personalizar</button>
-        <button>Criar novo plano</button>
+        <button id="personalizar" style="display: none;">Concluir alterações</button>
+        <button id="cancelar-alteracoes" style="display: none">Cancelar alterações</button>
+        <button id="criar">Criar novo plano</button>
         <br />
+
+        <div id="dados-treino">
+          <div id="days-container">
+          </div>
+        </div>
+
+        <!--
 
         <div id="dados-treino">
           <label for="titulo-treino" class="mt-2">Título do treino: </label>
           <input id="titulo-treino" />
           <label for="categoria-treino">Categoria: </label>
           <input id="categoria-treino" />
-          <label for="selecao">Nível de dificuldade</label>
-          <select id="selecao">
+          <label for="selecao-nivel">Nível de dificuldade:</label>
+          <select id="selecao-nivel">
             <option selected hidden>Selecionar...</option>
             <option>Iniciante</option>
             <option>Intermedário</option>
@@ -119,6 +127,8 @@
             </div>
           </div>
         </div>
+
+        -->
       </div>
     </div>
   </body>
