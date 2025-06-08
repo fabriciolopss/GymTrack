@@ -94,6 +94,7 @@ function carregarPlano() {
   {
     let botaoExcluirD1 = [];
     let botaoExcluirD2 = [];
+    let botaoAddD1, botaoAddD2;
 
     indiceTreinoSelect = -1;
     treinoSelect = gymApp.edited_trainings.find((e) => {
@@ -236,15 +237,46 @@ function carregarPlano() {
     `;
     interfaceDados.innerHTML += containerDias;
 
+    botaoAddD1 = document.querySelector("#adicionar-exercicio-d1");
+    botaoAddD2 = document.querySelector("#adicionar-exercicio-d2");
+
+    botaoAddD1.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      treinoSelect.days[0].day[treinoSelect.days[0].day.length] = {
+        exercise: "Novo exercício",
+        series: "",
+        repetitions: "",
+      };
+      carregarPlano();
+    });
+
+    botaoAddD2.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      treinoSelect.days[1].day[treinoSelect.days[1].day.length] = {
+        exercise: "Novo exercício",
+        series: "",
+        repetitions: "",
+      };
+      carregarPlano();
+    });
+
     for (let i = 0; i < treinoSelect.days[0].day.length; i++) {
       botaoExcluirD1[i] = document.querySelector(`#delete-ex${i + 1}-d1`);
       botaoExcluirD1[i].addEventListener("click", (e) => {
         e.preventDefault();
 
-        treinoSelect.days[0].day.splice(i, 1);
-        botaoExcluirD1.splice(i, 1);
+        let confirmExcluir = confirm(
+          `Confirmar exclusão de "${treinoSelect.days[0].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
+        );
 
-        carregarPlano();
+        if (confirmExcluir) {
+          treinoSelect.days[0].day.splice(i, 1);
+          botaoExcluirD1.splice(i, 1);
+
+          carregarPlano();
+        }
       });
     }
 
@@ -253,10 +285,16 @@ function carregarPlano() {
       botaoExcluirD2[i].addEventListener("click", (e) => {
         e.preventDefault();
 
-        treinoSelect.days[1].day.splice(i, 1);
-        botaoExcluirD2.splice(i, 1);
+        let confirmExcluir = confirm(
+          `Confirmar exclusão de "${treinoSelect.days[1].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
+        );
 
-        carregarPlano();
+        if (confirmExcluir) {
+          treinoSelect.days[1].day.splice(i, 1);
+          botaoExcluirD2.splice(i, 1);
+
+          carregarPlano();
+        }
       });
     }
   }
