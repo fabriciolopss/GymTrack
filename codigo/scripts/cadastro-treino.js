@@ -1,7 +1,7 @@
 lucide.createIcons();
 
 document.addEventListener("DOMContentLoaded", function () {
-  new LayoutManager();
+    new LayoutManager();
 });
 
 const gymAppString = localStorage.getItem("gymAppData");
@@ -18,590 +18,582 @@ const containerDia1 = document.querySelector("#first-day");
 const containerDia2 = document.querySelector("#second-day");
 
 let treinoSelect;
+function transformTreinoSelect() {
+    if (
+        gymApp.edited_trainings.find((e) => {
+            return (e.name == document.querySelector("#titulo-treino").value && e.id != treinoSelect.id);
+        })
+    ) {
+        alert("Nome já utilizado em outra ficha.");
+        return false;
+    } else {
+        treinoSelect.name = document.querySelector("#titulo-treino").value;
+    }
+    treinoSelect.category = document.querySelector("#categoria-treino").value;
+    treinoSelect.type = document.querySelector("#selecao-nivel").value;
+    treinoSelect.days[0].name = document.querySelector("#titulo-first").value;
+    treinoSelect.days[1].name = document.querySelector("#titulo-second").value;
 
-function resetLocalStorage() {
-  gymApp.edited_trainings = [
-    {
-      id: 1,
-      name: "Treino de inferiores",
-      category: "Pernas",
-      type: "Ficha iniciante",
-      days: [
-        {
-          id: 1,
-          xp: 100,
-          name: "Dia 1 - Gluteos e Posterior de Coxa",
-          day: [
-            { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-            { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-            { exercise: "Supino transversal", series: 4, repetitions: "8-12" },
-          ],
-        },
-        {
-          id: 2,
-          xp: 150,
-          name: "Dia 2 - Quadriceps e Panturrilha",
-          day: [
-            { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-            { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-            { exercise: "Supino transversal", series: 4, repetitions: "8-12" },
-          ],
-        },
-      ],
-    },
-    {
-      id: 2,
-      name: "Treino de superiores",
-      category: "Superiores",
-      type: "Ficha intermediária",
-      days: [
-        {
-          id: 1,
-          xp: 50,
-          name: "Dia 1 - Costas",
-          day: [
-            { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-            { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-            { exercise: "Supino transversal", series: 4, repetitions: "8-12" },
-          ],
-        },
-        {
-          id: 2,
-          xp: 75,
-          name: "Dia 2 - Ombro",
-          day: [
-            { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-            { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-            { exercise: "Supino transversal", series: 4, repetitions: "8-12" },
-          ],
-        },
-      ],
-    },
-  ];
-  localStorage.setItem("gymAppData", JSON.stringify(gymApp));
-  location.reload();
+    for (i = 0; i < treinoSelect.days[0].day.length; i++) {
+        treinoSelect.days[0].day[i].exercise = document.querySelector(
+            `#dia-1-nome-exercicio-${i + 1}`
+        ).value;
+        treinoSelect.days[0].day[i].series = document.querySelector(
+            `#dia-1-series-exercicio-${i + 1}`
+        ).value;
+        treinoSelect.days[0].day[i].repetitions = document.querySelector(
+            `#dia-1-rep-exercicio-${i + 1}`
+        ).value;
+    }
+    for (i = 0; i < treinoSelect.days[1].day.length; i++) {
+        treinoSelect.days[1].day[i].exercise = document.querySelector(
+            `#dia-2-nome-exercicio-${i + 1}`
+        ).value;
+        treinoSelect.days[1].day[i].series = document.querySelector(
+            `#dia-2-series-exercicio-${i + 1}`
+        ).value;
+        treinoSelect.days[1].day[i].repetitions = document.querySelector(
+            `#dia-2-rep-exercicio-${i + 1}`
+        ).value;
+    }
+
+    return true;
+}
+
+function transformTreinoSelectTemp() {
+    treinoSelectTemp.name = document.querySelector("#titulo-treino").value;
+    treinoSelectTemp.category = document.querySelector("#categoria-treino").value;
+    treinoSelectTemp.type = document.querySelector("#selecao-nivel").value;
+    treinoSelectTemp.days[0].name = document.querySelector("#titulo-first").value;
+    treinoSelectTemp.days[1].name = document.querySelector("#titulo-second").value;
+
+    for (i = 0; i < treinoSelect.days[0].day.length; i++) {
+        treinoSelectTemp.days[0].day[i].exercise = document.querySelector(
+            `#dia-1-nome-exercicio-${i + 1}`
+        ).value;
+        treinoSelectTemp.days[0].day[i].series = document.querySelector(
+            `#dia-1-series-exercicio-${i + 1}`
+        ).value;
+        treinoSelectTemp.days[0].day[i].repetitions = document.querySelector(
+            `#dia-1-rep-exercicio-${i + 1}`
+        ).value;
+    }
+    for (i = 0; i < treinoSelect.days[1].day.length; i++) {
+        treinoSelectTemp.days[1].day[i].exercise = document.querySelector(
+            `#dia-2-nome-exercicio-${i + 1}`
+        ).value;
+        treinoSelectTemp.days[1].day[i].series = document.querySelector(
+            `#dia-2-series-exercicio-${i + 1}`
+        ).value;
+        treinoSelectTemp.days[1].day[i].repetitions = document.querySelector(
+            `#dia-2-rep-exercicio-${i + 1}`
+        ).value;
+    }
 }
 
 let selecionarTemp = `
     <option selected hidden>Selecionar...</option>
 `;
 for (i = 0; i < gymApp.edited_trainings.length; i++) {
-  selecionarTemp += `
+    selecionarTemp += `
         <option value="${gymApp.edited_trainings[i].name}">${gymApp.edited_trainings[i].name}</option>
     `;
 }
 
 let indiceTreinoSelect;
+let recursivo = false;
+let treinoSelectTemp;
+
 function carregarPlano() {
-  {
-    let botaoExcluirD1 = [];
-    let botaoExcluirD2 = [];
-    let botaoAddD1, botaoAddD2;
+    {
+        let botaoExcluirD1 = [];
+        let botaoExcluirD2 = [];
+        let botaoAddD1, botaoAddD2;
 
-    indiceTreinoSelect = -1;
-    treinoSelect = gymApp.edited_trainings.find((e) => {
-      indiceTreinoSelect++;
-      console.log(indiceTreinoSelect);
-      return e.name == selecionarPlano.value;
-    });
+        indiceTreinoSelect = -1;
 
-    customBtn.style = "display: inline";
-    cancelarBtn.style = "display: inline";
-    excluirFicha.style = "display: inline; float: right";
-    criarBtn.style = "display: none";
-    
+        if (!recursivo) {
+            treinoSelect = gymApp.edited_trainings.find((e) => {
+                indiceTreinoSelect++;
+                console.log(indiceTreinoSelect);
+                return e.name == selecionarPlano.value;
+            });
 
-    interfaceDados.innerHTML = `
-        <label for="titulo-treino" class="mt-2">Título do treino: </label>
-        <input id="titulo-treino" value="${treinoSelect.name}"/>
-        <label for="categoria-treino">Categoria: </label>
-        <input id="categoria-treino" value="${treinoSelect.category}"/>
-        <label for="selecao-nivel">Nível de dificuldade</label>
-        <select id="selecao-nivel">
-            <option hidden>Selecionar...</option>
-            <option value="Ficha iniciante" ${
-              treinoSelect.type == "Ficha iniciante" ? "selected" : ""
-            }>Iniciante</option>
-            <option value="Ficha intermediária" ${
-              treinoSelect.type == "Ficha intermediária" ? "selected" : ""
-            }>Intermedário</option>
-            <option value="Ficha avançada" ${
-              treinoSelect.type == "Ficha avançada" ? "selected" : ""
-            }>Avançado</option>
-        </select>
-    `;
-
-    let containerDias = `
-        <h1 class="mt-3">Dia 1</h1>
-        <label for="titulo-first">Título do dia: </label>
-        <input id="titulo-first" class="mb-3" value="${treinoSelect.days[0].name}"/>
-        <div id="first-day">
-    `;
-    for (i = 0; i < treinoSelect.days[0].day.length; i++) {
-      containerDias =
-        containerDias +
-        `
-            <div class="exercicio d-flex flex-row justify-content-between align-items-center">
-                <div>
-                    <input class="fs-5" type="text" id="dia-1-nome-exercicio-${
-                      i + 1
-                    }" value="${treinoSelect.days[0].day[i].exercise}">
-                    <div id="series-rep">
-                        <label for="dia-1-series-exercicio-${
-                          i + 1
-                        }">Número de séries: </label>
-                        <input type="number" id="dia-1-series-exercicio-${
-                          i + 1
-                        }" value="${treinoSelect.days[0].day[i].series}">
-                        
-                        <label for="dia-1-rep-exercicio-${
-                          i + 1
-                        }">Número de repetições</label>
-                        <select id="dia-1-rep-exercicio-${i + 1}">
-                            <option hidden>Selecionar...</option>
-                            <option value="4-6" ${
-                              treinoSelect.days[0].day[i].repetitions == "4-6"
-                                ? "selected"
-                                : ""
-                            }>4-6</option>
-                            <option value="8-12" ${
-                              treinoSelect.days[0].day[i].repetitions == "8-12"
-                                ? "selected"
-                                : ""
-                            }>8-12</option>
-                            <option value="12-15" ${
-                              treinoSelect.days[0].day[i].repetitions == "12-15"
-                                ? "selected"
-                                : ""
-                            }>12-15</option>
-                        </select>
-                    </div>
-                </div>
-                <button id="delete-ex${i + 1}-d1">Excluir</button>
-            </div>
-        `;
-    }
-
-    containerDias += `
-        </div>
-        <button id="adicionar-exercicio-d1">Adicionar exercício</button>
-        <h1 class="mt-3">Dia 2</h1>
-        <label for="titulo-second">Título do dia: </label>
-        <input id="titulo-second" class="mb-3" value="${treinoSelect.days[1].name}"/>
-        <div id="second-day">
-    `;
-
-    for (i = 0; i < treinoSelect.days[1].day.length; i++) {
-      containerDias =
-        containerDias +
-        `
-            <div class="exercicio d-flex flex-row justify-content-between align-items-center">
-                <div>
-                    <input class="fs-5" type="text" id="dia-2-nome-exercicio-${
-                      i + 1
-                    }" value="${treinoSelect.days[1].day[i].exercise}">
-                    <div id="series-rep">
-                        <label for="dia-2-series-exercicio-${
-                          i + 1
-                        }">Número de séries: </label>
-                        <input type="number" id="dia-2-series-exercicio-${
-                          i + 1
-                        }" value="${treinoSelect.days[1].day[i].series}">
-                        
-                        <label for="dia-2-rep-exercicio-${
-                          i + 1
-                        }">Número de repetições</label>
-                        <select id="dia-2-rep-exercicio-${i + 1}">
-                            <option hidden>Selecionar...</option>
-                            <option value="4-6" ${
-                              treinoSelect.days[1].day[i].repetitions == "4-6"
-                                ? "selected"
-                                : ""
-                            }>4-6</option>
-                            <option value="8-12" ${
-                              treinoSelect.days[1].day[i].repetitions == "8-12"
-                                ? "selected"
-                                : ""
-                            }>8-12</option>
-                            <option value="12-15" ${
-                              treinoSelect.days[1].day[i].repetitions == "12-15"
-                                ? "selected"
-                                : ""
-                            }>12-15</option>
-                        </select>
-                    </div>
-                </div>
-                <button id="delete-ex${i + 1}-d2">Excluir</button>
-            </div>
-        `;
-    }
-    containerDias += `
-        </div>
-        <button id="adicionar-exercicio-d2">Adicionar exercício</button>
-    `;
-    interfaceDados.innerHTML += containerDias;
-
-    botaoAddD1 = document.querySelector("#adicionar-exercicio-d1");
-    botaoAddD2 = document.querySelector("#adicionar-exercicio-d2");
-
-    botaoAddD1.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      treinoSelect.days[0].day[treinoSelect.days[0].day.length] = {
-        exercise: "Novo exercício",
-        series: "",
-        repetitions: "",
-      };
-      carregarPlano();
-    });
-
-    botaoAddD2.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      treinoSelect.days[1].day[treinoSelect.days[1].day.length] = {
-        exercise: "Novo exercício",
-        series: "",
-        repetitions: "",
-      };
-      carregarPlano();
-    });
-
-    for (let i = 0; i < treinoSelect.days[0].day.length; i++) {
-      botaoExcluirD1[i] = document.querySelector(`#delete-ex${i + 1}-d1`);
-      botaoExcluirD1[i].addEventListener("click", (e) => {
-        e.preventDefault();
-
-        let confirmExcluir = confirm(
-          `Confirmar exclusão de "${treinoSelect.days[0].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
-        );
-
-        if (confirmExcluir) {
-          treinoSelect.days[0].day.splice(i, 1);
-          botaoExcluirD1.splice(i, 1);
-
-          carregarPlano();
+            treinoSelectTemp = treinoSelect;
+        } else {
+            treinoSelect = treinoSelectTemp;
+            recursivo = false;
         }
-      });
-    }
 
-    for (let i = 0; i < treinoSelect.days[1].day.length; i++) {
-      botaoExcluirD2[i] = document.querySelector(`#delete-ex${i + 1}-d2`);
-      botaoExcluirD2[i].addEventListener("click", (e) => {
-        e.preventDefault();
+        customBtn.style = "display: inline";
+        cancelarBtn.style = "display: inline";
+        excluirFicha.style = "display: inline; float: right";
+        criarBtn.style = "display: none";
 
-        let confirmExcluir = confirm(
-          `Confirmar exclusão de "${treinoSelect.days[1].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
-        );
+        interfaceDados.innerHTML = `
+        <hr style="border: 1px solid #ccc; margin: 20px 0;">
+            <label for="titulo-treino" class="mt-2">Título do treino: </label>
+            <input id="titulo-treino" value="${treinoSelect.name}"/>
+            <label for="categoria-treino">Categoria: </label>
+            <input id="categoria-treino" value="${treinoSelect.category}"/>
+            <label for="selecao-nivel">Nível de dificuldade</label>
+            <select id="selecao-nivel">
+                <option hidden>Selecionar...</option>
+                <option value="Ficha iniciante" ${
+                    treinoSelect.type == "Ficha iniciante" ? "selected" : ""
+                }>Iniciante</option>
+                <option value="Ficha intermediária" ${
+                    treinoSelect.type == "Ficha intermediária" ? "selected" : ""
+                }>Intermedário</option>
+                <option value="Ficha avançada" ${
+                    treinoSelect.type == "Ficha avançada" ? "selected" : ""
+                }>Avançado</option>
+            </select>
+        `;
 
-        if (confirmExcluir) {
-          treinoSelect.days[1].day.splice(i, 1);
-          botaoExcluirD2.splice(i, 1);
-
-          carregarPlano();
+        let containerDias = `
+            <h1 class="mt-3">Dia 1</h1>
+            <label for="titulo-first">Título do dia: </label>
+            <input id="titulo-first" class="mb-3" value="${treinoSelect.days[0].name}"/>
+            <div id="first-day">
+        `;
+        for (i = 0; i < treinoSelect.days[0].day.length; i++) {
+            containerDias =
+                containerDias +
+                `
+                <div class="exercicio d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                        <input class="fs-5" type="text" id="dia-1-nome-exercicio-${i + 1}" value="${
+                    treinoSelect.days[0].day[i].exercise
+                }">
+                        <div id="series-rep">
+                            <label for="dia-1-series-exercicio-${i + 1}">Número de séries: </label>
+                            <input type="number" id="dia-1-series-exercicio-${i + 1}" value="${
+                    treinoSelect.days[0].day[i].series
+                }">
+                            
+                            <label for="dia-1-rep-exercicio-${i + 1}">Número de repetições</label>
+                            <select id="dia-1-rep-exercicio-${i + 1}">
+                                <option hidden>Selecionar...</option>
+                                <option value="4-6" ${
+                                    treinoSelect.days[0].day[i].repetitions == "4-6" ? "selected" : ""
+                                }>4-6</option>
+                                <option value="8-12" ${
+                                    treinoSelect.days[0].day[i].repetitions == "8-12" ? "selected" : ""
+                                }>8-12</option>
+                                <option value="12-15" ${
+                                    treinoSelect.days[0].day[i].repetitions == "12-15" ? "selected" : ""
+                                }>12-15</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="delete-ex${i + 1}-d1">Excluir</button>
+                </div>
+            `;
         }
-      });
+
+        containerDias += `
+            </div>
+            <button id="adicionar-exercicio-d1">Adicionar exercício</button>
+            <h1 class="mt-3">Dia 2</h1>
+            <label for="titulo-second">Título do dia: </label>
+            <input id="titulo-second" class="mb-3" value="${treinoSelect.days[1].name}"/>
+            <div id="second-day">
+        `;
+
+        for (i = 0; i < treinoSelect.days[1].day.length; i++) {
+            containerDias =
+                containerDias +
+                `
+                <div class="exercicio d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                        <input class="fs-5" type="text" id="dia-2-nome-exercicio-${i + 1}" value="${
+                    treinoSelect.days[1].day[i].exercise
+                }">
+                        <div id="series-rep">
+                            <label for="dia-2-series-exercicio-${i + 1}">Número de séries: </label>
+                            <input type="number" id="dia-2-series-exercicio-${i + 1}" value="${
+                    treinoSelect.days[1].day[i].series
+                }">
+                            
+                            <label for="dia-2-rep-exercicio-${i + 1}">Número de repetições</label>
+                            <select id="dia-2-rep-exercicio-${i + 1}">
+                                <option hidden>Selecionar...</option>
+                                <option value="4-6" ${
+                                    treinoSelect.days[1].day[i].repetitions == "4-6" ? "selected" : ""
+                                }>4-6</option>
+                                <option value="8-12" ${
+                                    treinoSelect.days[1].day[i].repetitions == "8-12" ? "selected" : ""
+                                }>8-12</option>
+                                <option value="12-15" ${
+                                    treinoSelect.days[1].day[i].repetitions == "12-15" ? "selected" : ""
+                                }>12-15</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="delete-ex${i + 1}-d2">Excluir</button>
+                </div>
+            `;
+        }
+        containerDias += `
+            </div>
+            <button id="adicionar-exercicio-d2">Adicionar exercício</button>
+        `;
+        interfaceDados.innerHTML += containerDias;
+
+        botaoAddD1 = document.querySelector("#adicionar-exercicio-d1");
+        botaoAddD2 = document.querySelector("#adicionar-exercicio-d2");
+
+        botaoAddD1.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            transformTreinoSelectTemp();
+            recursivo = true;
+
+            treinoSelect.days[0].day[treinoSelect.days[0].day.length] = {
+                exercise: "Novo exercício",
+                series: "",
+                repetitions: "",
+            };
+
+            carregarPlano();
+        });
+
+        botaoAddD2.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            transformTreinoSelectTemp();
+            recursivo = true;
+
+            treinoSelect.days[1].day[treinoSelect.days[1].day.length] = {
+                exercise: "Novo exercício",
+                series: "",
+                repetitions: "",
+            };
+
+            carregarPlano();
+        });
+
+        for (let i = 0; i < treinoSelect.days[0].day.length; i++) {
+            botaoExcluirD1[i] = document.querySelector(`#delete-ex${i + 1}-d1`);
+            botaoExcluirD1[i].addEventListener("click", (e) => {
+                e.preventDefault();
+
+                let confirmExcluir = confirm(
+                    `Confirmar exclusão de "${treinoSelect.days[0].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
+                );
+
+                if (confirmExcluir) {
+                    treinoSelect.days[0].day.splice(i, 1);
+                    botaoExcluirD1.splice(i, 1);
+
+                    transformTreinoSelectTemp();
+                    recursivo = true;
+
+                    carregarPlano();
+                }
+            });
+        }
+
+        for (let i = 0; i < treinoSelect.days[1].day.length; i++) {
+            botaoExcluirD2[i] = document.querySelector(`#delete-ex${i + 1}-d2`);
+            botaoExcluirD2[i].addEventListener("click", (e) => {
+                e.preventDefault();
+
+                let confirmExcluir = confirm(
+                    `Confirmar exclusão de "${treinoSelect.days[1].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
+                );
+
+                if (confirmExcluir) {
+                    treinoSelect.days[1].day.splice(i, 1);
+                    botaoExcluirD2.splice(i, 1);
+
+                    transformTreinoSelectTemp();
+                    recursivo = true;
+
+                    carregarPlano();
+                }
+            });
+        }
     }
-  }
 }
 
-    treinoSelect = {
-    "id": (gymApp.edited_trainings[(gymApp.edited_trainings.length)-1].id)+1,
-    "name": "Nova ficha",
-    "category": "",
-    "type": "",
-    "days": [
-      {
-        "id": 1,
-        "xp": 100,
-        "name": "Dia 1 - Nova ficha",
-        "day": []
-      },
-      {
-        "id": 2,
-        "xp": 150,
-        "name": "Dia 2 - Nova ficha",
-        "day": []
-      }
-    ]
-    };
+treinoSelect = {
+    id: gymApp.edited_trainings[gymApp.edited_trainings.length - 1].id + 1,
+    name: "Nova ficha",
+    category: "",
+    type: "",
+    days: [
+        {
+            id: 1,
+            xp: 100,
+            name: "Dia 1 - Nova ficha",
+            day: [],
+        },
+        {
+            id: 2,
+            xp: 150,
+            name: "Dia 2 - Nova ficha",
+            day: [],
+        },
+    ],
+};
 function criarFicha() {
-  {
-    let botaoExcluirD1 = [];
-    let botaoExcluirD2 = [];
-    let botaoAddD1, botaoAddD2;
+    {
+        let botaoExcluirD1 = [];
+        let botaoExcluirD2 = [];
+        let botaoAddD1, botaoAddD2;
 
-    document.querySelector("#container-selecao-plano").style = "display: none";
+        document.querySelector("#container-selecao-plano").style = "display: none";
 
-    indiceTreinoSelect = -1;
-
-    cadastrar.style = "display: inline; margin-top: 2vh";
-    cancelarBtn.style = "display: inline; margin-top: 2vh";
-    criarBtn.style = "display: none";
-    
-
-    interfaceDados.innerHTML = `
-        <label for="titulo-treino" class="mt-2">Título do treino: </label>
-        <input id="titulo-treino" value="${treinoSelect.name}"/>
-        <label for="categoria-treino">Categoria: </label>
-        <input id="categoria-treino" value="${treinoSelect.category}"/>
-        <label for="selecao-nivel">Nível de dificuldade</label>
-        <select id="selecao-nivel">
-            <option hidden>Selecionar...</option>
-            <option value="Ficha iniciante" ${
-              treinoSelect.type == "Ficha iniciante" ? "selected" : ""
-            }>Iniciante</option>
-            <option value="Ficha intermediária" ${
-              treinoSelect.type == "Ficha intermediária" ? "selected" : ""
-            }>Intermedário</option>
-            <option value="Ficha avançada" ${
-              treinoSelect.type == "Ficha avançada" ? "selected" : ""
-            }>Avançado</option>
-        </select>
-    `;
-
-    let containerDias = `
-        <h1 class="mt-3">Dia 1</h1>
-        <label for="titulo-first">Título do dia: </label>
-        <input id="titulo-first" class="mb-3" value="${treinoSelect.days[0].name}"/>
-        <div id="first-day">
-    `;
-    for (i = 0; i < treinoSelect.days[0].day.length; i++) {
-      containerDias =
-        containerDias +
-        `
-            <div class="exercicio d-flex flex-row justify-content-between align-items-center">
-                <div>
-                    <input class="fs-5" type="text" id="dia-1-nome-exercicio-${
-                      i + 1
-                    }" value="${treinoSelect.days[0].day[i].exercise}">
-                    <div id="series-rep">
-                        <label for="dia-1-series-exercicio-${
-                          i + 1
-                        }">Número de séries: </label>
-                        <input type="number" id="dia-1-series-exercicio-${
-                          i + 1
-                        }" value="${treinoSelect.days[0].day[i].series}">
-                        
-                        <label for="dia-1-rep-exercicio-${
-                          i + 1
-                        }">Número de repetições</label>
-                        <select id="dia-1-rep-exercicio-${i + 1}">
-                            <option hidden>Selecionar...</option>
-                            <option value="4-6" ${
-                              treinoSelect.days[0].day[i].repetitions == "4-6"
-                                ? "selected"
-                                : ""
-                            }>4-6</option>
-                            <option value="8-12" ${
-                              treinoSelect.days[0].day[i].repetitions == "8-12"
-                                ? "selected"
-                                : ""
-                            }>8-12</option>
-                            <option value="12-15" ${
-                              treinoSelect.days[0].day[i].repetitions == "12-15"
-                                ? "selected"
-                                : ""
-                            }>12-15</option>
-                        </select>
-                    </div>
-                </div>
-                <button id="delete-ex${i + 1}-d1">Excluir</button>
-            </div>
-        `;
-    }
-
-    containerDias += `
-        </div>
-        <button id="adicionar-exercicio-d1">Adicionar exercício</button>
-        <h1 class="mt-3">Dia 2</h1>
-        <label for="titulo-second">Título do dia: </label>
-        <input id="titulo-second" class="mb-3" value="${treinoSelect.days[1].name}"/>
-        <div id="second-day">
-    `;
-
-    for (i = 0; i < treinoSelect.days[1].day.length; i++) {
-      containerDias =
-        containerDias +
-        `
-            <div class="exercicio d-flex flex-row justify-content-between align-items-center">
-                <div>
-                    <input class="fs-5" type="text" id="dia-2-nome-exercicio-${
-                      i + 1
-                    }" value="${treinoSelect.days[1].day[i].exercise}">
-                    <div id="series-rep">
-                        <label for="dia-2-series-exercicio-${
-                          i + 1
-                        }">Número de séries: </label>
-                        <input type="number" id="dia-2-series-exercicio-${
-                          i + 1
-                        }" value="${treinoSelect.days[1].day[i].series}">
-                        
-                        <label for="dia-2-rep-exercicio-${
-                          i + 1
-                        }">Número de repetições</label>
-                        <select id="dia-2-rep-exercicio-${i + 1}">
-                            <option hidden>Selecionar...</option>
-                            <option value="4-6" ${
-                              treinoSelect.days[1].day[i].repetitions == "4-6"
-                                ? "selected"
-                                : ""
-                            }>4-6</option>
-                            <option value="8-12" ${
-                              treinoSelect.days[1].day[i].repetitions == "8-12"
-                                ? "selected"
-                                : ""
-                            }>8-12</option>
-                            <option value="12-15" ${
-                              treinoSelect.days[1].day[i].repetitions == "12-15"
-                                ? "selected"
-                                : ""
-                            }>12-15</option>
-                        </select>
-                    </div>
-                </div>
-                <button id="delete-ex${i + 1}-d2">Excluir</button>
-            </div>
-        `;
-    }
-    containerDias += `
-        </div>
-        <button id="adicionar-exercicio-d2">Adicionar exercício</button>
-    `;
-    interfaceDados.innerHTML += containerDias;
-
-    botaoAddD1 = document.querySelector("#adicionar-exercicio-d1");
-    botaoAddD2 = document.querySelector("#adicionar-exercicio-d2");
-
-    botaoAddD1.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      treinoSelect.days[0].day[treinoSelect.days[0].day.length] = {
-        exercise: "Novo exercício",
-        series: "",
-        repetitions: "",
-      };
-      criarFicha();
-    });
-
-    botaoAddD2.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      treinoSelect.days[1].day[treinoSelect.days[1].day.length] = {
-        exercise: "Novo exercício",
-        series: "",
-        repetitions: "",
-      };
-      criarFicha();
-    });
-
-    for (let i = 0; i < treinoSelect.days[0].day.length; i++) {
-      botaoExcluirD1[i] = document.querySelector(`#delete-ex${i + 1}-d1`);
-      botaoExcluirD1[i].addEventListener("click", (e) => {
-        e.preventDefault();
-
-        let confirmExcluir = confirm(
-          `Confirmar exclusão de "${treinoSelect.days[0].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
-        );
-
-        if (confirmExcluir) {
-          treinoSelect.days[0].day.splice(i, 1);
-          botaoExcluirD1.splice(i, 1);
-
-          carregarPlano();
+        if (!recursivo) {
+            treinoSelectTemp = treinoSelect;
+        } else {
+            treinoSelect = treinoSelectTemp;
+            recursivo = false;
         }
-      });
-    }
 
-    for (let i = 0; i < treinoSelect.days[1].day.length; i++) {
-      botaoExcluirD2[i] = document.querySelector(`#delete-ex${i + 1}-d2`);
-      botaoExcluirD2[i].addEventListener("click", (e) => {
-        e.preventDefault();
+        indiceTreinoSelect = -1;
 
-        let confirmExcluir = confirm(
-          `Confirmar exclusão de "${treinoSelect.days[1].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
-        );
+        cadastrar.style = "display: inline; margin-top: 2vh";
+        cancelarBtn.style = "display: inline; margin-top: 2vh";
+        criarBtn.style = "display: none";
 
-        if (confirmExcluir) {
-          treinoSelect.days[1].day.splice(i, 1);
-          botaoExcluirD2.splice(i, 1);
+        interfaceDados.innerHTML = `
+        <hr style="border: 1px solid #ccc; margin: 20px 0;">
+            <label for="titulo-treino" class="mt-2">Título do treino: </label>
+            <input id="titulo-treino" value="${treinoSelect.name}"/>
+            <label for="categoria-treino">Categoria: </label>
+            <input id="categoria-treino" value="${treinoSelect.category}"/>
+            <label for="selecao-nivel">Nível de dificuldade</label>
+            <select id="selecao-nivel">
+                <option hidden>Selecionar...</option>
+                <option value="Ficha iniciante" ${
+                    treinoSelect.type == "Ficha iniciante" ? "selected" : ""
+                }>Iniciante</option>
+                <option value="Ficha intermediária" ${
+                    treinoSelect.type == "Ficha intermediária" ? "selected" : ""
+                }>Intermedário</option>
+                <option value="Ficha avançada" ${
+                    treinoSelect.type == "Ficha avançada" ? "selected" : ""
+                }>Avançado</option>
+            </select>
+        `;
 
-          carregarPlano();
+        let containerDias = `
+            <h1 class="mt-3">Dia 1</h1>
+            <label for="titulo-first">Título do dia: </label>
+            <input id="titulo-first" class="mb-3" value="${treinoSelect.days[0].name}"/>
+            <div id="first-day">
+        `;
+        for (i = 0; i < treinoSelect.days[0].day.length; i++) {
+            containerDias =
+                containerDias +
+                `
+                <div class="exercicio d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                        <input class="fs-5" type="text" id="dia-1-nome-exercicio-${i + 1}" value="${
+                    treinoSelect.days[0].day[i].exercise
+                }">
+                        <div id="series-rep">
+                            <label for="dia-1-series-exercicio-${i + 1}">Número de séries: </label>
+                            <input type="number" id="dia-1-series-exercicio-${i + 1}" value="${
+                    treinoSelect.days[0].day[i].series
+                }">
+                            
+                            <label for="dia-1-rep-exercicio-${i + 1}">Número de repetições</label>
+                            <select id="dia-1-rep-exercicio-${i + 1}">
+                                <option hidden>Selecionar...</option>
+                                <option value="4-6" ${
+                                    treinoSelect.days[0].day[i].repetitions == "4-6" ? "selected" : ""
+                                }>4-6</option>
+                                <option value="8-12" ${
+                                    treinoSelect.days[0].day[i].repetitions == "8-12" ? "selected" : ""
+                                }>8-12</option>
+                                <option value="12-15" ${
+                                    treinoSelect.days[0].day[i].repetitions == "12-15" ? "selected" : ""
+                                }>12-15</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="delete-ex${i + 1}-d1">Excluir</button>
+                </div>
+            `;
         }
-      });
+
+        containerDias += `
+            </div>
+            <button id="adicionar-exercicio-d1">Adicionar exercício</button>
+            <h1 class="mt-3">Dia 2</h1>
+            <label for="titulo-second">Título do dia: </label>
+            <input id="titulo-second" class="mb-3" value="${treinoSelect.days[1].name}"/>
+            <div id="second-day">
+        `;
+
+        for (i = 0; i < treinoSelect.days[1].day.length; i++) {
+            containerDias =
+                containerDias +
+                `
+                <div class="exercicio d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                        <input class="fs-5" type="text" id="dia-2-nome-exercicio-${i + 1}" value="${
+                    treinoSelect.days[1].day[i].exercise
+                }">
+                        <div id="series-rep">
+                            <label for="dia-2-series-exercicio-${i + 1}">Número de séries: </label>
+                            <input type="number" id="dia-2-series-exercicio-${i + 1}" value="${
+                    treinoSelect.days[1].day[i].series
+                }">
+                            
+                            <label for="dia-2-rep-exercicio-${i + 1}">Número de repetições</label>
+                            <select id="dia-2-rep-exercicio-${i + 1}">
+                                <option hidden>Selecionar...</option>
+                                <option value="4-6" ${
+                                    treinoSelect.days[1].day[i].repetitions == "4-6" ? "selected" : ""
+                                }>4-6</option>
+                                <option value="8-12" ${
+                                    treinoSelect.days[1].day[i].repetitions == "8-12" ? "selected" : ""
+                                }>8-12</option>
+                                <option value="12-15" ${
+                                    treinoSelect.days[1].day[i].repetitions == "12-15" ? "selected" : ""
+                                }>12-15</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="delete-ex${i + 1}-d2">Excluir</button>
+                </div>
+            `;
+        }
+        containerDias += `
+            </div>
+            <button id="adicionar-exercicio-d2">Adicionar exercício</button>
+        `;
+        interfaceDados.innerHTML += containerDias;
+
+        botaoAddD1 = document.querySelector("#adicionar-exercicio-d1");
+        botaoAddD2 = document.querySelector("#adicionar-exercicio-d2");
+
+        botaoAddD1.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            transformTreinoSelectTemp();
+            recursivo = true;
+
+            treinoSelect.days[0].day[treinoSelect.days[0].day.length] = {
+                exercise: "Novo exercício",
+                series: "",
+                repetitions: "",
+            };
+            criarFicha();
+        });
+
+        botaoAddD2.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            transformTreinoSelectTemp();
+            recursivo = true;
+
+            treinoSelect.days[1].day[treinoSelect.days[1].day.length] = {
+                exercise: "Novo exercício",
+                series: "",
+                repetitions: "",
+            };
+            criarFicha();
+        });
+
+        for (let i = 0; i < treinoSelect.days[0].day.length; i++) {
+            botaoExcluirD1[i] = document.querySelector(`#delete-ex${i + 1}-d1`);
+            botaoExcluirD1[i].addEventListener("click", (e) => {
+                e.preventDefault();
+
+                let confirmExcluir = confirm(
+                    `Confirmar exclusão de "${treinoSelect.days[0].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
+                );
+
+                if (confirmExcluir) {
+                    treinoSelect.days[0].day.splice(i, 1);
+                    botaoExcluirD1.splice(i, 1);
+
+                    transformTreinoSelectTemp();
+                    recursivo = true;
+
+                    carregarPlano();
+                }
+            });
+        }
+
+        for (let i = 0; i < treinoSelect.days[1].day.length; i++) {
+            botaoExcluirD2[i] = document.querySelector(`#delete-ex${i + 1}-d2`);
+            botaoExcluirD2[i].addEventListener("click", (e) => {
+                e.preventDefault();
+
+                let confirmExcluir = confirm(
+                    `Confirmar exclusão de "${treinoSelect.days[1].day[i].exercise}"? Você poderá recuperá-lo se cancelar as alterações.`
+                );
+
+                if (confirmExcluir) {
+                    treinoSelect.days[1].day.splice(i, 1);
+                    botaoExcluirD2.splice(i, 1);
+
+                    transformTreinoSelectTemp();
+                    recursivo = true;
+
+                    carregarPlano();
+                }
+            });
+        }
     }
-  }
 }
 
 selecionarPlano.innerHTML = selecionarTemp;
 selecionarPlano.addEventListener("change", (e) => {
-  e.preventDefault();
-  carregarPlano();
+    e.preventDefault();
+    carregarPlano();
 });
 
 customBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  treinoSelect.name = document.querySelector("#titulo-treino").value;
-  treinoSelect.category = document.querySelector("#categoria-treino").value;
-  treinoSelect.type = document.querySelector("#selecao-nivel").value;
-  treinoSelect.days[0].name = document.querySelector("#titulo-first").value;
-  treinoSelect.days[1].name = document.querySelector("#titulo-second").value;
+    if(transformTreinoSelect()) {
+    gymApp.edited_trainings[treinoSelect.id - 1] = treinoSelect;
+    localStorage.setItem("gymAppData", JSON.stringify(gymApp));
 
-  for (i = 0; i < treinoSelect.days[0].day.length; i++) {
-    treinoSelect.days[0].day[i].exercise = document.querySelector(
-      `#dia-1-nome-exercicio-${i + 1}`
-    ).value;
-    treinoSelect.days[0].day[i].series = document.querySelector(
-      `#dia-1-series-exercicio-${i + 1}`
-    ).value;
-    treinoSelect.days[0].day[i].repetitions = document.querySelector(
-      `#dia-1-rep-exercicio-${i + 1}`
-    ).value;
-  }
-  for (i = 0; i < treinoSelect.days[1].day.length; i++) {
-    treinoSelect.days[1].day[i].exercise = document.querySelector(
-      `#dia-2-nome-exercicio-${i + 1}`
-    ).value;
-    treinoSelect.days[1].day[i].series = document.querySelector(
-      `#dia-2-series-exercicio-${i + 1}`
-    ).value;
-    treinoSelect.days[1].day[i].repetitions = document.querySelector(
-      `#dia-2-rep-exercicio-${i + 1}`
-    ).value;
-  }
-
-  gymApp.edited_trainings[treinoSelect.id - 1] = treinoSelect;
-  localStorage.setItem("gymAppData", JSON.stringify(gymApp));
-
-  location.reload();
+    location.reload();
+    }
 });
 
 cancelarBtn.addEventListener("click", (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  location.reload();
-});
-
-excluirFicha.addEventListener("click", e => {
-  e.preventDefault();
-
-  if(confirm(`Confirmar exclusão da ficha ${treinoSelect.name}? Essa ação é irreversível.`)) {
-    gymApp.edited_trainings.splice(indiceTreinoSelect, 1);
-    localStorage.setItem("gymAppData", JSON.stringify(gymApp));
     location.reload();
-  }
 });
 
-criarBtn.addEventListener("click", e => {
-  e.preventDefault();
+excluirFicha.addEventListener("click", (e) => {
+    e.preventDefault();
 
-  criarFicha();
+    if (
+        confirm(
+            `Confirmar exclusão da ficha ${treinoSelect.name}? Essa ação é irreversível.`
+        )
+    ) {
+        gymApp.edited_trainings.splice(indiceTreinoSelect, 1);
+        localStorage.setItem("gymAppData", JSON.stringify(gymApp));
+        location.reload();
+    }
 });
 
-cadastrar.addEventListener("click", e => {
-  e.preventDefault();
+criarBtn.addEventListener("click", (e) => {
+    e.preventDefault();
 
-  gymApp.edited_trainings[gymApp.edited_trainings.length] = treinoSelect;
-  localStorage.setItem("gymAppData", JSON.stringify(gymApp));
-  location.reload();
+    criarFicha();
+});
+
+cadastrar.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if(transformTreinoSelect()) {
+        gymApp.edited_trainings[gymApp.edited_trainings.length] = treinoSelect;
+        localStorage.setItem("gymAppData", JSON.stringify(gymApp));
+        location.reload();
+    }
 });
