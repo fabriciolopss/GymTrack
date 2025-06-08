@@ -12,6 +12,7 @@ const selecionarPlano = document.querySelector("#selecao-plano");
 const customBtn = document.querySelector("#personalizar");
 const criarBtn = document.querySelector("#criar");
 const cancelarBtn = document.querySelector("#cancelar-alteracoes");
+const excluirFicha = document.querySelector("#excluir-ficha");
 const containerDia1 = document.querySelector("#first-day");
 const containerDia2 = document.querySelector("#second-day");
 
@@ -105,7 +106,9 @@ function carregarPlano() {
 
     customBtn.style = "display: inline";
     cancelarBtn.style = "display: inline";
+    excluirFicha.style = "display: inline; float: right";
     criarBtn.style = "display: none";
+    
 
     interfaceDados.innerHTML = `
         <label for="titulo-treino" class="mt-2">Título do treino: </label>
@@ -348,4 +351,14 @@ cancelarBtn.addEventListener("click", (e) => {
   e.preventDefault();
 
   location.reload();
+});
+
+excluirFicha.addEventListener("click", e => {
+  e.preventDefault();
+
+  if(confirm(`Confirmar exclusão da ficha ${treinoSelect.name}? Essa ação é irreversível.`)) {
+    gymApp.edited_trainings.splice(indiceTreinoSelect, 1);
+    localStorage.setItem("gymAppData", JSON.stringify(gymApp));
+    location.reload();
+  }
 });
