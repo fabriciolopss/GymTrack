@@ -517,7 +517,7 @@ function criarFicha() {
                     transformTreinoSelectTemp();
                     recursivo = true;
 
-                    carregarPlano();
+                    criarFicha();
                 }
             });
         }
@@ -538,7 +538,7 @@ function criarFicha() {
                     transformTreinoSelectTemp();
                     recursivo = true;
 
-                    carregarPlano();
+                    criarFicha();
                 }
             });
         }
