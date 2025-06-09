@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles/style.css">
   <link rel="stylesheet" href="styles/dashboard.css">
-  <title>Document</title>
+  <title>GymTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -190,7 +190,7 @@
       <div class="dashboard-wrapper">
         <div class="dashboard-header">
           <p class="dashboard-subtitle">
-            Olá, <span id="user-name"></span>! 👋
+            Olá, <span id="user-name"></span>!
           </p>
           <p class="dashboard-title">
             Veja abaixo o resumo dos seus treinos e conquistas recentes!
@@ -198,63 +198,75 @@
         </div>
 
         <!-- Dashboard Widgets -->
-        <div class="row g-4" id="dashboard-widgets-row">
+        <div class="row g-4 dashboard-widgets-row">
           <!-- Ficha Atual -->
-          <div class="col-md-4">
-            <div class="card h-100">
-              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ficha atual" class="ficha-img">
-              <div class="card-body">
-                <span id="ficha-atual-badge" class="badge badge-iniciante mb-2"></span>
-                <h5 id="ficha-atual-nome" class="card-title mb-1"></h5>
-                <div id="ficha-atual-categoria" class="text-muted mb-2"></div>
-                <small id="ficha-atual-duracao" class="text-secondary"></small>
+          <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card ficha-card">
+              <div class="dashboard-card-title">Ficha atual</div>
+              <div class="ficha-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ficha atual" class="ficha-img">
+                <span class="ficha-status ficha-status-iniciante">Iniciante</span>
+              </div>
+              <div class="ficha-info">
+                <div class="ficha-tipo"></div>
+                <div class="ficha-duracao"><i class="fa-regular fa-clock"></i> 30 minutos</div>
+                <ul class="ficha-exercicios"></ul>
               </div>
             </div>
           </div>
 
           <!-- Última Ficha -->
-          <div class="col-md-4">
-            <div class="card h-100">
-              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Última ficha" class="ficha-img">
-              <div class="card-body">
-                <span id="ultima-ficha-badge" class="badge badge-iniciante mb-2"></span>
-                <h5 id="ultima-ficha-nome" class="card-title mb-1"></h5>
-                <div id="ultima-ficha-categoria" class="text-muted mb-2"></div>
-                <small id="ultima-ficha-duracao" class="text-secondary"></small>
+          <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card ficha-card">
+              <div class="dashboard-card-title">Última ficha</div>
+              <div class="ficha-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Última ficha" class="ficha-img">
+                <span class="ficha-status ficha-status-iniciante">Iniciante</span>
+              </div>
+              <div class="ficha-info">
+                <div class="ficha-tipo"></div>
+                <div class="ficha-duracao"><i class="fa-regular fa-clock"></i> 30 minutos</div>
+                <ul class="ficha-exercicios"></ul>
               </div>
             </div>
           </div>
 
           <!-- Distribuição de Treinos -->
-          <div class="col-md-4">
-            <div class="card h-100 p-3 d-flex flex-column align-items-center justify-content-center">
-              <h6 class="mb-3 text-center">Distribuição de treinos</h6>
+          <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card distribuicao-card">
+              <div class="dashboard-card-title">Distribuição de treinos</div>
               <canvas id="distribuicao-treinos" width="130" height="130"></canvas>
-              <div class="d-flex justify-content-around w-100 mt-3" id="distribuicao-legenda"></div>
+              <div class="distribuicao-legenda" id="distribuicao-legenda"></div>
+              <div class="distribuicao-totais" id="distribuicao-totais"></div>
+            </div>
+          </div>
+
+          <!-- Perfil no GymTrack -->
+          <div class="col-lg-3 col-md-6">
+            <div class="dashboard-card perfil-card">
+              <div class="dashboard-card-title">Perfil no GymTrack</div>
+              <div class="perfil-xp-wrapper">
+                <canvas id="xp-progress" class="xp-circle"></canvas>
+                <div class="perfil-xp-porcentagem">
+                  <div class="perfil-nivel">Nível 14</div>
+                  <div class="perfil-porcentagem">85%</div>
+                  <div class="perfil-xp">100/400<small>XP</small></div>
+                </div>
+              </div>
+              <div class="perfil-stats">
+                <div><i class="fa-solid fa-fire"></i> <b class="dias-treino">7</b> dias de treino seguidos</div>
+                <div><i class="fa-solid fa-check"></i> <b class="total-treinos">21</b> no total</div>
+              </div>
             </div>
           </div>
 
           <!-- Histórico de Treinos -->
-          <div class="col-md-8">
-            <div class="card h-100">
-              <div class="card-body">
-                <h6 class="mb-3">Histórico de treinos</h6>
-                <ul class="list-group" id="historico-treinos"></ul>
-                <div class="mt-3 text-end"><b id="total-treinos"></b> treinos no registro</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Experiência do Usuário -->
-          <div class="col-md-4">
-            <div class="card h-100 d-flex flex-column align-items-center justify-content-center p-4">
-              <h6 class="mb-3 text-center">Perfil no GymTrack</h6>
-              <canvas id="xp-progress" class="xp-circle"></canvas>
-              <div class="text-center mt-3">
-                <div><b id="level-label"></b></div>
-                <div><span id="xp-percent"></span>%</div>
-                <div><span id="xp-current"></span>/<span id="xp-next"></span> XP</div>
-              </div>
+          <div class="col-lg-6 col-12">
+            <div class="dashboard-card historico-card">
+              <div class="dashboard-card-title">Histórico de treinos</div>
+              <ul class="historico-lista" id="historico-treinos"></ul>
+              <div class="historico-total"><b>42</b> treinos no registro</div>
+              <button class="historico-download"><i class="fa-solid fa-download"></i> Download</button>
             </div>
           </div>
         </div>
@@ -416,3 +428,6 @@
 <script src="scripts/notifications.js" type="module"></script>
 
 <script src="scripts/level.js" type="module"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
