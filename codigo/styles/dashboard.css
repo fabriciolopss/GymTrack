@@ -1,55 +1,339 @@
-.dashboard-wrapper {}
-
-.dashboard-header {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+.dashboard-wrapper {
 }
 
+.dashboard-header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
 
 .dashboard-title {
-    font-size: 40px;
-    font-weight: 500;
-    color: #333;
-    margin-bottom: 1rem;
+  font-size: 40px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 1rem;
 }
 
 .dashboard-subtitle {
-    margin-bottom: 0;
-    font-size: 20px;
-    font-weight: 400;
-    color: #AFAFAF;
+  margin-bottom: 0;
+  font-size: 20px;
+  font-weight: 400;
+  color: #afafaf;
 }
 
 .dashboard-body {
-    padding: 20px;
-    height: calc(100vh - 150px);
+  padding: 20px;
+  height: calc(100vh - 150px);
 }
 
 .grid-stack {
-    background: transparent;
-    min-height: 100%;
+  background: transparent;
+  min-height: 100%;
 }
 
 .grid-stack-item {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 15px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 15px;
 }
 
 .grid-stack-item-content {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .card-content {
-    flex-grow: 1;
+  flex-grow: 1;
+}
+
+.ficha-img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.badge-iniciante {
+  background: #e6ffe6 !important;
+  color: #198754 !important;
+  font-weight: 600;
+}
+.badge-intermediario {
+  background: #fffbe6 !important;
+  color: #ffc107 !important;
+  font-weight: 600;
+}
+.badge-avancado {
+  background: #ffe6e6 !important;
+  color: #dc3545 !important;
+  font-weight: 600;
+}
+.xp-circle {
+  width: 110px !important;
+  height: 110px !important;
+  margin: 0 auto;
+}
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.dashboard-widgets-row {
+  margin-top: 0.5rem;
+}
+.dashboard-card {
+  background: #fff;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  padding: 1.5rem 1.2rem;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  position: relative;
+}
+.ficha-card .ficha-img-wrapper {
+  position: relative;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.ficha-img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 1.2rem;
+}
+.ficha-status {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: #e6ffe6;
+  color: #198754;
+  font-weight: 600;
+  border-radius: 1rem;
+  padding: 0.3rem 1rem;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+.ficha-play-btn {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-size: 1.2rem;
+  color: #a14fce;
+  transition: background 0.2s;
+}
+.ficha-play-btn:hover {
+  background: #f3eaff;
+}
+.ficha-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: flex-start;
+}
+.ficha-tipo {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+.ficha-duracao {
+  font-size: 0.95rem;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.dashboard-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.distribuicao-card {
+  align-items: center;
+  justify-content: flex-start;
+}
+#distribuicao-treinos {
+  margin: 0 auto;
+  display: block;
+}
+.distribuicao-legenda {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 0.7rem;
+  margin-bottom: 0.5rem;
+}
+.distribuicao-totais {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 0.7rem;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+.dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 0.4rem;
+}
+.dot-peito {
+  background: #7bed9f;
+}
+.dot-costas {
+  background: #70a1ff;
+}
+.dot-superiores {
+  background: #a14fce;
+}
+.perfil-card {
+  align-items: center;
+  justify-content: flex-start;
+}
+.perfil-xp-wrapper {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.xp-circle {
+  width: 140px !important;
+  height: 140px !important;
+}
+.perfil-xp-porcentagem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.perfil-nivel {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #a14fce;
+}
+.perfil-porcentagem {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #a14fce;
+  line-height: 1.1;
+}
+.perfil-xp {
+  font-size: 1rem;
+  color: #888;
+}
+.perfil-xp small {
+  font-size: 0.8em;
+  color: #bbb;
+}
+.perfil-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1.2rem;
+  margin-top: 1.2rem;
+  font-size: 1rem;
+  color: #888;
+}
+.perfil-stats i {
+  color: #ff9800;
+  margin-right: 0.3rem;
+}
+.perfil-stats i.fa-check {
+  color: #13db0c;
+}
+.historico-card {
+  min-height: 370px;
+}
+.historico-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
+.historico-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid #f1f1f1;
+  font-size: 1rem;
+}
+.historico-icone {
+  color: #a14fce;
+  font-size: 1.2rem;
+  width: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.historico-nome {
+  font-weight: 600;
+  color: #333;
+}
+.historico-tipo {
+  color: #bbb;
+  font-size: 0.95rem;
+  margin-left: 0.5rem;
+}
+.historico-data {
+  margin-left: auto;
+  color: #888;
+  font-size: 0.95rem;
+}
+.historico-total {
+  text-align: right;
+  color: #888;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.historico-download {
+  background: none;
+  border: none;
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  margin-left: auto;
+  transition: color 0.2s;
+}
+.historico-download:hover {
+  color: #1251a3;
+}
+.historico-nome-complemento {
+  color: #888;
+  font-weight: 400;
 }
