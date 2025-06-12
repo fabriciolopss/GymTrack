@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/login.css">
+    <script src="https://kit.fontawesome.com/64b9a24b58.js" crossorigin="anonymous"></script>
+    <script src="scripts/auth.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="main">
+        <div class="login-wrapper">
+            <div class="login-left">
+                <div class="logo-wrapper">
+                    <img src="images/logoBranca.png" class="logo-branca" width="96px" alt="logo">
+                </div>
+                <div class="title">
+                    <div class="title-name">GymTrack</div>
+                    <div class="title-logo">Sua jornada fitness começa aqui!</div>
+                </div>
+                <div class="title">
+                    <div class="subtitle-name">Bem vindo de volta!</div>
+                    <div class="title-logo">Preparado para bater as metas de hoje?</div>
+                </div>
+                <div class="pequeno-texto"></div>
+
+                <div class="form-tabs">
+                    <button class="tab-button active" data-form="login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </button>
+                    <button class="tab-button" data-form="register">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Cadastro</span>
+                    </button>
+                </div>
+
+                <div class="forms-container">
+                    <form id="loginForm" class="form-content active" onsubmit="return false;">
+                        <div class="login-input">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="email" placeholder="Insira seu email" required />
+                        </div>
+                        <div class="login-input">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="password" placeholder="Insira sua senha" required />
+                        </div>
+                        <button class="login-button" type="submit">Entrar</button>
+                    </form>
+
+                    <form id="registerForm" class="form-content" onsubmit="return false;">
+                        <div class="login-input">
+                            <i class="fa-regular fa-envelope"></i>
+                            <input type="email" id="registerEmail" placeholder="Insira seu email" required />
+                        </div>
+                        <div class="login-input">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="registerPassword" placeholder="Crie uma senha" required />
+                        </div>
+                        <div class="login-input">
+                            <i class="fa-solid fa-lock"></i>
+                            <input type="password" id="confirmPassword" placeholder="Confirme sua senha" required />
+                        </div>
+                        <button class="login-button" type="submit">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+            <div class="login-right">
+                <div class="feature-carousel">
+                    <div class="carousel-container">
+                        <button class="carousel-arrow prev">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <div class="carousel-slide active">
+                            <div class="feature-content">
+                                <i class="fas fa-dumbbell feature-icon"></i>
+                                <h2>Registro de Treinos</h2>
+                                <p>Registre seus treinos com facilidade e acompanhe seu progresso.</p>
+                            </div>
+                            <div class="feature-preview">
+                                <div class="preview-container">
+                                    <div class="preview-header">
+                                        <i class="fa-solid fa-dumbbell"></i>
+                                        <h5>Registrar treino</h5>
+                                    </div>
+                                    <div class="preview-form">
+                                        <div class="form-group">
+                                            <label>Plano de treino</label>
+                                            <select class="form-select">
+                                                <option>Treino de Inferiores</option>
+                                                <option>Treino de Superiores</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Treino realizado</label>
+                                            <select class="form-select">
+                                                <option>Dia 1 - Glúteos e Posterior</option>
+                                                <option>Dia 2 - Quadríceps</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Tempo de treino</label>
+                                            <div class="time-inputs">
+                                                <div class="time-group">
+                                                    <label>Horas</label>
+                                                    <div class="input-group">
+                                                        <button class="btn btn-outline-secondary">
+                                                            <i class="fa-solid fa-minus"></i>
+                                                        </button>
+                                                        <input type="number" value="1" class="form-control text-center">
+                                                        <button class="btn btn-outline-secondary">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="time-group">
+                                                    <label>Minutos</label>
+                                                    <div class="input-group">
+                                                        <button class="btn btn-outline-secondary">
+                                                            <i class="fa-solid fa-minus"></i>
+                                                        </button>
+                                                        <input type="number" value="30"
+                                                            class="form-control text-center">
+                                                        <button class="btn btn-outline-secondary">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="xp-preview">
+                                            <div class="xp-header">
+                                                <span>Experiência ganha</span>
+                                                <span>+150 XP</span>
+                                            </div>
+                                            <div class="progress-bar">
+                                                <div class="progress" style="width: 45%"></div>
+                                            </div>
+                                            <div class="xp-footer">
+                                                <span>Nível 5</span>
+                                                <span>45%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="feature-content">
+                                <i class="fas fa-chart-line feature-icon"></i>
+                                <h2>Acompanhamento de Progresso</h2>
+                                <p>Visualize seu desenvolvimento com métricas detalhadas.</p>
+                            </div>
+                            <div class="feature-preview">
+                                <div class="preview-container">
+                                    <div class="progress-stats">
+                                        <div class="stat-card">
+                                            <i class="fa-solid fa-fire"></i>
+                                            <div class="stat-info">
+                                                <h3>5</h3>
+                                                <p>dias seguidos</p>
+                                            </div>
+                                        </div>
+                                        <div class="stat-card">
+                                            <i class="fa-solid fa-check"></i>
+                                            <div class="stat-info">
+                                                <h3>12</h3>
+                                                <p>treinos concluídos</p>
+                                            </div>
+                                        </div>
+                                        <div class="stat-card">
+                                            <i class="fa-solid fa-trophy"></i>
+                                            <div class="stat-info">
+                                                <h3>8</h3>
+                                                <p>conquistas</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="calendar-preview">
+                                        <div class="calendar-header">
+                                            <button class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-chevron-left"></i>
+                                            </button>
+                                            <h5>Maio 2024</h5>
+                                            <button class="btn btn-sm btn-outline-secondary">
+                                                <i class="fa fa-chevron-right"></i>
+                                            </button>
+                                        </div>
+                                        <div class="calendar-grid">
+                                            <div class="calendar-day completed">1</div>
+                                            <div class="calendar-day completed">2</div>
+                                            <div class="calendar-day completed">3</div>
+                                            <div class="calendar-day">4</div>
+                                            <div class="calendar-day">5</div>
+                                            <div class="calendar-day">6</div>
+                                            <div class="calendar-day">7</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="feature-content">
+                                <i class="fas fa-calendar-check feature-icon"></i>
+                                <h2>Rotinas Personalizadas</h2>
+                                <p>Crie e gerencie suas rotinas de treino.</p>
+                            </div>
+                            <div class="feature-preview">
+                                <div class="preview-container">
+                                    <div class="routine-preview">
+                                        <div class="routine-header">
+                                            <div class="routine-title">
+                                                <h5>Treino de Inferiores</h5>
+                                                <span class="badge-iniciante">Iniciante</span>
+                                            </div>
+                                            <div class="routine-category">Pernas</div>
+                                        </div>
+                                        <div class="routine-exercises">
+                                            <div class="exercise-item">
+                                                <div class="exercise-info">
+                                                    <span class="exercise-name">Supino Reto</span>
+                                                    <span class="exercise-sets">4x 8-12</span>
+                                                </div>
+                                                <div class="exercise-status">
+                                                    <i class="fa-solid fa-check-circle"></i>
+                                                </div>
+                                            </div>
+                                            <div class="exercise-item">
+                                                <div class="exercise-info">
+                                                    <span class="exercise-name">Supino Inclinado</span>
+                                                    <span class="exercise-sets">4x 8-12</span>
+                                                </div>
+                                                <div class="exercise-status">
+                                                    <i class="fa-solid fa-check-circle"></i>
+                                                </div>
+                                            </div>
+                                            <div class="exercise-item">
+                                                <div class="exercise-info">
+                                                    <span class="exercise-name">Supino Transversal</span>
+                                                    <span class="exercise-sets">4x 8-12</span>
+                                                </div>
+                                                <div class="exercise-status">
+                                                    <i class="fa-regular fa-circle"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="feature-content">
+                                <i class="fas fa-users feature-icon"></i>
+                                <h2>Comunidade e Conquistas</h2>
+                                <p>Conecte-se e desbloqueie conquistas exclusivas.</p>
+                            </div>
+                            <div class="feature-preview">
+                                <div class="preview-container">
+                                    <div class="achievements-preview">
+                                        <div class="achievements-header">
+                                            <h5>Suas conquistas</h5>
+                                            <button class="btn btn-outline-primary btn-sm">Nova conquista</button>
+                                        </div>
+                                        <div class="achievements-list">
+                                            <div class="achievement-card unlocked">
+                                                <div class="achievement-icon">
+                                                    <i class="fas fa-trophy"></i>
+                                                </div>
+                                                <div class="achievement-info">
+                                                    <h6>Primeiro Treino</h6>
+                                                    <p>Complete seu primeiro treino</p>
+                                                    <div class="achievement-progress">
+                                                        <div class="progress">
+                                                            <div class="progress-bar" style="width: 100%"></div>
+                                                        </div>
+                                                        <span>1/1</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="achievement-card">
+                                                <div class="achievement-icon">
+                                                    <i class="fas fa-fire"></i>
+                                                </div>
+                                                <div class="achievement-info">
+                                                    <h6>5 Dias Seguidos</h6>
+                                                    <p>Complete 5 dias de treino consecutivos</p>
+                                                    <div class="achievement-progress">
+                                                        <div class="progress">
+                                                            <div class="progress-bar" style="width: 60%"></div>
+                                                        </div>
+                                                        <span>3/5</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-arrow next">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/codigo/scripts/login.js"></script>
+
+</body>
+
+</html>

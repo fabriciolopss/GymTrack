@@ -8,6 +8,7 @@ class LayoutManager {
     this.setActiveHeaderFromURL();
     this.addEventListeners();
     this.initializeSidebar();
+    this.addLogoutButton();
   }
 
   initializeSidebar() {
@@ -85,5 +86,32 @@ class LayoutManager {
         : `${basePath}/sections/${fileName}`;
 
     window.location.href = targetPath;
+  }
+
+  addLogoutButton() {
+    const sidebarFooter = document.querySelector('.sidebar-footer');
+    if (!sidebarFooter) return;
+
+    // Cria o botão de logout
+    const logoutButton = document.createElement('button');
+    logoutButton.className = 'btn btn-danger w-100 mt-2';
+    logoutButton.style.cssText = 'background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; font-weight: 600; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s ease;';
+    logoutButton.innerHTML = `
+        <i data-lucide="log-out"></i>
+        <span class="nav-text">Sair</span>
+    `;
+
+    // Adiciona o evento de clique
+    logoutButton.addEventListener('click', () => {
+      // Remove o token e os dados do usuário do localStorage
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      
+      // Redireciona para a página de login
+      window.location.href = 'login.html';
+    });
+
+    // Adiciona o botão após o botão de registrar treino
+    sidebarFooter.appendChild(logoutButton);
   }
 }
