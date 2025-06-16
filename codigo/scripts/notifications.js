@@ -1,3 +1,5 @@
+import ApiService from './services/api.js';
+
 document.addEventListener("DOMContentLoaded", function(){
   const notifications = new Notifications;
 })
@@ -13,9 +15,7 @@ const NOTIFICATION_ICONS = {
   default: "fa-solid fa-bell text-primary" // Default icon
 };
 
-
-
-export function createNotification({ title, description, type }) {
+export async function createNotification({ title, description, type }) {
   const notification = {
     title,
     type,
@@ -23,30 +23,36 @@ export function createNotification({ title, description, type }) {
     dateTime: new Date().toISOString()
   };
 
-  const gymAppData = JSON.parse(localStorage.getItem('gymAppData')) || { notifications: [] };
-  gymAppData.notifications.unshift(notification); 
-  localStorage.setItem('gymAppData', JSON.stringify(gymAppData));
-  
-  return notification;
+  try {
+    await ApiService.addNotification(notification);
+    return notification;
+  } catch (error) {
+    console.error('Erro ao criar notificação:', error);
+    throw error;
+  }
 }
 
-class Notifications{
-
-  constructor(){
-    this.notifications = this.getNotifications();
-    this.notificationButton = document.querySelector('[redirect-session-name="notificacoes"]');
-    this.notificationWrapper = document.querySelector('.notification-system-wrapper');
-    this.notificationBody = document.querySelector('.notification-system-body');
-    this.previousUsedDate;
-
-    this.startNotificationsSystem();
-    this.fillNotificationsBody();
-    this.notificationsCount();
+class Notifications {
+  constructor() {
+    this.initializeNotifications();
   }
 
-  getNotifications(){
-    const gymAppData = JSON.parse(localStorage.getItem('gymAppData'));
-    return gymAppData.notifications;
+  async initializeNotifications() {
+    try {
+      const userData = await ApiService.getUserData();
+      this.notifications = userData.notifications || [];
+      this.notificationButton = document.querySelector('[redirect-session-name="notificacoes"]');
+      this.notificationWrapper = document.querySelector('.notification-system-wrapper');
+      this.notificationBody = document.querySelector('.notification-system-body');
+      this.previousUsedDate;
+
+      this.startNotificationsSystem();
+      this.fillNotificationsBody();
+      this.notificationsCount();
+    } catch (error) {
+      console.error('Erro ao inicializar notificações:', error);
+      this.notifications = [];
+    }
   }
 
   countUpToNumber(targetNumber, duration = 1000, element = document.getElementById("notification-count")) {
@@ -68,7 +74,6 @@ class Notifications{
         element.classList.remove("bg-danger");
       }
 
-      
       if (progress < 1) {
         requestAnimationFrame(updateCount);
       }
@@ -77,9 +82,9 @@ class Notifications{
     requestAnimationFrame(updateCount);
   }
 
-  notificationsCount(){
+  notificationsCount() {
     const count = document.getElementById("notification-count");
-    this.countUpToNumber(this.notifications.length, 1000, count)
+    this.countUpToNumber(this.notifications.length, 1000, count);
   }
 
   timeAgo(date) {
@@ -95,31 +100,31 @@ class Notifications{
     return `${diffDays} dia${diffDays > 1 ? 's' : ''} atrás`;
   }
 
-  isToGenerateHeader(notification){
+  isToGenerateHeader(notification) {
     const formattedNotificationDate = new Date(notification.dateTime).toLocaleDateString('pt-BR');
     const formattedPreviousDate = new Date(this.previousUsedDate).toLocaleDateString('pt-BR');
     return formattedNotificationDate === formattedPreviousDate;
   }
 
-  generateDateHeader(notification){
-    if(this.isToGenerateHeader(notification)){
+  generateDateHeader(notification) {
+    if(this.isToGenerateHeader(notification)) {
       return null;
-    }else{
+    } else {
       const formattedNotificationDate = new Date(notification.dateTime).toLocaleDateString('pt-BR');
       const formattedToday = new Date().toLocaleDateString('pt-BR');
 
       const dateHeader = document.createElement("div");
 
-      if(formattedNotificationDate === formattedToday){
+      if(formattedNotificationDate === formattedToday) {
         return dateHeader.innerHTML = `<div class="notification-date-header">Hoje</div>`;
-      }else{
+      } else {
         return dateHeader.innerHTML = `<div class="notification-date-header">${formattedNotificationDate}</div>`;
       }
     }
   }
 
-  fillNotificationsBody(){
-    if(this.notifications.length > 0){
+  fillNotificationsBody() {
+    if(this.notifications.length > 0) {
       this.notifications.forEach((notification, index) => {
         const dataHeader = this.generateDateHeader(notification);
         if(dataHeader)
@@ -144,28 +149,31 @@ class Notifications{
         this.previousUsedDate = new Date(notification.dateTime).toISOString();
       });
       this.bindDeleteButtons();
-    }else{
+    } else {
       this.notificationBody.innerHTML = 
         `<div class="text-center p-3 text-muted">Sem notificações recentes</div>`;
     }
   }
 
-  bindDeleteButtons() {
+  async bindDeleteButtons() {
     document.querySelectorAll('.delete-notification').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+      btn.addEventListener('click', async (e) => {
         const index = parseInt(e.currentTarget.dataset.index);
-        this.notifications.splice(index, 1);
-        const gymAppData = JSON.parse(localStorage.getItem('gymAppData'));
-        gymAppData.notifications = this.notifications;
-        localStorage.setItem('gymAppData', JSON.stringify(gymAppData));
-        this.notificationBody.innerHTML = '';
-        this.previousUsedDate = null;
-        this.fillNotificationsBody();
+        try {
+          await ApiService.deleteNotification(index);
+          this.notifications.splice(index, 1);
+          this.notificationBody.innerHTML = '';
+          this.previousUsedDate = null;
+          this.fillNotificationsBody();
+          this.notificationsCount();
+        } catch (error) {
+          console.error('Erro ao deletar notificação:', error);
+        }
       });
     });
   }
 
-  startNotificationsSystem(){
+  startNotificationsSystem() {
     document.addEventListener('click', (event) => {
       if (!this.notificationWrapper.contains(event.target) && !this.notificationButton.contains(event.target)) {
         this.notificationWrapper.classList.remove('show');

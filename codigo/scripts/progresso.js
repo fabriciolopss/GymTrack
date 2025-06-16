@@ -1,3 +1,5 @@
+import ApiService from './services/api.js';
+
 function calcularXpConquista(tipo, valor) {
     if (tipo === "treinos") return valor * 10;
     if (tipo === "streak") return valor * 15;
@@ -616,4 +618,55 @@ function criarNovoGrupo() {
 
     saveGymData(gymData);
     preencherSocialFeatures(gymData);
+}
+
+class Progresso {
+  constructor() {
+    this.initializeProgresso();
+  }
+
+  async initializeProgresso() {
+    try {
+      const userData = await ApiService.getUserData();
+      this.gymData = userData.gymData || {};
+      this.progressoContainer = document.querySelector('.progresso-container');
+      this.bindEvents();
+      this.renderProgresso();
+    } catch (error) {
+      console.error('Erro ao inicializar progresso:', error);
+      this.gymData = {};
+    }
+  }
+
+  bindEvents() {
+    // Add any event listeners here
+  }
+
+  async renderProgresso() {
+    if (!this.gymData.progresso) {
+      this.gymData.progresso = [];
+    }
+
+    this.progressoContainer.innerHTML = this.gymData.progresso.map(progress => `
+      <div class="progresso-item">
+        <h3>${progress.date}</h3>
+        <p>${progress.description}</p>
+      </div>
+    `).join('') || '<p>Nenhum progresso registrado</p>';
+  }
+
+  async addProgresso(progressoData) {
+    try {
+      if (!this.gymData.progresso) {
+        this.gymData.progresso = [];
+      }
+      
+      this.gymData.progresso.push(progressoData);
+      await ApiService.updateUserData({ gymData: this.gymData });
+      await this.renderProgresso();
+    } catch (error) {
+      console.error('Erro ao adicionar progresso:', error);
+      throw error;
+    }
+  }
 }

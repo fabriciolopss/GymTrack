@@ -4,25 +4,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 class DashboardManager {
   constructor() {
-    this.gymData = JSON.parse(localStorage.getItem("gymAppData")) || {};
-    this.getUserName();
-    this.hideCadastroIfProfileExists();
+    this.initializeDashboard();
+  }
+
+  async initializeDashboard() {
+    try {
+      const userData = await window.auth.getCurrentUserData();
+      if (!userData) {
+        console.error('Não foi possível obter os dados do usuário');
+        return;
+      }
+
+      this.userData = userData;
+      this.getUserName();
+      this.hideCadastroIfProfileExists();
+    } catch (error) {
+      console.error('Erro ao inicializar dashboard:', error);
+    }
   }
 
   getUserName() {
-    document.getElementById("user-name").innerText =
-      this.gymData.profile.name || "Usuário desconhecido";
+    const userName = this.userData?.userData?.profile?.pessoal?.nome || "Usuário desconhecido";
+    document.getElementById("user-name").innerText = userName;
   }
 
   hideCadastroIfProfileExists() {
-    const profile = this.gymData.profile;
+    const profile = this.userData?.userData?.profile;
 
     function isEmptyProfile(profile) {
       return (
         !profile ||
         typeof profile !== "object" ||
         Array.isArray(profile) ||
-        Object.keys(profile).length === 0
+        Object.keys(profile).length === 0 ||
+        !profile.pessoal?.nome // Verifica se o nome existe
       );
     }
 
@@ -30,12 +45,12 @@ class DashboardManager {
       '[redirect-session-name="cadastro"]'
     );
     if (cadastroMenuItem) {
-      cadastroMenuItem.style.display = isEmptyProfile(profile)
-        ? "flex"
-        : "none";
+      // Mostra o menu de cadastro se o perfil estiver vazio
+      cadastroMenuItem.style.display = isEmptyProfile(profile) ? "flex" : "none";
     }
   }
 }
+
 class Dashboard {
   constructor() {
     this.grid = null;
