@@ -1,19 +1,14 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   // --- VERIFICAÇÃO INICIAL: O usuário já está cadastrado? ---
   try {
-    const existingAppData =
-      JSON.parse(localStorage.getItem("gymAppData")) || {};
-    if (
-      existingAppData.profile &&
-      existingAppData.profile.meta &&
-      existingAppData.profile.meta.data_cadastro
-    ) {
+    const userData = await window.auth.getCurrentUserData();
+    if (userData?.userData?.profile?.metadados?.data_cadastro) {
       console.log("Usuário já cadastrado. Redirecionando para o dashboard...");
       window.location.href = "index.html";
       return;
     }
   } catch (error) {
-    console.error("Erro ao verificar dados existentes no localStorage:", error);
+    console.error("Erro ao verificar dados existentes:", error);
     // Continua mesmo se houver erro na leitura, permitindo o cadastro
   }
 
@@ -164,71 +159,66 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // SUBMIT: coleta dados organizados, calcula IMC, salva e redireciona
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-
-    if (validateStep(currentStep)) {
-      // Coleta os dados do formulário pelos IDs/names
-      const altura = parseFloat(
-        document.getElementById("altura_cm")?.value || ""
-      );
-      const peso = parseFloat(document.getElementById("peso_kg")?.value || "");
-      const imc =
-        altura && peso && altura > 0
-          ? (peso / (altura / 100) ** 2).toFixed(1)
-          : null;
-
+  // Event listener para o botão de submit
+  submitBtn.addEventListener("click", async function () {
+    if (form.checkValidity()) {
+      const formData = new FormData(form);
       const profile = {
-        pessoal: {
-          nome_completo: document.getElementById("nome_completo")?.value || "",
-          data_nascimento:
-            document.getElementById("data_nascimento")?.value || "",
-          genero: document.getElementById("genero")?.value || "",
-          altura_cm: altura,
-          peso_kg: peso,
-          imc: imc,
-          telefone: document.getElementById("telefone")?.value || "",
-          email: document.getElementById("email")?.value || "",
-        },
-        objetivos: {
-          objetivo_principal:
-            document.getElementById("objetivo_principal")?.value || "",
-          frequencia_semanal:
-            document.getElementById("frequencia_semanal")?.value || "",
-          experiencia_previa:
-            document.getElementById("experiencia_previa")?.value || "",
-          tipo_treino: document.getElementById("tipo_treino")?.value || "",
-        },
         metadados: {
-          termos: document.getElementById("termos")?.checked || false,
+          termos: true,
           data_cadastro: new Date().toISOString(),
           xp: 0,
-          conquistas: [],
+          conquistas: []
         },
+        objetivos: {
+          objetivo: formData.get("objetivo"),
+          frequencia: formData.get("frequencia"),
+          nivel: formData.get("nivel")
+        },
+        pessoal: {
+          nome: formData.get("nome"),
+          data_nascimento: formData.get("data_nascimento"),
+          genero: formData.get("genero"),
+          altura: formData.get("altura"),
+          peso: formData.get("peso")
+        }
       };
 
       try {
-        let appData = JSON.parse(localStorage.getItem("gymAppData")) || {};
-        appData.profile = profile;
-        localStorage.setItem("gymAppData", JSON.stringify(appData));
-        console.log(
-          "Dados do perfil salvos com sucesso em gymAppData:",
-          appData
-        );
+        const userId = window.auth.getCurrentUserId();
+        if (!userId) {
+          throw new Error('ID do usuário não encontrado');
+        }
+
+        const response = await fetch(`${window.auth.API_URL}/users/${userId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.auth.getToken()}`
+          },
+          body: JSON.stringify({
+            userData: {
+              ...profile,
+              default_trainings: { ids: [] },
+              edited_trainings: [],
+              notifications: [],
+              registered_trainings: []
+            }
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error('Erro ao salvar dados do perfil');
+        }
 
         // Redireciona para o dashboard
-        window.location.href = "../index.html";
+        window.location.href = "index.html";
       } catch (error) {
-        console.error("Erro ao salvar dados no gymAppData:", error);
-        alert(
-          "Erro ao salvar cadastro. Verifique o console para mais detalhes."
-        );
+        console.error("Erro ao salvar dados do perfil:", error);
+        alert("Erro ao salvar cadastro. Verifique o console para mais detalhes.");
       }
     } else {
-      console.log(
-        "Formulário inválido no último passo. Verifique os campos marcados."
-      );
+      console.log("Formulário inválido no último passo. Verifique os campos marcados.");
     }
   });
 

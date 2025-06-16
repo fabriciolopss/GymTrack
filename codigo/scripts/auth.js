@@ -17,9 +17,9 @@ async function login(email, password) {
             throw new Error(data.error || 'Erro ao fazer login');
         }
 
-        // Salva o token e os dados do usuário no localStorage
+        // Salva o token e o ID do usuário no localStorage
         localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('userId', data.user.id);
 
         return data;
     } catch (error) {
@@ -44,9 +44,9 @@ async function register(email, password) {
             throw new Error(data.error || 'Erro ao registrar usuário');
         }
 
-        // Salva o token e os dados do usuário no localStorage
+        // Salva o token e o ID do usuário no localStorage
         localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
+        localStorage.setItem('userId', data.userId);
 
         return data;
     } catch (error) {
@@ -62,7 +62,7 @@ function isAuthenticated() {
 // Função para fazer logout
 function logout() {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('userId');
     window.location.href = 'login.html';
 }
 
@@ -71,10 +71,33 @@ function getToken() {
     return localStorage.getItem('token');
 }
 
-// Função para obter os dados do usuário atual
-function getCurrentUser() {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+// Função para obter o ID do usuário atual
+function getCurrentUserId() {
+    return localStorage.getItem('userId');
+}
+
+// Função para obter os dados do usuário atual do servidor
+async function getCurrentUserData() {
+    try {
+        const userId = getCurrentUserId();
+        if (!userId) return null;
+
+        const response = await fetch(`${API_URL}/users/${userId}`, {
+            headers: {
+                'Authorization': `Bearer ${getToken()}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Erro ao obter dados do usuário');
+        }
+
+        const userData = await response.json();
+        return userData;
+    } catch (error) {
+        console.error('Erro ao obter dados do usuário:', error);
+        return null;
+    }
 }
 
 // Exporta as funções
@@ -84,5 +107,6 @@ window.auth = {
     logout,
     isAuthenticated,
     getToken,
-    getCurrentUser
+    getCurrentUserId,
+    getCurrentUserData
 }; 

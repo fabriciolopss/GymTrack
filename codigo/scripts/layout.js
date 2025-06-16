@@ -101,9 +101,7 @@ class LayoutManager {
         <span class="nav-text">Sair</span>
     `;
 
-    // Adiciona o evento de clique
     logoutButton.addEventListener('click', () => {
-      // Remove o token e os dados do usuário do localStorage
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       
