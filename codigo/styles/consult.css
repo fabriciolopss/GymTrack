@@ -34,7 +34,7 @@ li {
     height: 38px;
 
     border: 1px solid rgba(0, 0, 0, 0);
-    
+
     display: flex;
     flex-direction: column;
 }
@@ -83,12 +83,12 @@ select:focus {
 select:hover {
     background-color: rgba(20, 20, 20);
 
-    color: white;  
+    color: white;
 }
 
 .dado-usuario {
     font-weight: bold;
-    
+
     width: 100%;
 }
 

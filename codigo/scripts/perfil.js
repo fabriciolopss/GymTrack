@@ -1,305 +1,445 @@
+import ApiService from './services/api.js';
+
 lucide.createIcons();
 
 document.addEventListener("DOMContentLoaded", function () {
   new LayoutManager();
 });
 
-const divDados = document.querySelector("#dados");
-const botaoEditar = document.querySelector("#editar");
-const botaoConcluirEdit = document.querySelector("#concluir-edicao");
-const botaoCancelarEdit = document.querySelector("#cancelar-edicao");
-const botaoExcluir = document.querySelector("#excluir-perfil");
+class ProfileManager {
+  constructor() {
+    this.initializeElements();
+    this.initializeEventListeners();
+    this.currentProfile = null;
+    this.initializeProfile();
+  }
 
-if (JSON.parse(localStorage.getItem("gymAppData")).profile.pessoal != null) {
-  const gymAppDataFull = JSON.parse(localStorage.getItem("gymAppData"));
+  initializeElements() {
+    this.dadosDiv = document.getElementById("dados");
+    this.loadingDiv = document.getElementById("loading");
+    this.errorMessageDiv = document.getElementById("error-message");
+    this.editarButton = document.getElementById("editar");
+    this.concluirEdicaoButton = document.getElementById("concluir-edicao");
+    this.cancelarEdicaoButton = document.getElementById("cancelar-edicao");
+    this.excluirPerfilButton = document.getElementById("excluir-perfil");
+    this.editButtonsContainer = this.concluirEdicaoButton.parentElement;
+  }
 
-  const dadosUsuarioRaw = JSON.parse(
-    localStorage.getItem("gymAppData")
-  ).profile;
-  let dadosUsuario = JSON.parse(localStorage.getItem("gymAppData")).profile;
+  initializeEventListeners() {
+    this.editarButton.addEventListener("click", () => this.toggleEditMode(true));
+    this.concluirEdicaoButton.addEventListener("click", () => this.saveProfile());
+    this.cancelarEdicaoButton.addEventListener("click", () => this.toggleEditMode(false));
+    this.excluirPerfilButton.addEventListener("click", () => this.deleteProfile());
+  }
 
-  const divDados = document.querySelector("#dados");
-  const botaoEditar = document.querySelector("#editar");
-  const botaoConcluirEdit = document.querySelector("#concluir-edicao");
-  const botaoCancelarEdit = document.querySelector("#cancelar-edicao");
+  async initializeProfile() {
+    try {
+      this.showLoading(true);
+      const userData = await ApiService.getUserData();
+      
+      if (!userData?.profile) {
+        this.showIncompleteProfile();
+        return;
+      }
 
-  function traducaoDados() {
-    let anoNascimento = dadosUsuarioRaw.pessoal.data_nascimento.substring(0, 4);
-    let mesNascimento = dadosUsuarioRaw.pessoal.data_nascimento.substring(5, 7);
-    let diaNascimento = dadosUsuarioRaw.pessoal.data_nascimento.substring(
-      8,
-      10
-    );
+      if (this.isProfileIncomplete(userData.profile)) {
+        this.showIncompleteProfile();
+        return;
+      }
 
-    dadosUsuario.pessoal.data_nascimento =
-      diaNascimento + "/" + mesNascimento + "/" + anoNascimento;
-
-    let telefone = dadosUsuario.pessoal.telefone;
-    if (telefone.length == 11) {
-      dadosUsuario.pessoal.telefone =
-        "(" +
-        telefone.substring(0, 2) +
-        ") " +
-        telefone.substring(2, 7) +
-        "-" +
-        telefone.substring(7, 11);
-    } else if (telefone.length == 10) {
-      dadosUsuarioRaw.pessoal.telefone =
-        telefone.substring(0, 2) + "9" + telefone.substring(2, 10);
-      dadosUsuario.pessoal.telefone =
-        "(" +
-        telefone.substring(0, 2) +
-        ") 9" +
-        telefone.substring(2, 6) +
-        "-" +
-        telefone.substring(6, 10);
+      this.currentProfile = userData.profile;
+      this.displayProfile(userData.profile);
+    } catch (error) {
+      console.error("Erro ao carregar perfil:", error);
+      this.showError("Erro ao carregar perfil. Por favor, tente novamente.");
+    } finally {
+      this.showLoading(false);
     }
   }
 
-  traducaoDados();
+  isProfileIncomplete(profile) {
+    return !profile.pessoal?.nome || 
+           !profile.pessoal?.data_nascimento || 
+           !profile.pessoal?.altura || 
+           !profile.pessoal?.peso || 
+           !profile.objetivos?.objetivo_principal;
+  }
 
-  divDados.innerHTML = `
-      <ul class="list-unstyled row">
-        <h1 class="fs-1 text-secondary mt-3 col-12">Dados pessoais</h1>
-        <li class="col-xl-4 col-lg-12">Nome completo: <span class="dado-usuario">${dadosUsuario.pessoal.nome_completo}</span></li>
-        <li class="col-xl-4 col-lg-6">Data de nascimento: <span class="dado-usuario">${dadosUsuario.pessoal.data_nascimento}</span></li>
-        <li class="col-xl-4 col-lg-6">Gênero: <span class="dado-usuario">${dadosUsuario.pessoal.genero}</span></li>
-        <li class="col-xl-4 col-lg-6">Altura (cm): <span class="dado-usuario">${dadosUsuario.pessoal.altura_cm}</span></li>
-        <li class="col-xl-4 col-lg-6">Peso (kg): <span class="dado-usuario">${dadosUsuario.pessoal.peso_kg}</span></li>
-        <li class="col-xl-4 col-lg-6">Telefone: <span class="dado-usuario">${dadosUsuario.pessoal.telefone}</span></li>
-        <li class="col-12">Email: <span class="dado-usuario">${dadosUsuario.pessoal.email}</span></li>
-      </ul>
-      <ul class="list-unstyled row">
-        <h1 class="fs-1 text-secondary">Objetivos</h1>
-        <li class="col-lg-4 col-md-6">Experiência: <span class="dado-usuario">${dadosUsuario.objetivos.experiencia_previa}</span></li>
-        <li class="col-lg-4 col-md-6">Frequência semanal: <span class="dado-usuario">${dadosUsuario.objetivos.frequencia_semanal}</span></li>
-        <li class="col-lg-4 col-md-6">Objetivo principal: <span class="dado-usuario">${dadosUsuario.objetivos.objetivo_principal}</span></li>
-        <li class="col-lg-4 col-md-6">Tipo de atividade: <span class="dado-usuario">${dadosUsuario.objetivos.tipo_treino}</span></li>
-      </ul>
+  showIncompleteProfile() {
+    this.dadosDiv.innerHTML = `
+      <div class="text-center py-5">
+        <i data-lucide="alert-circle" class="text-warning mb-3" style="width: 48px; height: 48px;"></i>
+        <h3 class="mb-3">Perfil Incompleto</h3>
+        <p class="text-muted mb-4">Para aproveitar ao máximo o GymTrack, complete seu cadastro com suas informações pessoais e objetivos.</p>
+        <a href="cadastro.html" class="btn btn-primary">
+          <i data-lucide="user-plus" class="me-2"></i>Completar Cadastro
+        </a>
+      </div>
     `;
+    lucide.createIcons();
+  }
 
-  botaoEditar.addEventListener("click", (e) => {
-    botaoEditar.style = "display: none";
-    botaoConcluirEdit.style = "display: inline";
-    botaoCancelarEdit.style = "display: inline";
+  displayProfile(profile, isEditing = false) {
+    const pessoal = profile.pessoal || {};
+    const objetivos = profile.objetivos || {};
+    const metadados = profile.metadados || {};
 
-    e.preventDefault();
-    divDados.innerHTML = `<ul class="list-unstyled row">
-        <h1 class="fs-1 text-secondary mt-3 col-12">Dados pessoais</h1>
-        <li class="col-xl-4 col-lg-12" id="nome">
-          Nome completo: <input id="input-nome" class="w-lg-50" type="text" value="${dadosUsuario.pessoal.nome_completo}">
-        </li>
-        <li class="col-xl-4 col-lg-6" id="nascimento">
-          Data de nascimento: <input id="input-nasc" type="date" value="${dadosUsuarioRaw.pessoal.data_nascimento}">
-        </li>
-        <li class="col-xl-4 col-lg-6" id="genero">
-          Gênero: <strong>${dadosUsuario.pessoal.genero}</strong>
-        </li>
-        <li class="col-xl-4 col-lg-6" id="altura">
-          Altura (cm): <input id="input-altura" type="number" value="${dadosUsuario.pessoal.altura_cm}">
-        </li>
-        <li class="col-xl-4 col-lg-6" id="peso">
-          Peso (kg): <input id="input-peso" type="number" value="${dadosUsuario.pessoal.peso_kg}">
-        </li>
-        <li class="col-xl-4 col-lg-6" id="telefone">
-          Telefone: <input id="input-tel" type="tel" value="${dadosUsuarioRaw.pessoal.telefone}">
-        </li>
-        <li class="col-12" id="email">
-          Email: <input id="input-email" type="email" value="${dadosUsuario.pessoal.email}">
-        </li>
-      </ul>
-      <ul class="list-unstyled row">
-        <h1 class="fs-1 text-secondary">Objetivos</h1>
-        <li id="experiencia" class="col-xl-4 col-lg-6">
-          Experiência: <strong>${dadosUsuario.objetivos.experiencia_previa}</strong>
-        </li>
-        <li id="frequencia" class="col-xl-4 col-lg-6">
-          Frequência semanal:<strong>${dadosUsuario.objetivos.frequencia_semanal}</strong>
-        </li>
-        <li id="objetivo" class="col-xl-4 col-lg-6">
-          Objetivo principal:<strong>${dadosUsuario.objetivos.objetivo_principal}</strong>
-        </li>
-        <li id="atividade" class="col-xl-4 col-lg-6">
-          Tipo de atividade: <strong>${dadosUsuario.objetivos.tipo_treino}</strong>
-        </li>
-      </ul>`;
+    this.dadosDiv.innerHTML = `
+      <div class="row">
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-header bg-light d-flex align-items-center">
+              <i data-lucide="user-circle" class="me-2" style="width: 24px; height: 24px; color: #4CAF50;"></i>
+              <h5 class="card-title mb-0">Dados Pessoais</h5>
+            </div>
+            <div class="card-body">
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="user" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Nome</label>
+                  ${isEditing ? 
+                    `<input type="text" class="form-control" id="nome" value="${pessoal.nome || ''}" required>` :
+                    `<p class="mb-0 fw-medium">${pessoal.nome || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="calendar" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Data de Nascimento</label>
+                  ${isEditing ? 
+                    `<input type="date" class="form-control" id="data_nascimento" value="${pessoal.data_nascimento || ''}" required>` :
+                    `<p class="mb-0 fw-medium">${this.formatDate(pessoal.data_nascimento) || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="venus-mars" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Gênero</label>
+                  ${isEditing ? 
+                    `<select class="form-select" id="genero" required>
+                      <option value="">Selecione...</option>
+                      <option value="Masculino" ${pessoal.genero === 'Masculino' ? 'selected' : ''}>Masculino</option>
+                      <option value="Feminino" ${pessoal.genero === 'Feminino' ? 'selected' : ''}>Feminino</option>
+                      <option value="Outro" ${pessoal.genero === 'Outro' ? 'selected' : ''}>Outro</option>
+                    </select>` :
+                    `<p class="mb-0 fw-medium">${pessoal.genero || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="ruler" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Altura (cm)</label>
+                  ${isEditing ? 
+                    `<input type="number" class="form-control" id="altura" value="${pessoal.altura || ''}" min="100" max="250" required>` :
+                    `<p class="mb-0 fw-medium">${pessoal.altura ? `${pessoal.altura} cm` : 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="scale" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Peso (kg)</label>
+                  ${isEditing ? 
+                    `<input type="number" class="form-control" id="peso" value="${pessoal.peso || ''}" min="30" max="300" required>` :
+                    `<p class="mb-0 fw-medium">${pessoal.peso ? `${pessoal.peso} kg` : 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="phone" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Telefone</label>
+                  ${isEditing ? 
+                    `<input type="tel" class="form-control" id="telefone" value="${pessoal.telefone || ''}" pattern="[0-9]{10,11}" required>` :
+                    `<p class="mb-0 fw-medium">${pessoal.telefone || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="mail" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Email</label>
+                  ${isEditing ? 
+                    `<input type="email" class="form-control" id="email" value="${pessoal.email || ''}" required>` :
+                    `<p class="mb-0 fw-medium">${pessoal.email || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mb-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-header bg-light d-flex align-items-center">
+              <i data-lucide="target" class="me-2" style="width: 24px; height: 24px; color: #4CAF50;"></i>
+              <h5 class="card-title mb-0">Objetivos</h5>
+            </div>
+            <div class="card-body">
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="flag" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Objetivo Principal</label>
+                  ${isEditing ? 
+                    `<select class="form-select" id="objetivo_principal" required>
+                      <option value="">Selecione...</option>
+                      <option value="Perda de peso" ${objetivos.objetivo_principal === 'Perda de peso' ? 'selected' : ''}>Perda de peso</option>
+                      <option value="Ganho de massa" ${objetivos.objetivo_principal === 'Ganho de massa' ? 'selected' : ''}>Ganho de massa</option>
+                      <option value="Condicionamento físico" ${objetivos.objetivo_principal === 'Condicionamento físico' ? 'selected' : ''}>Condicionamento físico</option>
+                      <option value="Saúde" ${objetivos.objetivo_principal === 'Saúde' ? 'selected' : ''}>Saúde</option>
+                    </select>` :
+                    `<p class="mb-0 fw-medium">${objetivos.objetivo_principal || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="award" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Experiência Prévia</label>
+                  ${isEditing ? 
+                    `<select class="form-select" id="experiencia_previa" required>
+                      <option value="">Selecione...</option>
+                      <option value="Iniciante" ${objetivos.experiencia_previa === 'Iniciante' ? 'selected' : ''}>Iniciante</option>
+                      <option value="Intermediário" ${objetivos.experiencia_previa === 'Intermediário' ? 'selected' : ''}>Intermediário</option>
+                      <option value="Avançado" ${objetivos.experiencia_previa === 'Avançado' ? 'selected' : ''}>Avançado</option>
+                    </select>` :
+                    `<p class="mb-0 fw-medium">${objetivos.experiencia_previa || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="calendar-clock" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Frequência Semanal</label>
+                  ${isEditing ? 
+                    `<select class="form-select" id="frequencia_semanal" required>
+                      <option value="">Selecione...</option>
+                      <option value="1-2 vezes" ${objetivos.frequencia_semanal === '1-2 vezes' ? 'selected' : ''}>1-2 vezes</option>
+                      <option value="3-4 vezes" ${objetivos.frequencia_semanal === '3-4 vezes' ? 'selected' : ''}>3-4 vezes</option>
+                      <option value="5+ vezes" ${objetivos.frequencia_semanal === '5+ vezes' ? 'selected' : ''}>5+ vezes</option>
+                    </select>` :
+                    `<p class="mb-0 fw-medium">${objetivos.frequencia_semanal || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+              <div class="mb-4 d-flex align-items-center">
+                <i data-lucide="dumbbell" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                <div class="w-100">
+                  <label class="form-label text-muted mb-1">Tipo de Treino</label>
+                  ${isEditing ? 
+                    `<select class="form-select" id="tipo_treino" required>
+                      <option value="">Selecione...</option>
+                      <option value="Musculação" ${objetivos.tipo_treino === 'Musculação' ? 'selected' : ''}>Musculação</option>
+                      <option value="Funcional" ${objetivos.tipo_treino === 'Funcional' ? 'selected' : ''}>Funcional</option>
+                      <option value="Cardio" ${objetivos.tipo_treino === 'Cardio' ? 'selected' : ''}>Cardio</option>
+                      <option value="Misto" ${objetivos.tipo_treino === 'Misto' ? 'selected' : ''}>Misto</option>
+                    </select>` :
+                    `<p class="mb-0 fw-medium">${objetivos.tipo_treino || 'Não informado'}</p>`
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="card border-0 shadow-sm">
+            <div class="card-header bg-light d-flex align-items-center">
+              <i data-lucide="activity" class="me-2" style="width: 24px; height: 24px; color: #4CAF50;"></i>
+              <h5 class="card-title mb-0">Progresso</h5>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4 mb-4">
+                  <div class="d-flex align-items-center">
+                    <i data-lucide="calendar-check" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                    <div>
+                      <label class="form-label text-muted mb-1">Data de Cadastro</label>
+                      <p class="mb-0 fw-medium">${this.formatDate(metadados.data_cadastro) || 'Não informado'}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                  <div class="d-flex align-items-center">
+                    <i data-lucide="zap" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                    <div>
+                      <label class="form-label text-muted mb-1">XP Atual</label>
+                      <p class="mb-0 fw-medium">
+                        <span class="badge bg-success">${metadados.xp || 0} XP</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                  <div class="d-flex align-items-center">
+                    <i data-lucide="trophy" class="me-3" style="width: 20px; height: 20px; color: #666;"></i>
+                    <div>
+                      <label class="form-label text-muted mb-1">Conquistas</label>
+                      <p class="mb-0 fw-medium">
+                        <span class="badge bg-warning text-dark">${metadados.conquistas?.length || 0} conquistas</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    lucide.createIcons();
+  }
 
-    let liGenero = document.querySelector("#genero");
-    liGenero.innerHTML = `
-        <label for="input-genero">Gênero:</label>
-        <select id="input-genero" name="genero" required>
-            <option value="Masculino" ${
-              dadosUsuario.pessoal.genero == "Masculino" ? "selected" : ""
-            }>Masculino</option>
-            <option value="Feminino" ${
-              dadosUsuario.pessoal.genero == "Feminino" ? "selected" : ""
-            }>Feminino</option>
-            <option value="Não binário" ${
-              dadosUsuario.pessoal.genero == "Não binário" ? "selected" : ""
-            }>Não binário</option>
-            <option value="Prefiro não informar" ${
-              dadosUsuario.pessoal.genero == "Prefiro não informar"
-                ? "selected"
-                : ""
-            }>Prefiro não identificar</option>
-        </select>
-      `;
+  toggleEditMode(editing) {
+    this.editarButton.style.display = editing ? 'none' : 'block';
+    this.editButtonsContainer.style.display = editing ? 'block' : 'none';
+    this.excluirPerfilButton.style.display = editing ? 'none' : 'block';
+    
+    // Use the stored current profile data when entering edit mode
+    this.displayProfile(this.currentProfile, editing);
+  }
 
-    let liExper = document.querySelector("#experiencia");
-    liExper.innerHTML = `
-        <label for="input-experiencia">Experiência:</label>
-        <select id="input-experiencia" name="experiencia" required>
-          <option value="Iniciante" ${
-            dadosUsuario.objetivos.experiencia_previa == "Iniciante"
-              ? "selected"
-              : ""
-          }>Iniciante</option>
-          <option value="Intermediário" ${
-            dadosUsuario.objetivos.experiencia_previa == "Intermediário"
-              ? "selected"
-              : ""
-          }>Intermediário</option>
-          <option value="Avançado" ${
-            dadosUsuario.objetivos.experiencia_previa == "Avançado"
-              ? "selected"
-              : ""
-          }>Avançado</option>
-        </select>
-      `;
+  getCurrentProfileData() {
+    return {
+      profile: {
+        pessoal: {
+          nome: document.getElementById('nome')?.value || '',
+          data_nascimento: document.getElementById('data_nascimento')?.value || '',
+          genero: document.getElementById('genero')?.value || '',
+          altura: document.getElementById('altura')?.value || '',
+          peso: document.getElementById('peso')?.value || '',
+          telefone: document.getElementById('telefone')?.value || '',
+          email: document.getElementById('email')?.value || ''
+        },
+        objetivos: {
+          objetivo_principal: document.getElementById('objetivo_principal')?.value || '',
+          experiencia_previa: document.getElementById('experiencia_previa')?.value || '',
+          frequencia_semanal: document.getElementById('frequencia_semanal')?.value || '',
+          tipo_treino: document.getElementById('tipo_treino')?.value || ''
+        },
+        metadados: this.currentProfile?.metadados || {
+          termos: true,
+          data_cadastro: new Date().toISOString(),
+          xp: 0,
+          conquistas: []
+        }
+      }
+    };
+  }
 
-    let liFreq = document.querySelector("#frequencia");
-    liFreq.innerHTML = `
-        <label for="input-frequencia">Frequência semanal:</label>
-        <select id="input-frequencia" name="frequencia" required>
-          <option value="2-3 vezes" ${
-            dadosUsuario.objetivos.frequencia_semanal == "2-3 vezes"
-              ? "selected"
-              : ""
-          }>2-3 vezes</option>
-          <option value="3-4 vezes" ${
-            dadosUsuario.objetivos.frequencia_semanal == "3-4 vezes"
-              ? "selected"
-              : ""
-          }>3-4 vezes</option>
-          <option value="5+ vezes" ${
-            dadosUsuario.objetivos.frequencia_semanal == "5+ vezes"
-              ? "selected"
-              : ""
-          }>5+ vezes</option>
-        </select>
-      `;
+  validateForm(data) {
+    const requiredFields = {
+      pessoal: ['nome', 'data_nascimento', 'genero', 'altura', 'peso', 'telefone', 'email'],
+      objetivos: ['objetivo_principal', 'experiencia_previa', 'frequencia_semanal', 'tipo_treino']
+    };
 
-    let liObj = document.querySelector("#objetivo");
-    liObj.innerHTML = `
-        <label for="input-objetivo">Objetivo principal:</label>
-        <select id="input-objetivo" name="objetivo" required>
-          <option value="Perda de peso" ${
-            dadosUsuario.objetivos.objetivo_principal == "Perda de peso"
-              ? "selected"
-              : ""
-          }>Perda de peso</option>
-          <option value="Ganho de massa muscular" ${
-            dadosUsuario.objetivos.objetivo_principal ==
-            "Ganho de massa muscular"
-              ? "selected"
-              : ""
-          }>Ganho de massa muscular</option>
-          <option value="Condicionamento físico" ${
-            dadosUsuario.objetivos.objetivo_principal ==
-            "Condicionamento físico"
-              ? "selected"
-              : ""
-          }>Condicionamento físico</option>
-          <option value="Saúde e bem-estar" ${
-            dadosUsuario.objetivos.objetivo_principal == "Saúde e bem-estar"
-              ? "selected"
-              : ""
-          }>Saúde e bem-estar</option>
-        </select>
-      `;
-
-    let liAtiv = document.querySelector("#atividade");
-    liAtiv.innerHTML = `
-        <label for="input-atividade">Tipo de atividade:</label>
-        <select id="input-atividade" name="atividade" required>
-          <option value="Musculação" ${
-            dadosUsuario.objetivos.tipo_treino == "Musculação" ? "selected" : ""
-          }>Musculação</option>
-          <option value="Funcional" ${
-            dadosUsuario.objetivos.tipo_treino == "Funcional" ? "selected" : ""
-          }>Funcional</option>
-          <option value="Cardio" ${
-            dadosUsuario.objetivos.tipo_treino == "Cardio" ? "selected" : ""
-          }>Cardio</option>
-        </select>
-      `;
-  });
-
-  botaoConcluirEdit.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    if (
-      document.querySelector("#input-tel").value.length == 11 ||
-      document.querySelector("#input-tel").value.length == 10
-    ) {
-      gymAppDataFull.profile.pessoal.nome_completo =
-        document.querySelector("#input-nome").value;
-      gymAppDataFull.profile.pessoal.data_nascimento =
-        document.querySelector("#input-nasc").value;
-      gymAppDataFull.profile.pessoal.genero =
-        document.querySelector("#input-genero").value;
-      gymAppDataFull.profile.pessoal.email =
-        document.querySelector("#input-email").value;
-      gymAppDataFull.profile.pessoal.peso_kg =
-        document.querySelector("#input-peso").value;
-      gymAppDataFull.profile.pessoal.altura_cm =
-        document.querySelector("#input-altura").value;
-      gymAppDataFull.profile.pessoal.telefone =
-        document.querySelector("#input-tel").value;
-      gymAppDataFull.profile.objetivos.experiencia_previa =
-        document.querySelector("#input-experiencia").value;
-      gymAppDataFull.profile.objetivos.frequencia_semanal =
-        document.querySelector("#input-frequencia").value;
-      gymAppDataFull.profile.objetivos.objetivo_principal =
-        document.querySelector("#input-objetivo").value;
-      gymAppDataFull.profile.objetivos.tipo_treino =
-        document.querySelector("#input-atividade").value;
-
-      localStorage.setItem("gymAppData", JSON.stringify(gymAppDataFull));
-
-      location.reload();
-    } else {
-      document.querySelector("#input-tel").style.border = "1px solid red";
-      alert("Insira um número de telefone válido.");
+    for (const section in requiredFields) {
+      for (const field of requiredFields[section]) {
+        if (!data.profile[section][field]) {
+          return false;
+        }
+      }
     }
-  });
 
-  botaoCancelarEdit.addEventListener("click", (e) => {
-    e.preventDefault();
+    return true;
+  }
 
-    location.reload();
-  });
+  async saveProfile() {
+    try {
+      const formData = this.getCurrentProfileData();
+      
+      // Validate required fields
+      if (!this.validateForm(formData)) {
+        this.showError("Por favor, preencha todos os campos obrigatórios.");
+        return;
+      }
 
-  console.log(JSON.stringify(dadosUsuario));
-
-  botaoExcluir.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const confirmExcluir = confirm(
-      "Tem certeza que deseja deletar seu perfil?"
-    );
-    if (confirmExcluir == true) {
-      gymAppDataFull.profile = {};
-      localStorage.setItem("gymAppData", JSON.stringify(gymAppDataFull));
-      location.reload();
+      this.showLoading(true);
+      await ApiService.updateUserData(formData);
+      
+      // Update the current profile with the new data
+      this.currentProfile = formData.profile;
+      
+      this.toggleEditMode(false);
+      this.displayProfile(this.currentProfile);
+      this.showSuccess("Perfil atualizado com sucesso!");
+    } catch (error) {
+      console.error("Erro ao salvar perfil:", error);
+      this.showError("Erro ao salvar perfil. Por favor, tente novamente.");
+    } finally {
+      this.showLoading(false);
     }
-  });
-} else {
-  console.log("Nada cadastrado");
+  }
 
-  botaoEditar.style = "display: none";
-  botaoExcluir.style = "display: none";
+  formatDate(dateString) {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR');
+  }
 
-  divDados.innerHTML =
-    '<h1 class="mt-5">Não há usuário conectado :/</h1><br><p class="mb-5">Crie sua conta e conecte-se <a href="./cadastro.html">aqui</a>!</p>';
+  showLoading(show) {
+    this.loadingDiv.style.display = show ? 'block' : 'none';
+    this.dadosDiv.style.display = show ? 'none' : 'block';
+  }
+
+  showError(message) {
+    this.errorMessageDiv.textContent = message;
+    this.errorMessageDiv.style.display = 'block';
+    setTimeout(() => {
+      this.errorMessageDiv.style.display = 'none';
+    }, 5000);
+  }
+
+  showSuccess(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3';
+    toast.setAttribute('role', 'alert');
+    toast.setAttribute('aria-live', 'assertive');
+    toast.setAttribute('aria-atomic', 'true');
+    
+    toast.innerHTML = `
+      <div class="d-flex">
+        <div class="toast-body">
+          <i data-lucide="check-circle" class="me-2"></i>${message}
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    `;
+    
+    document.body.appendChild(toast);
+    const bsToast = new bootstrap.Toast(toast);
+    bsToast.show();
+    
+    toast.addEventListener('hidden.bs.toast', () => {
+      document.body.removeChild(toast);
+    });
+    
+    lucide.createIcons();
+  }
+
+  async deleteProfile() {
+    if (!confirm("Tem certeza que deseja excluir seu perfil? Esta ação não pode ser desfeita.")) {
+      return;
+    }
+
+    try {
+      this.showLoading(true);
+      await ApiService.deleteUser();
+      window.location.href = "login.html";
+    } catch (error) {
+      console.error("Erro ao excluir perfil:", error);
+      this.showError("Erro ao excluir perfil. Por favor, tente novamente.");
+    } finally {
+      this.showLoading(false);
+    }
+  }
 }
+
+// Initialize the profile manager when the DOM is loaded
+document.addEventListener("DOMContentLoaded", () => {
+  new ProfileManager();
+});
+

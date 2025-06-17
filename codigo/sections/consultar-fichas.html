@@ -9,114 +9,10 @@
     <title>Fichas</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
-    <script src="https://kit.fontawesome.com/64b9a24b58.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="../scripts/auth.js"></script>
 </head>
 
 <body>
-
-
-    <div class="modal fade" id="checkinTreino" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <i class="fa-solid fa-dumbbell"></i>
-                    <h5 class="modal-title" id="exampleModalLabel">Registrar treino</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="form-checkin">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Plano de treino</label>
-                            <select required class="form-select" id="training-plans"
-                                aria-label="Default select example">
-                                <option selected>Selecionar o plano de treino realizado</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Treino realizado</label>
-                            <select class="form-select" id="training-days" aria-label="Default select example" disabled>
-                                <option selected>Selecionar dia do treino realizado</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Data do treino</label>
-                            <input type="date" class="form-control" id="date-checkin">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Tempo de treino</label>
-
-                            <div class="d-flex gap-3 mt-2">
-                                <div class="w-50">
-                                    <label for="hours-trained" class="form-label">Horas</label>
-                                    <div class="input-group">
-                                        <button class="btn btn-outline-secondary" id="decrement-hours" type="button">
-                                            <i class="fa-solid fa-minus"></i>
-                                        </button>
-                                        <input type="number" id="hours-trained" class="form-control text-center"
-                                            value="0" min="0" max="3">
-                                        <button class="btn btn-outline-secondary" id="increment-hours" type="button">
-                                            <i class="fa-solid fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="w-50">
-                                    <label for="minutes-trained" class="form-label">Minutos</label>
-                                    <div class="input-group">
-                                        <button class="btn btn-outline-secondary" id="decrement-minutes" type="button">
-                                            <i class="fa-solid fa-minus"></i>
-                                        </button>
-                                        <input type="number" id="minutes-trained" class="form-control text-center"
-                                            value="30" min="0" max="59">
-                                        <button class="btn btn-outline-secondary" id="increment-minutes" type="button">
-                                            <i class="fa-solid fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="xp-gain mb-3">
-                            <label class="form-label titulo-modal">Experiencia ganha</label>
-                            <div class="d-flex flex-row justify-content-between mb-2">
-                                <div class="d-flex flex-row align-items-center" data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="O ganho de XP é baseado na duração do treino e no plano escolhido.">
-                                    <span id="xp-gain">+0 XP
-                                    </span>
-                                    <i class="fa-solid fa-circle-info ms-2 ">
-                                    </i>
-                                </div>
-                                <span id="xp-porcentagem">0%</span>
-                                <span id="level">Nível 0</span>
-                            </div>
-                            <div class="custom-progress-wrapper mb-1">
-                                <div class="real-progress-bar"></div>
-                                <div class="future-progress-bar"></div>
-                            </div>
-
-
-                            <div class="d-flex flex-row justify-content-between">
-                                <span id="xp-low-limit">1320XP</span>
-                                <span id="xp-high-limit">5000XP</span>
-                            </div>
-                        </div>
-
-
-                        <button type="submit" class="btn btn-primary">Registrar treino</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="content-wrapper">
         <aside class="sidebar">
             <div class="sidebar-header">
@@ -157,9 +53,7 @@
                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
                         </span>
                     </div>
-
                     <span class="nav-text">Notificações</span>
-
                 </div>
 
                 <div class="notification-system-wrapper">
@@ -170,7 +64,6 @@
                             <div class="as-read">Marcar como lidas</div>
                         </div>
                     </div>
-
                     <div class="notification-system-body"></div>
                 </div>
             </nav>
@@ -183,8 +76,94 @@
                 </button>
             </div>
         </aside>
-        <main class="main-content">
 
+        <main class="main-content">
+            <div class="container-fluid py-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <div id="container-selecao-plano">
+                            <label for="selecao-plano" class="mt-2">Selecione o plano:</label>
+                            <select id="selecao-plano">
+                                <option selected hidden>Selecionar...</option>
+                            </select>
+                            <hr style="border: 1px solid #ccc; margin: 20px 0;">
+                        </div>
+
+                        <button id="personalizar" style="display: none">Concluir alterações</button>
+                        <button id="concluir-criacao" style="display: none">Cadastrar</button>
+                        <button id="cancelar" style="display: none">Cancelar</button>
+                        <button id="excluir-ficha" style="display: none">Excluir ficha</button>
+                        <button id="criar">Criar novo plano</button>
+                        <br />
+
+                        <div id="dados-treino">
+                            <div id="days-container">
+                            </div>
+                        </div>
+
+                        <div id="dados-treino">
+                            <label for="titulo-treino" class="mt-2">Título do treino: </label>
+                            <input id="titulo-treino" />
+                            <label for="categoria-treino">Categoria: </label>
+                            <input id="categoria-treino" />
+                            <label for="selecao-nivel">Nível de dificuldade:</label>
+                            <select id="selecao-nivel">
+                                <option selected hidden>Selecionar...</option>
+                                <option>Iniciante</option>
+                                <option>Intermedário</option>
+                                <option>Avançado</option>
+                            </select>
+
+                            <div id="first-day">
+                                <h1 class="mt-3">Dia 1</h1>
+                                <label for="titulo-first">Título do dia: </label>
+                                <input id="titulo-first" class="mb-3" />
+
+                                <div id="ex1-d1"
+                                    class="exercicio d-flex flex-row justify-content-between align-items-center">
+                                    <div>
+                                        <h5>Nome do exercício</h5>
+                                        <p>Número de séries - Número de repetições</p>
+                                    </div>
+                                    <button id="delete-ex1-d1">Excluir</button>
+                                </div>
+
+                                <div id="ex2-d1"
+                                    class="exercicio d-flex flex-row justify-content-between align-items-center">
+                                    <div>
+                                        <h5>Nome do exercício</h5>
+                                        <p>Número de séries - Número de repetições</p>
+                                    </div>
+                                    <button id="delete-ex2-d1">Excluir</button>
+                                </div>
+                            </div>
+                            <div id="second-day">
+                                <h1 class="mt-3">Dia 2</h1>
+                                <label for="titulo-second">Título do dia: </label>
+                                <input id="titulo-second" class="mb-3" />
+
+                                <div id="ex1-d2"
+                                    class="exercicio d-flex flex-row justify-content-between align-items-center">
+                                    <div>
+                                        <h5>Nome do exercício</h5>
+                                        <p>Número de séries - Número de repetições</p>
+                                    </div>
+                                    <button id="delete-ex1-d2">Excluir</button>
+                                </div>
+
+                                <div id="ex2-d2"
+                                    class="exercicio d-flex flex-row justify-content-between align-items-center">
+                                    <div>
+                                        <h5>Nome do exercício</h5>
+                                        <p>Número de séries - Número de repetições</p>
+                                    </div>
+                                    <button id="delete-ex2-d2">Excluir</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
@@ -197,212 +176,11 @@
         </div>
     </div>
 
-    </div>
-
     <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1055;"></div>
-    </div>
 
-    <!-- Modal Nova Conquista -->
-    <div class="modal fade" id="modalNovaConquista" tabindex="-1" aria-labelledby="modalNovaConquistaLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalNovaConquistaLabel">Cadastrar nova conquista</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <form id="form-nova-conquista">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="tipo-conquista" class="form-label">Tipo de conquista</label>
-                            <select class="form-select" id="tipo-conquista" required>
-                                <option value="treinos">Quantidade de treinos</option>
-                                <option value="streak">Dias seguidos de treino</option>
-                                <option value="minutos">Minutos totais de treino</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="valor-conquista" class="form-label">Valor necessário</label>
-                            <input type="number" class="form-control" id="valor-conquista" min="1" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Experiência (XP) ao resgatar</label>
-                            <div class="form-control bg-light" id="xp-preview" readonly>0</div>
-                        </div>
-                        <div class="mb-3" style="display: none;">
-                            <label for="nome-conquista" class="form-label">Nome da conquista</label>
-                            <input type="text" class="form-control" id="nome-conquista" maxlength="40">
-                        </div>
-                        <div class="mb-3" style="display: none;">
-                            <label for="descricao-conquista" class="form-label">Descrição</label>
-                            <textarea class="form-control" id="descricao-conquista" maxlength="120"></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar conquista</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalTreinosDia" tabindex="-1" aria-labelledby="modalTreinosDiaLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTreinosDiaLabel">Treinos do dia</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
-                </div>
-                <div class="modal-body" id="treinos-dia-body">
-                    <!-- Conteúdo preenchido pelo JS -->
-                </div>
-            </div>
-        </div>
-        </head>
-
-        <body>
-            <div class="content-wrapper d-flex flex-column">
-                <header>
-                    <div class="d-flex flex-row header">
-                        <div class="header-item" redirect-session-name="perfil">
-                            <i data-lucide="user"></i>
-                        </div>
-                        <div class="header-item" redirect-session-name="index">Dashboard</div>
-                        <div class="header-item" redirect-session-name="consultar-fichas">
-                            Consultar fichas
-                        </div>
-                        <div class="header-item" redirect-session-name="progresso">
-                            Progresso
-                        </div>
-                        <div class="header-item" redirect-session-name="salvos">
-                            <i data-lucide="bookmark"></i>
-                        </div>
-                        <div class="header-item" redirect-session-name="notificacoes">
-                            <i data-lucide="bell-dot"></i>
-                        </div>
-                    </div>
-                </header>
-
-                <div id="main-content" class="container bg-light mt-5 pb-3">
-                    <div id="container-selecao-plano">
-                        <label for="selecao-plano" class="mt-2">Selecione o plano:</label>
-                        <select id="selecao-plano">
-                            <option selected hidden>Selecionar...</option>
-                        </select>
-                        <hr style="border: 1px solid #ccc; margin: 20px 0;">
-                    </div>
-
-                    <button id="personalizar" style="display: none">Concluir alterações</button>
-                    <button id="concluir-criacao" style="display: none">Cadastrar</button>
-                    <button id="cancelar" style="display: none">Cancelar</button>
-                    <button id="excluir-ficha" style="display: none">Excluir ficha</button>
-                    <button id="criar">Criar novo plano</button>
-                    <br />
-
-                    <div id="dados-treino">
-                        <div id="days-container">
-                        </div>
-                    </div>
-
-                    <!--
-
-        <div id="dados-treino">
-          <label for="titulo-treino" class="mt-2">Título do treino: </label>
-          <input id="titulo-treino" />
-          <label for="categoria-treino">Categoria: </label>
-          <input id="categoria-treino" />
-          <label for="selecao-nivel">Nível de dificuldade:</label>
-          <select id="selecao-nivel">
-            <option selected hidden>Selecionar...</option>
-            <option>Iniciante</option>
-            <option>Intermedário</option>
-            <option>Avançado</option>
-          </select>
-
-          <div id="first-day">
-            <h1 class="mt-3">Dia 1</h1>
-            <label for="titulo-first">Título do dia: </label>
-            <input id="titulo-first" class="mb-3" />
-
-            <div
-              id="ex1-d1"
-              class="exercicio d-flex flex-row justify-content-between align-items-center"
-            >
-              <div>
-                <h5>Nome do exercício</h5>
-                <p>Número de séries - Número de repetições</p>
-              </div>
-
-              <button id="delete-ex1-d1">Excluir</button>
-            </div>
-
-            <div
-              id="ex2-d1"
-              class="exercicio d-flex flex-row justify-content-between align-items-center"
-            >
-              <div>
-                <h5>Nome do exercício</h5>
-                <p>Número de séries - Número de repetições</p>
-              </div>
-              <button id="delete-ex2-d1">Excluir</button>
-            </div>
-          </div>
-          <div id="second-day">
-            <h1 class="mt-3">Dia 2</h1>
-            <label for="titulo-second">Título do dia: </label>
-            <input id="titulo-second" class="mb-3" />
-
-            <div
-              id="ex1-d2"
-              class="exercicio d-flex flex-row justify-content-between align-items-center"
-            >
-              <div>
-                <h5>Nome do exercício</h5>
-                <p>Número de séries - Número de repetições</p>
-              </div>
-              <button id="delete-ex1-d2">Excluir</button>
-            </div>
-
-            <div
-              id="ex2-d2"
-              class="exercicio d-flex flex-row justify-content-between align-items-center"
-            >
-              <div>
-                <h5>Nome do exercício</h5>
-                <p>Número de séries - Número de repetições</p>
-              </div>
-              <button id="delete-ex2-d2">Excluir</button>
-            </div>
-          </div>
-        </div>
-
-        -->
-                </div>
-            </div>
-
-            <!-- Scripts devem estar no final do body -->
-            <script src="../scripts/layout.js"></script>
-            <script src="../scripts/progresso.js" type="module"></script>
-        </body>
-
+    <script src="../scripts/cadastro-treino.js"></script>
+    <script src="../scripts/layout.js"></script>
+    <script src="../scripts/notifications.js" type="module"></script>
 </body>
 
 </html>
-
-<script src="../scripts/cadastro-treino.js"></script>
-
-<script src="../scripts/layout.js"></script>
-
-<script>
-    lucide.createIcons();
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-            new bootstrap.Tooltip(tooltipTriggerEl);
-        });
-        new LayoutManager();
-    });
-</script>
