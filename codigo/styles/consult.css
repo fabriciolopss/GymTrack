@@ -39,51 +39,41 @@ li {
     flex-direction: column;
 }
 
-input {
-    background-color: rgba(0, 0, 0, 0);
-
+/* Remover hover escuro dos inputs */
+input,
+select {
+    background-color: #fff !important;
+    color: #333 !important;
     border: 1px solid #ccc;
-    padding-top: 0;
-    padding-bottom: 0;
-    padding-left: 2px;
-    padding-right: 2px;
-    margin: 0;
-
-    width: 100%;
-
-    font-weight: bold;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-input:hover {
-    background-color: rgba(20, 20, 20);
-
-    color: white;
-}
-
-input:focus {
-    outline: none;
+input:hover,
+input:focus,
+select:hover,
+select:focus {
+    background-color: #fff !important;
+    color: #333 !important;
+    border-color: var(--primary-color, #a14fce);
+    box-shadow: 0 0 0 2px rgba(161, 79, 206, 0.10);
 }
 
 select {
-    background-color: rgba(0, 0, 0, 0);
-
-    outline: none;
-    border: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-
-    font-weight: bold;
+    border: 1px solid #ccc;
+    background-color: #fff !important;
+    color: #333 !important;
+    font-weight: 500;
 }
 
+select option {
+    background: #fff;
+    color: #333;
+}
+
+/* Remove estilos antigos conflitantes */
+input:focus,
 select:focus {
     outline: none;
-}
-
-select:hover {
-    background-color: rgba(20, 20, 20);
-
-    color: white;
 }
 
 .dado-usuario {
@@ -94,4 +84,394 @@ select:hover {
 
 #dados-treino p {
     height: 38px;
+}
+
+/* Card wrapper para ficha */
+.ficha-card {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 24px rgba(161, 79, 206, 0.08), 0 1.5px 8px rgba(0, 0, 0, 0.04);
+    background: #fff;
+    border: none;
+}
+
+.ficha-card .card-body {
+    padding: 2.5rem 2rem;
+}
+
+.dias-treino h4 {
+    font-weight: 600;
+    color: var(--primary-color, #a14fce);
+}
+
+.input-group-text {
+    background: #f8f9fa;
+    border: 1px solid #e0e0e0;
+    border-right: none;
+    color: var(--primary-color, #a14fce);
+}
+
+.input-group .form-control,
+.input-group .form-select {
+    border-left: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    box-shadow: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group .form-control:focus,
+.input-group .form-select:focus {
+    border-color: var(--primary-color, #a14fce);
+    box-shadow: 0 0 0 2px rgba(161, 79, 206, 0.15);
+}
+
+.exercicio-card {
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px rgba(161, 79, 206, 0.07);
+    border: 1px solid #f0e6fa;
+    background: #faf8fd;
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-color, #a14fce);
+    color: var(--primary-color, #a14fce);
+    font-weight: 500;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background: var(--primary-color, #a14fce);
+    color: #fff;
+    border-color: var(--primary-color, #a14fce);
+}
+
+.btn-outline-danger {
+    border-color: #e74c3c;
+    color: #e74c3c;
+    font-weight: 500;
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+    background: #e74c3c;
+    color: #fff;
+    border-color: #e74c3c;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    border: none;
+    font-weight: 600;
+}
+
+.btn-success:hover,
+.btn-success:focus {
+    background: linear-gradient(135deg, #45a049 0%, #388e3c 100%);
+}
+
+.btn-primary {
+    background: var(--primary-color, #a14fce);
+    border: none;
+    font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background: #7c2bbf;
+}
+
+.form-control,
+.form-select {
+    min-height: 44px;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #e0e0e0;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-color, #a14fce);
+    box-shadow: 0 0 0 2px rgba(161, 79, 206, 0.12);
+}
+
+@media (max-width: 900px) {
+    .ficha-card .card-body {
+        padding: 1.2rem 0.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .ficha-card {
+        border-radius: 0.5rem;
+    }
+
+    .ficha-card .card-body {
+        padding: 0.5rem 0.2rem;
+    }
+
+    .dias-treino h4 {
+        font-size: 1.1rem;
+    }
+}
+
+/* Cards de dias */
+.card.bg-light {
+    background: linear-gradient(135deg, #f8f9fa 80%, #e9ecef 100%);
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 24px rgba(161, 79, 206, 0.08), 0 1.5px 8px rgba(0, 0, 0, 0.04);
+    border: none;
+    margin-bottom: 1.5rem;
+}
+
+.card .card-title {
+    font-weight: 600;
+    color: var(--primary-color, #a14fce);
+    font-size: 1.2rem;
+}
+
+/* Exercício em lista */
+.list-group-item {
+    border-radius: 0.7rem !important;
+    box-shadow: 0 2px 8px rgba(161, 79, 206, 0.07);
+    border: 1px solid #f0e6fa;
+    background: #fff;
+    margin-bottom: 0.5rem;
+    transition: box-shadow 0.2s;
+    padding: 0.5rem;
+}
+
+.list-group-item:hover {
+    box-shadow: 0 4px 16px rgba(161, 79, 206, 0.13);
+}
+
+.btn-outline-primary,
+.btn-outline-danger,
+.btn-success {
+    font-weight: 600;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 4px rgba(161, 79, 206, 0.07);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.btn-outline-primary {
+    border-color: var(--primary-color, #a14fce);
+    color: var(--primary-color, #a14fce);
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary-color, #a14fce);
+    color: #fff;
+}
+
+.btn-outline-danger {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
+.btn-outline-danger:hover {
+    background: #e74c3c;
+    color: #fff;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    border: none;
+    color: #fff;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #45a049 0%, #388e3c 100%);
+}
+
+input.form-control,
+select.form-select {
+    border-radius: 0.5rem;
+    min-height: 38px;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+input.form-control:focus,
+select.form-select:focus {
+    border-color: var(--primary-color, #a14fce);
+    box-shadow: 0 0 0 2px rgba(161, 79, 206, 0.12);
+}
+
+.animate__animated.animate__fadeIn {
+    animation: fadeIn 0.7s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .card.bg-light {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .card.bg-light {
+        border-radius: 0.5rem;
+    }
+
+    .list-group-item {
+        font-size: 0.95rem;
+    }
+}
+
+/* Estilos para os cards dos treinos */
+.treino-card {
+    background: #fff;
+    border: 2px solid #f0e6fa;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+.treino-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary-color, #a14fce) 0%, #7c2bbf 100%);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.treino-card:hover {
+    border-color: var(--primary-color, #a14fce);
+    box-shadow: 0 8px 32px rgba(161, 79, 206, 0.15);
+    transform: translateY(-2px);
+}
+
+.treino-card:hover::before {
+    transform: scaleX(1);
+}
+
+.treino-card.selected {
+    border-color: var(--primary-color, #a14fce);
+    background: linear-gradient(135deg, #faf8fd 0%, #f0e6fa 100%);
+    box-shadow: 0 8px 32px rgba(161, 79, 206, 0.2);
+}
+
+.treino-card.selected::before {
+    transform: scaleX(1);
+}
+
+.treino-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.treino-card-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color, #a14fce);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.treino-card-category {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+}
+
+.treino-card-type {
+    background: linear-gradient(135deg, var(--primary-color, #a14fce) 0%, #7c2bbf 100%);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.treino-card-stats {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f0e6fa;
+}
+
+.treino-stat {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.treino-stat i {
+    color: var(--primary-color, #a14fce);
+    width: 16px;
+    height: 16px;
+}
+
+.treino-card-actions {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.treino-card:hover .treino-card-actions {
+    opacity: 1;
+}
+
+.treino-card-actions .btn {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 0.5rem;
+}
+
+/* Responsividade para os cards */
+@media (max-width: 768px) {
+    .treino-card {
+        padding: 1rem;
+    }
+
+    .treino-card-stats {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .treino-card-actions {
+        position: static;
+        opacity: 1;
+        margin-top: 1rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .treino-card {
+        margin-bottom: 1rem;
+    }
 }

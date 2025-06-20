@@ -1,4 +1,4 @@
-const API_URL = 'https://ti1-webserver.onrender.com';
+const API_URL = 'https://ti1-webserver-production.up.railway.app';
 
 class ApiService {
   static async getUserData() {

@@ -1,4 +1,4 @@
-const API_URL = 'https://ti1-webserver.onrender.com';
+const API_URL = 'https://ti1-webserver-production.up.railway.app';
 
 // Função para fazer login
 async function login(email, password) {
@@ -82,7 +82,7 @@ async function getCurrentUserData() {
         const userId = getCurrentUserId();
         if (!userId) return null;
 
-        const response = await fetch(`${API_URL}/users/${userId}`, {
+        const response = await fetch(`${API_URL}/users/${5}`, {
             headers: {
                 'Authorization': `Bearer ${getToken()}`
             }
