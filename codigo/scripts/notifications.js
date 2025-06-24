@@ -1,8 +1,9 @@
 import ApiService from './services/api.js';
 
-document.addEventListener("DOMContentLoaded", function(){
-  const notifications = new Notifications;
-})
+// Comentado para evitar inicialização automática quando importado como módulo
+// document.addEventListener("DOMContentLoaded", function(){
+//   const notifications = new Notifications;
+// })
 
 const NOTIFICATION_ICONS = {
   Creation: "fa-solid fa-square-plus text-success", // Green for creation
@@ -32,7 +33,7 @@ export async function createNotification({ title, description, type }) {
   }
 }
 
-class Notifications {
+export class Notifications {
   constructor() {
     this.initializeNotifications();
   }

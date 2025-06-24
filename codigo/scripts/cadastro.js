@@ -1,16 +1,7 @@
+import ApiService from './services/api.js';
+
 document.addEventListener("DOMContentLoaded", async function () {
-  // --- VERIFICAÇÃO INICIAL: O usuário já está cadastrado? ---
-  try {
-    const userData = await window.auth.getCurrentUserData();
-    if (userData?.userData?.profile?.metadados?.data_cadastro) {
-      console.log("Usuário já cadastrado. Redirecionando para o dashboard...");
-      window.location.href = "index.html";
-      return;
-    }
-  } catch (error) {
-    console.error("Erro ao verificar dados existentes:", error);
-    // Continua mesmo se houver erro na leitura, permitindo o cadastro
-  }
+
 
   // Elementos principais
   const form = document.getElementById("student-form");
@@ -171,51 +162,49 @@ document.addEventListener("DOMContentLoaded", async function () {
           conquistas: []
         },
         objetivos: {
-          objetivo: formData.get("objetivo"),
-          frequencia: formData.get("frequencia"),
-          nivel: formData.get("nivel")
+          experiencia_previa: formData.get("experiencia_previa"),
+          frequencia_semanal: formData.get("frequencia_semanal"),
+          objetivo_principal: formData.get("objetivo_principal"),
+          tipo_treino: formData.get("tipo_treino")
         },
         pessoal: {
-          nome: formData.get("nome"),
+          nome: formData.get("nome_completo"),
           data_nascimento: formData.get("data_nascimento"),
           genero: formData.get("genero"),
-          altura: formData.get("altura"),
-          peso: formData.get("peso")
+          altura: formData.get("altura_cm"),
+          peso: formData.get("peso_kg"),
+          telefone: formData.get("telefone"),
+          email: formData.get("email")
         }
       };
 
       try {
-        const userId = window.auth.getCurrentUserId();
-        if (!userId) {
-          throw new Error('ID do usuário não encontrado');
-        }
+        // Mostra loading
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          Salvando...
+        `;
 
-        const response = await fetch(`${window.auth.API_URL}/users/${userId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${window.auth.getToken()}`
-          },
-          body: JSON.stringify({
-            userData: {
-              ...profile,
-              default_trainings: { ids: [] },
-              edited_trainings: [],
-              notifications: [],
-              registered_trainings: []
-            }
-          })
-        });
+        // Salva os dados usando o ApiService
+        await ApiService.updateUserData({ profile });
 
-        if (!response.ok) {
-          throw new Error('Erro ao salvar dados do perfil');
-        }
+        // Mostra tela de confirmação
+        mainContent.style.display = "none";
+        confirmationScreen.style.display = "block";
+        confirmationScreen.scrollIntoView({ behavior: "smooth", block: "start" });
 
-        // Redireciona para o dashboard
-        window.location.href = "index.html";
+        // Redireciona para o dashboard após 3 segundos
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 3000);
       } catch (error) {
         console.error("Erro ao salvar dados do perfil:", error);
-        alert("Erro ao salvar cadastro. Verifique o console para mais detalhes.");
+        alert("Erro ao salvar cadastro. Por favor, tente novamente.");
+        
+        // Restaura o botão
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Finalizar Cadastro";
       }
     } else {
       console.log("Formulário inválido no último passo. Verifique os campos marcados.");

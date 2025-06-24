@@ -1,5 +1,18 @@
 import ApiService from './services/api.js';
 
+async function saveGymData(gymData) {
+    try {
+        await ApiService.updateUserData({
+            profile: gymData.profile,
+            edited_trainings: gymData.edited_trainings,
+            notifications: gymData.notifications,
+            registered_trainings: gymData.registered_trainings
+          });
+    } catch (error) {
+        console.error('Erro ao salvar dados do usuário:', error);
+    }
+}
+
 function calcularXpConquista(tipo, valor) {
     if (tipo === "treinos") return valor * 10;
     if (tipo === "streak") return valor * 15;
@@ -51,143 +64,146 @@ function initCalendarioNavegavel(gymData) {
     };
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const gymData = JSON.parse(localStorage.getItem("gymAppData")) || {};
+document.addEventListener("DOMContentLoaded", async function () {
+    try {
+        const userData = await ApiService.getUserData();
+        const gymData = userData;
+        const profile = userData.profile || { metadados: {} };
 
-    preencherResumo(gymData);
-    preencherConquistas(gymData);
-    initCalendarioNavegavel(gymData);
-    preencherCalendario(gymData);
-    preencherRanking(gymData);
-    preencherHistoricoConquistas(gymData);
-    preencherSocialFeatures(gymData);
-    preencherDicasPersonalizadas(gymData);
+        console.log(gymData);
 
-    document.getElementById("form-nova-conquista").addEventListener("submit", function (e) {
-        e.preventDefault();
-        const tipo = document.getElementById("tipo-conquista").value;
-        const valor = parseInt(document.getElementById("valor-conquista").value);
-        const xp = calcularXpConquista(tipo, valor);
-        const { nome, descricao } = generateConquistaDetails(tipo, valor);
-        const id = `custom_${tipo}_${valor}_${Date.now()}`;
-        const nova = { id, tipo, valor, xp, nome, descricao, conquistada: false, resgatada: false };
-        let gymData = getGymData();
-        if (!gymData.custom_achievements) gymData.custom_achievements = [];
-        gymData.custom_achievements.push(nova);
-        saveGymData(gymData);
-        document.getElementById("form-nova-conquista").reset();
-        bootstrap.Modal.getInstance(document.getElementById("modalNovaConquista")).hide();
-        preencherConquistas(getGymData());
-    });
+        preencherResumo(gymData);
+        preencherConquistas(gymData);
+        initCalendarioNavegavel(gymData);
+        preencherCalendario(gymData);
+        preencherRanking(gymData);
+        preencherHistoricoConquistas(gymData);
+        preencherSocialFeatures(gymData);
+        preencherDicasPersonalizadas(gymData);
 
-    function atualizarXpPreview() {
-        const tipo = document.getElementById("tipo-conquista").value;
-        const valorInput = document.getElementById("valor-conquista").value;
-        const valor = parseInt(valorInput) || 0; // Garante que valor é um número (ou 0)
-        const xp = calcularXpConquista(tipo, valor);
-        const { nome, descricao } = generateConquistaDetails(tipo, valor);
-
-        document.getElementById("xp-preview").textContent = xp;
-    }
-    document.getElementById("tipo-conquista").addEventListener("change", atualizarXpPreview);
-    document.getElementById("valor-conquista").addEventListener("input", atualizarXpPreview);
-
-    window.editarConquistaCustom = function(id) {
-        let gymData = getGymData();
-        let conquistasCustom = gymData.custom_achievements || [];
-        const c = conquistasCustom.find(c => c.id === id);
-        if (!c || c.resgatada) return;
-
-        document.getElementById("tipo-conquista").value = c.tipo;
-        document.getElementById("valor-conquista").value = c.valor;
-
-        atualizarXpPreview();
-
-        document.getElementById("form-nova-conquista").onsubmit = function(e) {
+        document.getElementById("form-nova-conquista").addEventListener("submit", function (e) {
             e.preventDefault();
-            conquistasCustom = conquistasCustom.filter(x => x.id !== id);
-
             const tipo = document.getElementById("tipo-conquista").value;
             const valor = parseInt(document.getElementById("valor-conquista").value);
             const xp = calcularXpConquista(tipo, valor);
             const { nome, descricao } = generateConquistaDetails(tipo, valor);
-            const newId = `custom_${tipo}_${valor}_${Date.now()}`;
-            
-            const nova = { 
-                id: newId, 
-                tipo, 
-                valor, 
-                xp, 
-                nome, 
-                descricao, 
-                conquistada: c.conquistada, 
-                resgatada: c.resgatada 
-            };
-
-            conquistasCustom.push(nova);
-            gymData.custom_achievements = conquistasCustom;
+            const id = `custom_${tipo}_${valor}_${Date.now()}`;
+            const nova = { id, tipo, valor, xp, nome, descricao, conquistada: false, resgatada: false };
+            gymData.profile.metadados.conquistas.push(nova);
             saveGymData(gymData);
-
             document.getElementById("form-nova-conquista").reset();
             bootstrap.Modal.getInstance(document.getElementById("modalNovaConquista")).hide();
+            preencherConquistas(gymData);
+        });
 
-            preencherConquistas(getGymData());
+        function atualizarXpPreview() {
+            const tipo = document.getElementById("tipo-conquista").value;
+            const valorInput = document.getElementById("valor-conquista").value;
+            const valor = parseInt(valorInput) || 0; // Garante que valor é um número (ou 0)
+            const xp = calcularXpConquista(tipo, valor);
+            const { nome, descricao } = generateConquistaDetails(tipo, valor);
 
-            document.getElementById("form-nova-conquista").onsubmit = defaultNovaConquistaSubmit;
+            document.getElementById("xp-preview").textContent = xp;
+        }
+        document.getElementById("tipo-conquista").addEventListener("change", atualizarXpPreview);
+        document.getElementById("valor-conquista").addEventListener("input", atualizarXpPreview);
+
+        window.editarConquistaCustom = function(id) {
+            let conquistasCustom = gymData.profile.metadados.conquistas || [];
+            const c = conquistasCustom.find(c => c.id === id);
+            if (!c || c.resgatada) return;
+
+            document.getElementById("tipo-conquista").value = c.tipo;
+            document.getElementById("valor-conquista").value = c.valor;
+
+            atualizarXpPreview();
+
+            document.getElementById("form-nova-conquista").onsubmit = function(e) {
+                e.preventDefault();
+                conquistasCustom = conquistasCustom.filter(x => x.id !== id);
+
+                const tipo = document.getElementById("tipo-conquista").value;
+                const valor = parseInt(document.getElementById("valor-conquista").value);
+                const xp = calcularXpConquista(tipo, valor);
+                const { nome, descricao } = generateConquistaDetails(tipo, valor);
+                const newId = `custom_${tipo}_${valor}_${Date.now()}`;
+                
+                const nova = { 
+                    id: newId, 
+                    tipo, 
+                    valor, 
+                    xp, 
+                    nome, 
+                    descricao, 
+                    conquistada: c.conquistada, 
+                    resgatada: c.resgatada 
+                };
+
+                conquistasCustom.push(nova);
+                gymData.profile.metadados.conquistas = conquistasCustom;
+                saveGymData(gymData);
+
+                document.getElementById("form-nova-conquista").reset();
+                bootstrap.Modal.getInstance(document.getElementById("modalNovaConquista")).hide();
+
+                preencherConquistas(gymData);
+
+                document.getElementById("form-nova-conquista").onsubmit = defaultNovaConquistaSubmit;
+            };
+
+            new bootstrap.Modal(document.getElementById("modalNovaConquista")).show();
         };
 
-        new bootstrap.Modal(document.getElementById("modalNovaConquista")).show();
-    };
-
-    window.excluirConquistaCustom = function(id) {
-        if (!confirm("Tem certeza que deseja excluir esta conquista?")) return;
-        let gymData = getGymData();
-        let conquistasCustom = gymData.custom_achievements || [];
-        conquistasCustom = conquistasCustom.filter(c => c.id !== id);
-        gymData.custom_achievements = conquistasCustom;
-        saveGymData(gymData);
-        preencherConquistas(getGymData());
-    };
-
-    const defaultNovaConquistaSubmit = document.getElementById("form-nova-conquista").onsubmit;
-
-    window.resgatarConquistaCustom = function(id) {
-        let gymData = getGymData();
-        let conquistasCustom = gymData.custom_achievements || [];
-        const idx = conquistasCustom.findIndex(c => c.id === id);
-        if (idx !== -1 && conquistasCustom[idx].conquistada && !conquistasCustom[idx].resgatada) {
-            if (!gymData.profile) gymData.profile = { xp: 0 };
-            gymData.profile.xp = (gymData.profile.xp || 0) + conquistasCustom[idx].xp;
-            conquistasCustom[idx].resgatada = true;
-            conquistasCustom[idx].dataResgate = new Date().toISOString();
-            
-            // Adicionar à lista de conquistas recentes da comunidade
-            if (!gymData.community_achievements) gymData.community_achievements = [];
-            gymData.community_achievements.unshift({
-                usuario: 'Você',
-                conquista: conquistasCustom[idx].nome,
-                xp: conquistasCustom[idx].xp,
-                data: new Date().toISOString()
-            });
-            
-            // Manter apenas as 5 conquistas mais recentes
-            gymData.community_achievements = gymData.community_achievements.slice(0, 5);
-            
-            gymData.custom_achievements = conquistasCustom;
+        window.excluirConquistaCustom = function(id) {
+            if (!confirm("Tem certeza que deseja excluir esta conquista?")) return;
+            let conquistasCustom = gymData.profile.metadados.conquistas || [];
+            conquistasCustom = conquistasCustom.filter(c => c.id !== id);
+            gymData.profile.metadados.conquistas = conquistasCustom;
             saveGymData(gymData);
             preencherConquistas(gymData);
-            preencherHistoricoConquistas(gymData);
-            preencherSocialFeatures(gymData);
-            alert("Conquista resgatada! XP adicionado ao seu perfil.");
-        }
-    };
+        };
+
+        const defaultNovaConquistaSubmit = document.getElementById("form-nova-conquista").onsubmit;
+
+        window.resgatarConquistaCustom = function(id) {
+            let conquistasCustom = gymData.profile.metadados.conquistas || [];
+            const idx = conquistasCustom.findIndex(c => c.id === id);
+            if (idx !== -1 && conquistasCustom[idx].conquistada && !conquistasCustom[idx].resgatada) {
+                if (!gymData.profile) gymData.profile = { xp: 0 };
+                gymData.profile.xp = (gymData.profile.xp || 0) + conquistasCustom[idx].xp;
+                conquistasCustom[idx].resgatada = true;
+                conquistasCustom[idx].dataResgate = new Date().toISOString();
+                
+                // Adicionar à lista de conquistas recentes da comunidade
+                if (!gymData.community_achievements) gymData.community_achievements = [];
+                gymData.community_achievements.unshift({
+                    usuario: 'Você',
+                    conquista: conquistasCustom[idx].nome,
+                    xp: conquistasCustom[idx].xp,
+                    data: new Date().toISOString()
+                });
+                
+                // Manter apenas as 5 conquistas mais recentes
+                gymData.community_achievements = gymData.community_achievements.slice(0, 5);
+                
+                gymData.profile.metadados.conquistas = conquistasCustom;
+                saveGymData(gymData);
+                preencherConquistas(gymData);
+                preencherHistoricoConquistas(gymData);
+                preencherSocialFeatures(gymData);
+                alert("Conquista resgatada! XP adicionado ao seu perfil.");
+            }
+        };
+    } catch (error) {
+        console.error('Erro ao carregar dados do progresso do webserver:', error);
+    }
 });
 
 function preencherResumo(gymData) {
     const diasSeguidos = calcularStreak(gymData.registered_trainings || []);
     document.getElementById("dias-treino").textContent = diasSeguidos;
     document.getElementById("treinos-concluidos").textContent = (gymData.registered_trainings || []).length;
-    const conquistasResgatadas = (gymData.custom_achievements || []).filter(c => c.resgatada).length;
+    const conquistasResgatadas = (gymData.profile.metadados.conquistas || []).filter(c => c.resgatada).length;
     document.getElementById("conquistas-atingidas").textContent = conquistasResgatadas;
 }
 
@@ -233,14 +249,13 @@ function verificaRequisitoConquistaCustom(c, gymData) {
 }
 
 function preencherConquistas(gymData) {
-    let conquistasCustom = gymData.custom_achievements || [];
+    let conquistasCustom = gymData.profile.metadados.conquistas || [];
     conquistasCustom = conquistasCustom.map(c => {
         if (!c.resgatada && verificaRequisitoConquistaCustom(c, gymData)) {
             c.conquistada = true;
         }
         return c;
     });
-    gymData.custom_achievements = conquistasCustom;
     saveGymData(gymData);
     const lista = document.getElementById("conquistas-lista");
     lista.innerHTML = "";
@@ -398,50 +413,63 @@ function mostrarModalTreinosDia(ano, mes, dia, gymData) {
     modal.show();
 }
 
-function preencherRanking(gymData) {
-    const outros = [
-        { nome: 'Ana S.', xp: 3200, cor: 'warning' },
-        { nome: 'Carlos M.', xp: 2100, cor: 'secondary' },
-        { nome: 'Lucas P.', xp: 1500, cor: 'info' }
-    ];
-    const usuario = {
-        nome: 'Você',
-        xp: (gymData.profile && gymData.profile.xp) ? gymData.profile.xp : 0,
-        cor: 'primary',
-        isUser: true
-    };
-    const ranking = [...outros, usuario].sort((a, b) => b.xp - a.xp);
-    const posUsuario = ranking.findIndex(p => p.isUser) + 1;
-    const rankingDiv = document.getElementById("progresso-ranking");
-    rankingDiv.innerHTML = `
-        <ul class="list-group mb-3">
-            ${ranking.map((p, i) => `
-                <li class="list-group-item d-flex justify-content-between align-items-center ${p.isUser ? 'list-group-item-primary fw-bold' : ''}">
-                    <div class="d-flex align-items-center gap-2">
-                        <span class="badge bg-${p.cor} rounded-circle" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">${i+1}</span>
-                        <span>${p.nome}</span>
-                    </div>
-                    <span>${p.xp} XP</span>
-                </li>
-            `).join('')}
-        </ul>
-        <div class="small text-muted">Sua posição: <strong>${posUsuario}º</strong></div>
-    `;
-    document.getElementById("ranking-progress-bar").style.width = `${Math.min(100, Math.round((usuario.xp/4000)*100))}%`;
-    document.getElementById("desafio-mes").textContent = "4000 XP";
-    document.getElementById("desafio-status").textContent = usuario.xp >= 4000 ? "Completo" : "Incompleto";
+function findUserPosition(ranking, userId){
+    for(let position = 0; position < ranking.length; position++){
+        if(ranking[position].id === parseInt(userId)){
+            return position;
+        }
+    }
 }
 
-function getGymData() {
-    return JSON.parse(localStorage.getItem("gymAppData")) || {};
+async function preencherRanking(gymData) {
+    try {
+        const ranking = await ApiService.getRanking();
+        const userId = window.auth.getCurrentUserId && window.auth.getCurrentUserId();
+        let top5;
+        const userPosition = findUserPosition(ranking, userId);
+        if(userPosition > 4){
+            top5 = ranking.slice(0,4);
+            let userAttributes = ranking[userPosition];
+            userAttributes.realPosition = userPosition;
+            top5.push(userAttributes);
+        }else{
+            top5 = ranking.slice(0,5);
+        }
+        console.log(userPosition);
+        const rankingDiv = document.getElementById("progresso-ranking");
+        let posUsuario = 0;
+        rankingDiv.innerHTML = `
+            <ul class="list-group mb-3">
+                ${top5.map((p, i) => {
+                    const isUser = userId && String(p.id) === String(userId);
+                    if (isUser) posUsuario = i + 1;
+                    return `
+                        <li class="list-group-item d-flex justify-content-between align-items-center ${isUser ? 'list-group-item-primary fw-bold' : ''}">
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="badge bg-${isUser ? 'primary' : 'secondary'} rounded-circle" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;">${p.realPosition ? p.realPosition : i + 1}</span>
+                                <span>${isUser ? 'Você' : (p.email || 'Usuário')}</span>
+                            </div>
+                            <span>${p.xp} XP</span>
+                        </li>
+                    `;
+                }).join('')}
+            </ul>
+            <div class="small text-muted">Sua posição: <strong>${posUsuario || '-'}º</strong></div>
+        `;
+        const usuario = ranking.find(p => userId && String(p.id) === String(userId));
+        const xp = usuario ? usuario.xp : 0;
+        document.getElementById("ranking-progress-bar").style.width = `${Math.min(100, Math.round((xp/4000)*100))}%`;
+        document.getElementById("desafio-mes").textContent = "4000 XP";
+        document.getElementById("desafio-status").textContent = xp >= 4000 ? "Completo" : "Incompleto";
+    } catch (error) {
+        console.error('Erro ao carregar ranking global:', error);
+    }
 }
-function saveGymData(gymData) {
-    localStorage.setItem("gymAppData", JSON.stringify(gymData));
-}
+
 
 function preencherHistoricoConquistas(gymData) {
     const timeline = document.getElementById("achievement-timeline");
-    const conquistas = gymData.custom_achievements || [];
+    const conquistas = gymData.profile.metadados.conquistas || [];
     
     // Filtrar apenas conquistas resgatadas e ordenar por data
     const conquistasResgatadas = conquistas
@@ -546,7 +574,7 @@ function gerarDicasPersonalizadas(gymData) {
     const treinos = gymData.registered_trainings || [];
     const streak = calcularStreak(treinos);
     const totalTreinos = treinos.length;
-    const conquistas = gymData.custom_achievements || [];
+    const conquistas = gymData.profile.metadados.conquistas || [];
     const conquistasResgatadas = conquistas.filter(c => c.resgatada).length;
 
     // Dica baseada no streak
@@ -602,71 +630,3 @@ function encontrarHorarioMaisFrequente(horarios) {
         .sort((a, b) => b[1] - a[1])[0][0];
 }
 
-function criarNovoGrupo() {
-    const nome = prompt("Digite o nome do novo grupo de treino:");
-    if (!nome) return;
-
-    let gymData = getGymData();
-    if (!gymData.training_groups) gymData.training_groups = [];
-    
-    gymData.training_groups.push({
-        id: Date.now(),
-        nome: nome,
-        membros: [],
-        dataCriacao: new Date().toISOString()
-    });
-
-    saveGymData(gymData);
-    preencherSocialFeatures(gymData);
-}
-
-class Progresso {
-  constructor() {
-    this.initializeProgresso();
-  }
-
-  async initializeProgresso() {
-    try {
-      const userData = await ApiService.getUserData();
-      this.gymData = userData.gymData || {};
-      this.progressoContainer = document.querySelector('.progresso-container');
-      this.bindEvents();
-      this.renderProgresso();
-    } catch (error) {
-      console.error('Erro ao inicializar progresso:', error);
-      this.gymData = {};
-    }
-  }
-
-  bindEvents() {
-    // Add any event listeners here
-  }
-
-  async renderProgresso() {
-    if (!this.gymData.progresso) {
-      this.gymData.progresso = [];
-    }
-
-    this.progressoContainer.innerHTML = this.gymData.progresso.map(progress => `
-      <div class="progresso-item">
-        <h3>${progress.date}</h3>
-        <p>${progress.description}</p>
-      </div>
-    `).join('') || '<p>Nenhum progresso registrado</p>';
-  }
-
-  async addProgresso(progressoData) {
-    try {
-      if (!this.gymData.progresso) {
-        this.gymData.progresso = [];
-      }
-      
-      this.gymData.progresso.push(progressoData);
-      await ApiService.updateUserData({ gymData: this.gymData });
-      await this.renderProgresso();
-    } catch (error) {
-      console.error('Erro ao adicionar progresso:', error);
-      throw error;
-    }
-  }
-}

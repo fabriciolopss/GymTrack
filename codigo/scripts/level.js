@@ -31,19 +31,19 @@ const xpGain = document.querySelector("#xp-gain");
 const porcentagemSpan = document.querySelector("#xp-porcentagem");
 
 // Atualiza barra com ganho de XP (pré-checkin)
-export function mudarXpGanha(newXP) {
-  const gymData = JSON.parse(localStorage.getItem("gymAppData"));
-  if (!gymData) return;
-
-  const { xp } = gymData.profile;
-  const { xpNivelAtual, xpParaProximoNivel } = calcularNivel(xp);
-
-  const progressoFuturo =
-    ((xp - xpNivelAtual + newXP) / xpParaProximoNivel) * 100;
-
-  xpGain.textContent = `+${newXP} XP`;
-  futureBar.style.width = `${progressoFuturo}%`;
-  porcentagemSpan.textContent = `${Math.floor(progressoFuturo)}%`;
+export async function mudarXpGanha(newXP) {
+  try {
+    const userData = await ApiService.getUserData();
+    const gymData = userData || {};
+    const xp = gymData.profile?.xp || 0;
+    const { xpNivelAtual, xpParaProximoNivel } = calcularNivel(xp);
+    const progressoFuturo = ((xp - xpNivelAtual + newXP) / xpParaProximoNivel) * 100;
+    xpGain.textContent = `+${newXP} XP`;
+    futureBar.style.width = `${progressoFuturo}%`;
+    porcentagemSpan.textContent = `${Math.floor(progressoFuturo)}%`;
+  } catch (error) {
+    console.error('Erro ao buscar dados do usuário para mudarXpGanha:', error);
+  }
 }
 
 export function calcularXpPorTipoETempo(tipo, horas, minutos) {
@@ -58,22 +58,22 @@ export function calcularXpPorTipoETempo(tipo, horas, minutos) {
   return Math.round(tempoEmHoras * multiplier);
 }
 
-export function xpModalCheckin() {
-  const gymData = JSON.parse(localStorage.getItem("gymAppData"));
-  if (!gymData) return;
-
-  const { xp } = gymData.profile;
-  const { nivel, xpNivelAtual, xpProxNivel, xpParaProximoNivel } =
-    calcularNivel(xp);
-
-  const progressoAtual = ((xp - xpNivelAtual) / xpParaProximoNivel) * 100;
-
-  nivelSpan.textContent = `Nível ${nivel}`;
-  xpLowLimit.textContent = `${xpNivelAtual} XP`;
-  xpHighLimit.textContent = `${xpProxNivel} XP`;
-  xpGain.textContent = `+0 XP`;
-  realBar.style.width = `${progressoAtual}%`;
-  porcentagemSpan.textContent = `${Math.floor(progressoAtual)}%`;
+export async function xpModalCheckin() {
+  try {
+    const userData = await ApiService.getUserData();
+    const gymData = userData.gymData || {};
+    const xp = gymData.profile?.xp || 0;
+    const { nivel, xpNivelAtual, xpProxNivel, xpParaProximoNivel } = calcularNivel(xp);
+    const progressoAtual = ((xp - xpNivelAtual) / xpParaProximoNivel) * 100;
+    nivelSpan.textContent = `Nível ${nivel}`;
+    xpLowLimit.textContent = `${xpNivelAtual} XP`;
+    xpHighLimit.textContent = `${xpProxNivel} XP`;
+    xpGain.textContent = `+0 XP`;
+    realBar.style.width = `${progressoAtual}%`;
+    porcentagemSpan.textContent = `${Math.floor(progressoAtual)}%`;
+  } catch (error) {
+    console.error('Erro ao buscar dados do usuário para xpModalCheckin:', error);
+  }
 }
 
 // Executa ao carregar a página

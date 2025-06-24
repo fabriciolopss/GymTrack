@@ -1,4 +1,4 @@
-const API_URL = 'https://ti1-webserver.onrender.com';
+const API_URL = 'https://ti1-webserver-production.up.railway.app';
 
 class ApiService {
   static async getUserData() {
@@ -93,6 +93,18 @@ class ApiService {
       throw new Error('Erro ao registrar treino');
     }
 
+    return response.json();
+  }
+
+  static async getRanking() {
+    const response = await fetch(`${API_URL}/ranking`, {
+      headers: {
+        'Authorization': `Bearer ${window.auth.getToken()}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Erro ao obter ranking global');
+    }
     return response.json();
   }
 }
