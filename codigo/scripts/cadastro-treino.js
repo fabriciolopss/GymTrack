@@ -466,6 +466,7 @@ function setupEventListeners() {
         }
         gymApp.edited_trainings.push(treinoSelect);
         try {
+            console.log(gymApp);
             await ApiService.updateUserData({ edited_trainings: gymApp.edited_trainings });
             
             // Criar notificação de treino criado

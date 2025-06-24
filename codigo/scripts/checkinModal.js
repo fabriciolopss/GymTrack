@@ -15,7 +15,7 @@ class CheckinModal {
   async initializeCheckinModal() {
     try {
       const userData = await ApiService.getUserData();
-      this.gymData = userData.gymData || {};
+      this.gymData = userData || {};
       this.setupEventListeners();
     } catch (error) {
       console.error('Erro ao inicializar modal de check-in:', error);
@@ -58,9 +58,9 @@ class CheckinModal {
       if (selectedPlan) {
         mudarXpGanha(selectedPlan.days[0].xp);
         trainingDaysSelected.disabled = false;
-        selectedPlan.days.forEach((day) => {
+        selectedPlan.days.forEach((day, index) => {
           const option = document.createElement("option");
-          option.value = day.id;
+          option.value = index;
           option.textContent = day.name;
           trainingDaysSelected.appendChild(option);
         });
@@ -72,7 +72,9 @@ class CheckinModal {
       const selectedPlan = this.gymData.edited_trainings?.find(
         (plan) => plan.id == trainingPlansSelected.value
       );
-      const day = selectedPlan?.days.find((day) => day.id == selectedDay);
+      const day = selectedPlan.days[selectedDay];
+
+      console.log(day);
 
       if (day) {
         mudarXpGanha(day.xp);
@@ -95,7 +97,7 @@ class CheckinModal {
       const selectedPlan = this.gymData.edited_trainings?.find(
         (plan) => plan.id == submitPlanId
       );
-      const selectedDay = selectedPlan?.days.find((day) => day.id == submitDayTrainedId);
+      const selectedDay = selectedPlan?.days[submitDayTrainedId];
       const xpGanho = calcularXpPorTipoETempo(selectedPlan.type, hours, minutes);
 
       const novoCheckin = {
@@ -112,7 +114,7 @@ class CheckinModal {
         this.gymData.registered_trainings = this.gymData.registered_trainings || [];
         this.gymData.registered_trainings.push(novoCheckin);
         
-        await ApiService.updateUserData({ gymData: this.gymData });
+        await ApiService.updateUserData({ ...this.gymData });
 
         const modalElement = document.getElementById("checkinTreino");
         const modalInstance = bootstrap.Modal.getInstance(modalElement);

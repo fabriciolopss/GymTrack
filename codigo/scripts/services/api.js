@@ -95,6 +95,18 @@ class ApiService {
 
     return response.json();
   }
+
+  static async getRanking() {
+    const response = await fetch(`${API_URL}/ranking`, {
+      headers: {
+        'Authorization': `Bearer ${window.auth.getToken()}`
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Erro ao obter ranking global');
+    }
+    return response.json();
+  }
 }
 
 export default ApiService; 
