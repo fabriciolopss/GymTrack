@@ -6,9 +6,6 @@ lucide.createIcons();
 document.addEventListener("DOMContentLoaded", function () {
     new LayoutManager();
     
-    // Inicializa o sistema de notificações
-    new Notifications();
-    
     // Verifica se auth.js foi carregado
     if (!window.auth) {
         console.error('Auth.js não foi carregado');

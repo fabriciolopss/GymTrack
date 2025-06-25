@@ -1,14 +1,119 @@
 class LayoutManager {
   constructor() {
-    this.headerItems = document.querySelectorAll(".header-item");
-    this.activeItem = null;
     this.sidebar = document.querySelector('.sidebar');
     this.sidebarToggle = document.getElementById('sidebarToggle');
+    this.headerItems = [];
+    this.activeItem = null;
 
+    this.populateSidebar();
     this.setActiveHeaderFromURL();
     this.addEventListeners();
     this.initializeSidebar();
     this.addLogoutButton();
+  }
+
+  populateSidebar() {
+    if (!this.sidebar) return;
+
+    const sidebarNav = this.sidebar.querySelector('.sidebar-nav');
+    if (!sidebarNav) return;
+
+    // Define os itens da sidebar
+    const sidebarItems = [
+      {
+        redirectSessionName: 'perfil',
+        icon: 'user',
+        text: 'Perfil'
+      },
+      {
+        redirectSessionName: 'index',
+        icon: 'layout-dashboard',
+        text: 'Dashboard'
+      },
+      {
+        redirectSessionName: 'registrar-treino',
+        icon: 'square-plus',
+        text: 'Registrar treino'
+      },
+      {
+        redirectSessionName: 'consultar-fichas',
+        icon: 'clipboard-list',
+        text: 'Consultar fichas'
+      },
+      {
+        redirectSessionName: 'progresso',
+        icon: 'trending-up',
+        text: 'Progresso'
+      },
+      {
+        redirectSessionName: 'historico',
+        icon: 'History',
+        text: 'Histórico'
+      },
+      {
+        redirectSessionName: 'notificacoes',
+        icon: 'bell-dot',
+        text: 'Notificações',
+        isNotification: true
+      }
+    ];
+
+    // Limpa o conteúdo existente da nav
+    sidebarNav.innerHTML = '';
+
+    // Cria os itens da sidebar
+    sidebarItems.forEach(item => {
+      if (item.isNotification) {
+        // Item de notificação com wrapper especial
+        const notificationWrapper = document.createElement('div');
+        notificationWrapper.className = 'header-item-wrapper position-relative';
+        notificationWrapper.setAttribute('redirect-session-name', item.redirectSessionName);
+        
+        notificationWrapper.innerHTML = `
+          <div class="position-relative">
+            <i data-lucide="${item.icon}"></i>
+            <span id="notification-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"></span>
+          </div>
+          <span class="nav-text">${item.text}</span>
+        `;
+        
+        sidebarNav.appendChild(notificationWrapper);
+        this.headerItems.push(notificationWrapper);
+      } else {
+        // Item normal
+        const headerItem = document.createElement('div');
+        headerItem.className = 'header-item';
+        headerItem.setAttribute('redirect-session-name', item.redirectSessionName);
+        
+        headerItem.innerHTML = `
+          <i data-lucide="${item.icon}"></i>
+          <span class="nav-text">${item.text}</span>
+        `;
+        
+        sidebarNav.appendChild(headerItem);
+        this.headerItems.push(headerItem);
+      }
+    });
+
+    // Adiciona o sistema de notificações após os itens
+    const notificationSystem = document.createElement('div');
+    notificationSystem.className = 'notification-system-wrapper';
+    notificationSystem.innerHTML = `
+      <div class="notification-header-wrapper d-flex flex-row justify-content-between">
+        <div class="notification-title">Notificações</div>
+        <div class="d-flex flex-row gap-1 align-items-center">
+          <i class="fa-solid fa-check-double"></i>
+          <div class="as-read">Marcar como lidas</div>
+        </div>
+      </div>
+      <div class="notification-system-body"></div>
+    `;
+    sidebarNav.appendChild(notificationSystem);
+    
+    // Recria os ícones do Lucide após adicionar os elementos dinamicamente
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
   }
 
   initializeSidebar() {
@@ -31,10 +136,14 @@ class LayoutManager {
 
   setActiveHeaderFromURL() {
     const path = window.location.pathname;
-    this.activeItem = path.split("/").pop().split(".")[0];
+    const currentPage = path.split("/").pop().split(".")[0];
+    
+    // Se estamos na página index, o activeItem deve ser 'index'
+    this.activeItem = currentPage === 'index' ? 'index' : currentPage;
 
     this.headerItems.forEach((headerItem) => {
-      if (this.getAttributeFromItem(headerItem) === this.activeItem) {
+      const itemSessionName = this.getAttributeFromItem(headerItem);
+      if (itemSessionName === this.activeItem) {
         headerItem.classList.add("active");
       } else {
         headerItem.classList.remove("active");
@@ -55,13 +164,20 @@ class LayoutManager {
   }
 
   handleHeaderClick(item) {
+    const sessionName = item.getAttribute("redirect-session-name");
+    
+    // Se for o item de notificações, não redireciona (deixa o notifications.js cuidar)
+    if (sessionName === 'notificacoes') {
+      return;
+    }
+    
     if (this.activeItem === item.innerText) return;
     this.activeItem = item.innerText;
     this.headerItems.forEach((headerItem) => {
       headerItem.classList.remove("active");
     });
     item.classList.add("active");
-    this.redirectToSection(item.getAttribute("redirect-session-name"));
+    this.redirectToSection(sessionName);
   }
 
   redirectToSection(session) {

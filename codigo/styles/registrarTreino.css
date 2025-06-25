@@ -1,0 +1,313 @@
+.register-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register {
+    width: 40%;
+    height: 90%;
+    border-radius: 20px;
+    background-color: aliceblue;
+}
+
+.menu-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 16px;
+}
+
+.menu-item {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    position: relative;
+}
+
+.menu-item.active {
+    color: var(--active-color);
+}
+
+.dot {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    left: 50%;
+    bottom: -10px;
+}
+
+.dot.active {
+    background-color: var(--active-color);
+}
+
+/* Form Container Styles */
+.form-container {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin: 20px;
+    height: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    color: white;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.form-header i {
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.form-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.form-body {
+    padding: 32px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* Form Elements Styling */
+.form-label {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-select,
+.form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.form-select:focus,
+.form-control:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25);
+    background: white;
+}
+
+.form-select:disabled {
+    background: #f1f3f4;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+/* Input Group Styling */
+.input-group {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.input-group .btn {
+    border: none;
+    padding: 12px 16px;
+    background: #f8f9fa;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.input-group .btn:hover {
+    background: #4CAF50;
+    color: white;
+    transform: translateY(-1px);
+}
+
+.input-group .form-control {
+    border: none;
+    background: white;
+    text-align: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.input-group .form-control:focus {
+    box-shadow: none;
+    background: white;
+}
+
+/* XP Gain Section */
+.xp-gain {
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid #dee2e6;
+}
+
+.titulo-modal {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 16px;
+}
+
+#xp-gain {
+    font-size: 18px;
+    font-weight: 700;
+    color: #4CAF50;
+    background: rgba(76, 175, 80, 0.1);
+    padding: 8px 12px;
+    border-radius: 8px;
+}
+
+#xp-porcentagem,
+#level {
+    font-weight: 600;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Progress Bar */
+.custom-progress-wrapper {
+    background: #e9ecef;
+    border-radius: 10px;
+    height: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.real-progress-bar {
+    background: linear-gradient(90deg, #4CAF50 0%, #45a049 100%);
+    height: 100%;
+    border-radius: 10px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.future-progress-bar {
+    background: linear-gradient(90deg, rgba(76, 175, 80, 0.3) 0%, rgba(69, 160, 73, 0.3) 100%);
+    height: 100%;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+#xp-low-limit,
+#xp-high-limit {
+    font-size: 12px;
+    color: #6c757d;
+    font-weight: 500;
+}
+
+/* Submit Button */
+.btn-primary {
+    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-weight: 600;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
+    transition: all 0.3s ease;
+    margin-top: 16px;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .register {
+        width: 90%;
+        height: 95%;
+    }
+
+    .form-body {
+        padding: 20px;
+    }
+
+    .form-header {
+        padding: 16px;
+    }
+
+    .form-title {
+        font-size: 18px;
+    }
+}
+
+/* Animation for form appearance */
+#treino-feito-content {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Hover effects for interactive elements */
+.form-select:hover,
+.form-control:hover {
+    border-color: #4CAF50;
+    background: white;
+}
+
+.input-group .btn:active {
+    transform: scale(0.95);
+}
+
+/* Custom scrollbar for form body */
+.form-body::-webkit-scrollbar {
+    width: 6px;
+}
+
+.form-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.form-body::-webkit-scrollbar-thumb {
+    background: #4CAF50;
+    border-radius: 3px;
+}
+
+.form-body::-webkit-scrollbar-thumb:hover {
+    background: #45a049;
+}

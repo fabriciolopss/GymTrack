@@ -1,9 +1,9 @@
 import ApiService from './services/api.js';
 
-// Comentado para evitar inicialização automática quando importado como módulo
-// document.addEventListener("DOMContentLoaded", function(){
-//   const notifications = new Notifications;
-// })
+// Inicialização automática quando importado como módulo
+document.addEventListener("DOMContentLoaded", function(){
+  new Notifications();
+})
 
 const NOTIFICATION_ICONS = {
   Creation: "fa-solid fa-square-plus text-success", // Green for creation
