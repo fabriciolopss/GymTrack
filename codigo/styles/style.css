@@ -30,7 +30,7 @@ body {
   display: flex;
   flex-direction: row;
   padding: 0;
-  background-image: url("../images/background.png");
+  background-color: #F8F8FA;
   background-size: cover;
   background-position: center;
   background-size: 60%;

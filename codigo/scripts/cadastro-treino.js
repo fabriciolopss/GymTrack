@@ -303,12 +303,7 @@ function renderTreinoForm(treino) {
                     <i data-lucide="dumbbell" class="text-primary"></i>
                     <input class="form-control form-control-sm flex-grow-1" type="text" id="dia-${diaIdx}-nome-exercicio-${exIdx}" value="${ex.exercise}" placeholder="Nome do exercício">
                     <input class="form-control form-control-sm" style="max-width:80px" type="number" id="dia-${diaIdx}-series-exercicio-${exIdx}" value="${ex.series}" placeholder="Séries">
-                    <select id="dia-${diaIdx}-rep-exercicio-${exIdx}" class="form-select form-select-sm" style="max-width:100px">
-                        <option hidden>Repetições</option>
-                        <option value="4-6" ${ex.repetitions == "4-6" ? "selected" : ""}>4-6</option>
-                        <option value="8-12" ${ex.repetitions == "8-12" ? "selected" : ""}>8-12</option>
-                        <option value="12-15" ${ex.repetitions == "12-15" ? "selected" : ""}>12-15</option>
-                    </select>
+                    <input class="form-control form-control-sm" style="max-width:80px" type="number" id="dia-${diaIdx}-rep-exercicio-${exIdx}" value="${ex.repetitions}" placeholder="Repetições">
                     <button class="btn btn-outline-danger btn-sm delete-ex d-flex align-items-center gap-1" data-dia="${diaIdx}" data-ex="${exIdx}"><i data-lucide="trash-2"></i></button>
                 </div>
             `;

@@ -26,6 +26,11 @@ class LayoutManager {
         text: 'Perfil'
       },
       {
+        redirectSessionName: 'social',
+        icon: 'users',
+        text: 'Social'
+      },
+      {
         redirectSessionName: 'index',
         icon: 'layout-dashboard',
         text: 'Dashboard'

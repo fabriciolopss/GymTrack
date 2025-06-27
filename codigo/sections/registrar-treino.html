@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="../scripts/auth.js" type="module"></script>
     <script src="../scripts/services/api.js" type="module"></script>
 </head>
@@ -151,7 +152,63 @@
                             </div>
                         </div>
                     </div>
-                    <div id="fazer-treino-content">fazer</div>
+                    <div id="fazer-treino-content">
+                        <div class="exercise-header">
+                            <div class="exercise-info">
+                                <div class="exercise-name">
+                                    <i class="fa-solid fa-dumbbell"></i>
+                                    <span id="current-exercise">Inicie um treino antes!</span>
+                                </div>
+                                <div class="exercise-details">
+                                    <div class="repetitions-info">
+                                        <i class="fa-solid fa-repeat"></i>
+                                        <span id="current-repetitions">0 x 0</span>
+                                    </div>
+                                    <div class="series-info">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        <span id="series-info">Série 1/4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="circle-container mb-3" id="circle">
+                            <div class="center-content">
+                                <i data-lucide="alarm-clock"></i>
+                                <div class="time" id="time-display">25:00</div>
+                                <div class="label" id="type-display">fazendo o exercício</div>
+                            </div>
+                        </div>
+
+                        <div class="play-pause">
+                            <i id="button-playpause" class="fa-solid fa-play"></i>
+                            <i id="button-forward" class="fa-solid fa-forward" style="margin-left: 16px;"></i>
+                        </div>
+
+                        <div class="training-footer">
+                            <div class="mb-3">
+                                <button class="btn-start-treino disabled" id="start-training" disabled>Iniciar
+                                    treino</button>
+                            </div>
+
+                            <div class="d-flex flex-row gap-4">
+                                <div class="mb-3">
+                                    <label for="training-plans-fazer" class="form-label">Plano de treino</label>
+                                    <select required class="form-select" id="training-plans-fazer"
+                                        aria-label="Default select example">
+                                        <option selected>Selecionar o plano de treino realizado</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="training-days-fazer" class="form-label">Treino realizado</label>
+                                    <select class="form-select" id="training-days-fazer"
+                                        aria-label="Default select example" disabled>
+                                        <option selected>Selecionar dia do treino realizado</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
