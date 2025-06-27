@@ -110,6 +110,34 @@ class ApiService {
     }
     return response.json();
   }
+
+  static async getSocialFeed(page = 0, limit = 10) {
+    const response = await fetch(`${API_URL}/social-feed?page=${page}&limit=${limit}`, {
+      headers: {
+        'Authorization': `Bearer ${window.auth.getToken()}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao obter feed social');
+    }
+    
+    return response.json();
+  }
+
+  static async getAllUsers() {
+    const response = await fetch(`${API_URL}/users`, {
+      headers: {
+        'Authorization': `Bearer ${window.auth.getToken()}`
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error('Erro ao obter lista de usuários');
+    }
+    
+    return response.json();
+  }
 }
 
 export default ApiService;

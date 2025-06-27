@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         // Redireciona para o dashboard após 3 segundos
         setTimeout(() => {
-          window.location.href = "index.html";
+          window.location.href = "perfil.html";
         }, 3000);
       } catch (error) {
         console.error("Erro ao salvar dados do perfil:", error);

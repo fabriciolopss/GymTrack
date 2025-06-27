@@ -129,57 +129,9 @@
                 </div>
             </div>
             <nav class="sidebar-nav">
-                <div class="header-item" redirect-session-name="perfil">
-                    <i data-lucide="user"></i>
-                    <span class="nav-text">Perfil</span>
-                </div>
-                <div class="header-item" redirect-session-name="index">
-                    <i data-lucide="layout-dashboard"></i>
-                    <span class="nav-text">Dashboard</span>
-                </div>
-                <div class="header-item" redirect-session-name="consultar-fichas">
-                    <i data-lucide="clipboard-list"></i>
-                    <span class="nav-text">Consultar fichas</span>
-                </div>
-                <div class="header-item" redirect-session-name="progresso">
-                    <i data-lucide="trending-up"></i>
-                    <span class="nav-text">Progresso</span>
-                </div>
-                <div class="header-item" redirect-session-name="historico">
-                    <i data-lucide="History"></i>
-                    <span class="nav-text">Histórico</span>
-                </div>
-                <div class="header-item-wrapper position-relative" redirect-session-name="notificacoes">
-                    <div class="position-relative">
-                        <i data-lucide="bell-dot"></i>
-                        <span id="notification-count"
-                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-                        </span>
-                    </div>
-
-                    <span class="nav-text">Notificações</span>
-
-                </div>
-
-                <div class="notification-system-wrapper">
-                    <div class="notification-header-wrapper d-flex flex-row justify-content-between">
-                        <div class="notification-title">Notificações</div>
-                        <div class="d-flex flex-row gap-1 align-items-center">
-                            <i class="fa-solid fa-check-double"></i>
-                            <div class="as-read">Marcar como lidas</div>
-                        </div>
-                    </div>
-
-                    <div class="notification-system-body"></div>
-                </div>
+                <!-- Header items serão populados dinamicamente pelo layout.js -->
             </nav>
             <div class="sidebar-footer">
-                <button class="btn btn-primary w-100 abrir-modal"
-                    style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); border: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; font-weight: 600; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s ease;"
-                    data-bs-toggle="modal" data-bs-target="#checkinTreino">
-                    <i data-lucide="Dumbbell"></i>
-                    <span class="nav-text">Registrar treino</span>
-                </button>
             </div>
         </aside>
         <main class="main-content">
@@ -465,6 +417,7 @@
     </div>
 
     <!-- Scripts devem estar no final do body -->
+    <script src="../scripts/notifications.js" type="module"></script>
     <script src="../scripts/layout.js"></script>
     <script src="../scripts/progresso.js" type="module"></script>
 </body>
