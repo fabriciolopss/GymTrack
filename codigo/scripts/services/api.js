@@ -1,5 +1,4 @@
-// const API_URL = 'https://ti1-webserver-production.up.railway.app';
-const API_URL = 'http://localhost:8080';
+const API_URL = 'https://ti1-webserver-production.up.railway.app';
 
 class ApiService {
   static async getUserData() {
