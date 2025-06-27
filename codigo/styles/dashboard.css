@@ -25,20 +25,27 @@
 
 .grid-stack {
   background: transparent;
-  min-height: 100%;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
 }
 
 .grid-stack-item {
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 15px;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 4px;
+  overflow: visible;
 }
 
 .grid-stack-item-content {
   height: 100%;
   display: flex;
   flex-direction: column;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
 }
 
 .card-title {
@@ -95,8 +102,9 @@
   min-height: 320px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   position: relative;
 }
 .ficha-card .ficha-img-wrapper {
@@ -171,6 +179,11 @@
 .distribuicao-card {
   align-items: center;
   justify-content: flex-start;
+  text-align: center;
+}
+.distribuicao-card .dashboard-card-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
 }
 #distribuicao-treinos {
   margin: 0 auto;
@@ -182,14 +195,16 @@
   gap: 1.2rem;
   margin-top: 0.7rem;
   margin-bottom: 0.5rem;
+  flex-wrap: wrap;
 }
 .distribuicao-totais {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 0.7rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
   font-size: 0.95rem;
   margin-top: 0.5rem;
+  text-align: center;
 }
 .dot {
   display: inline-block;
@@ -362,4 +377,153 @@
   font-size: 0.98rem;
   color: #888;
   font-weight: 400;
+}
+
+/* Gridstack Styles */
+.grid-stack {
+  background: transparent;
+  min-height: 100vh;
+  padding: 2rem 1.5rem;
+}
+
+.grid-stack-item {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 4px;
+  overflow: visible;
+}
+
+.grid-stack-item-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  overflow: visible;
+}
+
+.dashboard-widget {
+  transition: none;
+}
+
+.dashboard-widget:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Responsive adjustments for Gridstack */
+@media (max-width: 768px) {
+  .grid-stack {
+    padding: 0.5rem;
+  }
+
+  .grid-stack-item {
+    padding: 4px;
+  }
+
+  .dashboard-widget {
+    margin-bottom: 0;
+  }
+}
+
+/* Gridstack resize handles */
+.grid-stack-item .ui-resizable-handle {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  width: 16px !important;
+  height: 16px !important;
+  z-index: 2;
+  opacity: 0 !important;
+  transition: opacity 0.2s;
+  display: none !important;
+}
+
+/* Ensure charts are responsive within Gridstack */
+.grid-stack-item canvas {
+  max-width: 100%;
+  height: auto !important;
+}
+
+/* Override some Bootstrap styles for Gridstack compatibility */
+.grid-stack-item .dashboard-card {
+  height: 100%;
+  margin: 0;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
+  padding: 1.5rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  position: relative;
+  background: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: visible;
+  border-top-left-radius: 1.5rem !important;
+  border-top-right-radius: 1.5rem !important;
+  border-bottom-left-radius: 1.5rem !important;
+  border-bottom-right-radius: 1.5rem !important;
+}
+
+/* Garantindo que não haja sobreposição mas permitindo conteúdo completo */
+.grid-stack-item {
+  overflow: visible;
+}
+
+.grid-stack-item-content {
+  overflow: visible;
+}
+
+/* Ajustando altura mínima dos cards para evitar corte */
+.grid-stack-item .dashboard-card {
+  min-height: 200px;
+}
+
+/* Cards específicos que precisam de mais altura */
+.grid-stack-item .historico-card {
+  min-height: 300px;
+}
+
+.grid-stack-item .ficha-card {
+  min-height: 280px;
+}
+
+.grid-stack-item .perfil-card {
+  min-height: 320px;
+}
+
+.grid-stack-item .distribuicao-card {
+  min-height: 250px;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-stack-item .distribuicao-card .dashboard-card {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.grid-stack-item:focus,
+.grid-stack-item:active,
+.grid-stack-item:hover,
+.grid-stack-item.ui-draggable-dragging,
+.grid-stack-item.ui-resizable-resizing {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.grid-stack-item-content:focus,
+.grid-stack-item-content:active,
+.grid-stack-item-content:hover {
+  outline: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
