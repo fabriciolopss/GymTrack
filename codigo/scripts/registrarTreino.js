@@ -171,8 +171,9 @@ class Registration {
                 (plan) => plan.id == submitPlanId
             );
             const selectedDay = selectedPlan?.days[submitDayTrainedId];
+            let xpGanho;
             try{
-                const xpGanho = this.calcularXpPorTipoETempo(selectedPlan.type, hours, minutes);
+                xpGanho = this.calcularXpPorTipoETempo(selectedPlan.type, hours, minutes);
             }catch(error){
                 showAlert("Erro ao registrar o treino" , "error");
             }
