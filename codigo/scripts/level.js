@@ -5,7 +5,7 @@ function xpParaNivel(nivel, fator = 50, expoente = 1.5) {
   return Math.floor(fator * Math.pow(nivel, expoente));
 }
 
-function calcularNivel(xp, fator = 50, expoente = 1.4) {
+export function calcularNivel(xp, fator = 50, expoente = 1.4) {
   let totalXp = 0;
   let nivel = 1;
 
@@ -21,16 +21,7 @@ function calcularNivel(xp, fator = 50, expoente = 1.4) {
   return { nivel, xpNivelAtual, xpProxNivel, xpParaProximoNivel };
 }
 
-// Elementos DOM
-const nivelSpan = document.querySelector("#level");
-const realBar = document.querySelector(".real-progress-bar");
-const futureBar = document.querySelector(".future-progress-bar");
-const xpLowLimit = document.querySelector("#xp-low-limit");
-const xpHighLimit = document.querySelector("#xp-high-limit");
-const xpGain = document.querySelector("#xp-gain");
-const porcentagemSpan = document.querySelector("#xp-porcentagem");
 
-// Atualiza barra com ganho de XP (pré-checkin)
 export async function mudarXpGanha(newXP) {
   try {
     const userData = await ApiService.getUserData();
@@ -73,68 +64,5 @@ export async function xpModalCheckin() {
     porcentagemSpan.textContent = `${Math.floor(progressoAtual)}%`;
   } catch (error) {
     console.error('Erro ao buscar dados do usuário para xpModalCheckin:', error);
-  }
-}
-
-// Executa ao carregar a página
-document.addEventListener("DOMContentLoaded", function(){
-  const level = new Level;
-})
-
-class Level {
-  constructor() {
-    this.initializeLevel();
-  }
-
-  async initializeLevel() {
-    try {
-      const userData = await ApiService.getUserData();
-      this.gymData = userData.gymData || {};
-      this.levelContainer = document.querySelector('.level-container');
-      this.bindEvents();
-      this.renderLevel();
-    } catch (error) {
-      console.error('Erro ao inicializar level:', error);
-      this.gymData = {};
-    }
-  }
-
-  bindEvents() {
-    // Add any event listeners here
-  }
-
-  async renderLevel() {
-    if (!this.gymData.level) {
-      this.gymData.level = 1;
-    }
-
-    this.levelContainer.innerHTML = `
-      <div class="level-item">
-        <h3>Nível ${this.gymData.level}</h3>
-        <p>XP: ${this.gymData.xp || 0}</p>
-      </div>
-    `;
-  }
-
-  async addXp(xp) {
-    try {
-      if (!this.gymData.xp) {
-        this.gymData.xp = 0;
-      }
-      
-      this.gymData.xp += xp;
-      // Check for level up
-      const newLevel = Math.floor(this.gymData.xp / 100) + 1;
-      if (newLevel > this.gymData.level) {
-        this.gymData.level = newLevel;
-        // You might want to trigger a level up notification here
-      }
-      
-      await ApiService.updateUserData({ gymData: this.gymData });
-      await this.renderLevel();
-    } catch (error) {
-      console.error('Erro ao adicionar XP:', error);
-      throw error;
-    }
   }
 }

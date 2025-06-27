@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     // Verifica se o usuário já está autenticado
     if (window.auth.isAuthenticated()) {
-        window.location.href = 'index.html';
+        window.location.href = 'social.html';
         return;
     }
 
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setButtonSuccess(submitButton);
             showSuccess('Login realizado com sucesso!', loginForm);
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'social.html';
             }, 1000);
         } catch (error) {
             resetButton(submitButton, originalButtonText);
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', function () {
             setButtonSuccess(submitButton);
             showSuccess('Cadastro realizado com sucesso!', registerForm);
             setTimeout(() => {
-                window.location.href = 'index.html';
+                window.location.href = 'social.html';
             }, 1000);
         } catch (error) {
             resetButton(submitButton, originalButtonText);

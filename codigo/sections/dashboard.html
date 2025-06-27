@@ -4,8 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles/style.css">
-  <link rel="stylesheet" href="styles/dashboard.css">
+  <link rel="stylesheet" href="../styles/style.css">
+  <link rel="stylesheet" href="../styles/dashboard.css">
   <title>GymTrack</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
@@ -14,7 +14,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gridstack@7.2.3/dist/gridstack-all.js"></script>
   <script src="https://kit.fontawesome.com/64b9a24b58.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="scripts/auth.js"></script>
+  <script src="../scripts/auth.js"></script>
 </head>
 
 <body>
@@ -121,7 +121,7 @@
     <aside class="sidebar">
       <div class="sidebar-header">
         <div class="logo">
-          <img src="images/logo.png" alt="GymApp Logo" class="logo-img">
+          <img src="../images/logo.png" alt="GymApp Logo" class="logo-img">
         </div>
       </div>
       <div class="sidebar-toggle" id="sidebarToggle">
@@ -130,61 +130,9 @@
         </div>
       </div>
       <nav class="sidebar-nav">
-        <div class="header-item" redirect-session-name="perfil">
-          <i data-lucide="user"></i>
-          <span class="nav-text">Perfil</span>
-        </div>
-        <div class="header-item" redirect-session-name="index">
-          <i data-lucide="layout-dashboard"></i>
-          <span class="nav-text">Dashboard</span>
-        </div>
-        <div class="header-item" redirect-session-name="consultar-fichas">
-          <i data-lucide="clipboard-list"></i>
-          <span class="nav-text">Consultar fichas</span>
-        </div>
-        <div class="header-item" redirect-session-name="progresso">
-          <i data-lucide="trending-up"></i>
-          <span class="nav-text">Progresso</span>
-        </div>
-        <div class="header-item" redirect-session-name="cadastro">
-          <i data-lucide="user-plus"></i>
-          <span class="nav-text">Cadastro</span>
-        </div>
-        <div class="header-item" redirect-session-name="historico">
-          <i data-lucide="History"></i>
-          <span class="nav-text">Histórico</span>
-        </div>
-        <div class="header-item-wrapper position-relative" redirect-session-name="notificacoes">
-          <div class="position-relative">
-            <i data-lucide="bell-dot"></i>
-            <span id="notification-count"
-              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">
-            </span>
-          </div>
-
-          <span class="nav-text">Notificações</span>
-
-        </div>
-
-        <div class="notification-system-wrapper">
-          <div class="notification-header-wrapper d-flex flex-row justify-content-between">
-            <div class="notification-title">Notificações</div>
-            <div class="d-flex flex-row gap-1 align-items-center">
-              <i class="fa-solid fa-check-double"></i>
-              <div class="as-read">Marcar como lidas</div>
-            </div>
-          </div>
-
-          <div class="notification-system-body"></div>
-        </div>
+        <!-- Header items serão populados dinamicamente pelo layout.js -->
       </nav>
       <div class="sidebar-footer">
-        <button class="btn btn-primary w-100 abrir-modal"
-          style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); border: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; font-weight: 600; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s ease;"
-          data-bs-toggle="modal" data-bs-target="#checkinTreino">
-          <i data-lucide="Dumbbell"></i>
-          <span class="nav-text">Registrar treino</span>
-        </button>
       </div>
     </aside>
     <main class="main-content">
@@ -200,119 +148,137 @@
 
         <div class="row">
           <div class="col-md-4">
-              <div class="card" style="border-radius: 1rem; padding: 1rem;">
-                <div class="card-body">
-                  <div class="d-flex align-items-center mb-3">
-                    <i class="fa-solid fa-clock me-2" style="font-size: 1.5rem;"></i>
-                    <h5 class="card-title mb-0" style="font-size: 1.5rem; font-weight: bold;">Resumo do progresso</h5>
+            <div class="card" style="border-radius: 1rem; padding: 1rem;">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-3">
+                  <i class="fa-solid fa-clock me-2" style="font-size: 1.5rem;"></i>
+                  <h5 class="card-title mb-0" style="font-size: 1.5rem; font-weight: bold;">Resumo do progresso</h5>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3 gap-2" style="overflow-x: auto; padding-bottom: 10px;">
+                  <!-- Dates - this should be dynamic in a real app -->
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
+                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
                   </div>
-
-                  <div class="d-flex justify-content-between mb-3 gap-2" style="overflow-x: auto; padding-bottom: 10px;">
-                    <!-- Dates - this should be dynamic in a real app -->
-                    <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                      <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                    </div>
-                    <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                      <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                    </div>
-                    <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                      <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                    </div>
-                    <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #e6f4ea; border: 1px solid #4CAF50;">
-                      <div style="font-size: 0.75rem; color: #4CAF50;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold; color: #4CAF50;">16</div>
-                    </div>
-                    <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                      <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                    </div>
-                    <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                      <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                    </div>
-                     <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                      <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                    </div>
-                    <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                      <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                    </div>
-                    <div class="text-center" style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                      <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                      <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                    </div>
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
+                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
                   </div>
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
+                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
+                  </div>
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #e6f4ea; border: 1px solid #4CAF50;">
+                    <div style="font-size: 0.75rem; color: #4CAF50;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold; color: #4CAF50;">16</div>
+                  </div>
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
+                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
+                  </div>
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
+                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
+                  </div>
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
+                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
+                  </div>
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
+                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
+                  </div>
+                  <div class="text-center"
+                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
+                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
+                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
+                  </div>
+                </div>
 
-                  <p class="mb-4" style="font-size: 1.1rem; font-weight: 500;">Dia 16 de maio de 2025</p>
+                <p class="mb-4" style="font-size: 1.1rem; font-weight: 500;">Dia 16 de maio de 2025</p>
 
-                  <div class="row">
-                    <div class="col-4">
-                      <div class="card text-center" style="background-color: #fff9c4; border-radius: 0.75rem; padding: 10px;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div style="background-color: #ffeb3b; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-solid fa-fire" style="color: black;"></i>
-                            </div>
-                            <i class="fa-solid fa-ellipsis-v"></i>
+                <div class="row">
+                  <div class="col-4">
+                    <div class="card text-center"
+                      style="background-color: #fff9c4; border-radius: 0.75rem; padding: 10px;">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div
+                          style="background-color: #ffeb3b; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
+                          <i class="fa-solid fa-fire" style="color: black;"></i>
                         </div>
+                        <i class="fa-solid fa-ellipsis-v"></i>
+                      </div>
 
-                        <div class="d-flex align-items-center">
-                          <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">6</h2>
-                          <span style="font-size: 0.9rem; color: #6c757d;">dias sem falhar</span>
-                        </div>
+                      <div class="d-flex align-items-center">
+                        <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">6</h2>
+                        <span style="font-size: 0.9rem; color: #6c757d;">dias sem falhar</span>
                       </div>
                     </div>
+                  </div>
 
-                    <div class="col-4">
-                      <div class="card text-center" style="background-color: #e1bee7; border-radius: 0.75rem; padding: 10px;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div style="background-color: #ce93d8; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-solid fa-dumbbell" style="color: black;"></i>
-                            </div>
-                            <i class="fa-solid fa-ellipsis-v"></i>
+                  <div class="col-4">
+                    <div class="card text-center"
+                      style="background-color: #e1bee7; border-radius: 0.75rem; padding: 10px;">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div
+                          style="background-color: #ce93d8; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
+                          <i class="fa-solid fa-dumbbell" style="color: black;"></i>
                         </div>
+                        <i class="fa-solid fa-ellipsis-v"></i>
+                      </div>
 
-                        <div class="d-flex align-items-center">
-                          <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">36</h2>
-                          <span style="font-size: 0.9rem; color: #6c757d;">séries</span>
-                        </div>
+                      <div class="d-flex align-items-center">
+                        <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">36</h2>
+                        <span style="font-size: 0.9rem; color: #6c757d;">séries</span>
                       </div>
                     </div>
+                  </div>
 
-                    <div class="col-4">
-                      <div class="card text-center" style="background-color: #b3e5fc; border-radius: 0.75rem; padding: 10px;">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div style="background-color: #81d4fa; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
-                                <i class="fa-solid fa-hourglass-half" style="color: black;"></i>
-                            </div>
-                            <i class="fa-solid fa-ellipsis-v"></i>
+                  <div class="col-4">
+                    <div class="card text-center"
+                      style="background-color: #b3e5fc; border-radius: 0.75rem; padding: 10px;">
+                      <div class="d-flex justify-content-between align-items-center">
+                        <div
+                          style="background-color: #81d4fa; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
+                          <i class="fa-solid fa-hourglass-half" style="color: black;"></i>
                         </div>
+                        <i class="fa-solid fa-ellipsis-v"></i>
+                      </div>
 
-                        <div class="d-flex align-items-center">
-                          <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">120</h2>
-                          <span style="font-size: 0.9rem; color: #6c757d;">minutos</span>
-                        </div>
+                      <div class="d-flex align-items-center">
+                        <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">120</h2>
+                        <span style="font-size: 0.9rem; color: #6c757d;">minutos</span>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
 
           <div class="col-md-4">
             <div class="card" style="border-radius: 1rem; padding: 1rem;">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
-                    <i class="fa-solid fa-clock me-2" style="font-size: 1.5rem;"></i>
-                    <h5 class="card-title mb-0" style="font-size: 1.25rem; font-weight: bold;">Progresso de volume total</h5>
+                  <i class="fa-solid fa-clock me-2" style="font-size: 1.5rem;"></i>
+                  <h5 class="card-title mb-0" style="font-size: 1.25rem; font-weight: bold;">Progresso de volume total
+                  </h5>
                 </div>
                 <div class="d-flex align-items-center mb-3">
-                    <select id="equipamentoVolumeSelect" class="form-select form-select-sm me-2" aria-label="Selecionar equipamento" style="width: auto; font-size: 1rem; font-weight: 500; border: none; background-color: transparent; padding-left: 0;">
-                        <!-- Options will be populated by JavaScript -->
-                    </select>
+                  <select id="equipamentoVolumeSelect" class="form-select form-select-sm me-2"
+                    aria-label="Selecionar equipamento"
+                    style="width: auto; font-size: 1rem; font-weight: 500; border: none; background-color: transparent; padding-left: 0;">
+                    <!-- Options will be populated by JavaScript -->
+                  </select>
                 </div>
                 <canvas id="volumeChart"></canvas>
               </div>
@@ -323,22 +289,25 @@
             <div class="card" style="border-radius: 1rem; padding: 1rem;">
               <div class="card-body">
                 <div class="d-flex align-items-center mb-2">
-                    <i class="fa-solid fa-chart-line me-2" style="font-size: 1.5rem;"></i>
-                    <h5 class="card-title mb-0" style="font-size: 1.25rem; font-weight: bold;">Progressão de carga</h5>
+                  <i class="fa-solid fa-chart-line me-2" style="font-size: 1.5rem;"></i>
+                  <h5 class="card-title mb-0" style="font-size: 1.25rem; font-weight: bold;">Progressão de carga</h5>
                 </div>
                 <div class="d-flex align-items-center mb-3">
-                    <select id="equipamentoCargaSelect" class="form-select form-select-sm me-2" aria-label="Selecionar equipamento" style="width: auto; font-size: 1rem; font-weight: 500; border: none; background-color: transparent; padding-left: 0;">
-                        <!-- Options will be populated by JavaScript -->
-                    </select>
+                  <select id="equipamentoCargaSelect" class="form-select form-select-sm me-2"
+                    aria-label="Selecionar equipamento"
+                    style="width: auto; font-size: 1rem; font-weight: 500; border: none; background-color: transparent; padding-left: 0;">
+                    <!-- Options will be populated by JavaScript -->
+                  </select>
                 </div>
                 <div class="row align-items-center">
-                    <div class="col-5">
-                        <p class="mb-1" style="font-size: 0.9rem; color: #6c757d;">Maior carga para esse exercício</p>
-                        <p class="mb-0" style="font-size: 3.5rem; font-weight: bold;">65<span style="font-size: 1.5rem; font-weight: normal; color: #6c757d;">kg</span></p>
-                    </div>
-                    <div class="col-7">
-                        <canvas id="progressaoCargaChart"></canvas>
-                    </div>
+                  <div class="col-5">
+                    <p class="mb-1" style="font-size: 0.9rem; color: #6c757d;">Maior carga para esse exercício</p>
+                    <p class="mb-0" style="font-size: 3.5rem; font-weight: bold;">65<span
+                        style="font-size: 1.5rem; font-weight: normal; color: #6c757d;">kg</span></p>
+                  </div>
+                  <div class="col-7">
+                    <canvas id="progressaoCargaChart"></canvas>
+                  </div>
                 </div>
               </div>
             </div>
@@ -351,7 +320,9 @@
             <div class="dashboard-card ficha-card">
               <div class="dashboard-card-title">Ficha atual</div>
               <div class="ficha-img-wrapper">
-                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ficha atual" class="ficha-img">
+                <img
+                  src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Ficha atual" class="ficha-img">
                 <span class="ficha-status ficha-status-iniciante">Iniciante</span>
               </div>
               <div class="ficha-info">
@@ -367,7 +338,9 @@
             <div class="dashboard-card ficha-card">
               <div class="dashboard-card-title">Última ficha</div>
               <div class="ficha-img-wrapper">
-                <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Última ficha" class="ficha-img">
+                <img
+                  src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  alt="Última ficha" class="ficha-img">
                 <span class="ficha-status ficha-status-iniciante">Iniciante</span>
               </div>
               <div class="ficha-info">
@@ -642,7 +615,7 @@
         }
       ]
     };
-image.png
+    image.png
 
   });
 
@@ -655,13 +628,13 @@ image.png
   });
 </script>
 
-<script src="scripts/checkinModal.js" type="module"></script>
-<script src="scripts/layout.js"></script>
-<script src="scripts/dashboard.js"></script>
-<script src="scripts/dashboard-widgets.js"></script>
-<script src="scripts/notifications.js" type="module"></script>
+<script src="../scripts/checkinModal.js" type="module"></script>
+<script src="../scripts/layout.js"></script>
+<script src="../scripts/dashboard.js"></script>
+<script src="../scripts/dashboard-widgets.js"></script>
+<script src="../scripts/notifications.js" type="module"></script>
 
-<script src="scripts/level.js" type="module"></script>
+<script src="../scripts/level.js" type="module"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
