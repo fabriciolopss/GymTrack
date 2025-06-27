@@ -1,4 +1,4 @@
-import ApiService from './services/api.js';
+import ApiService from "./services/api.js";
 
 // Utilidades de XP
 function xpParaNivel(nivel, fator = 50, expoente = 1.5) {
@@ -37,20 +37,21 @@ export async function mudarXpGanha(newXP) {
     const gymData = userData || {};
     const xp = gymData.profile?.xp || 0;
     const { xpNivelAtual, xpParaProximoNivel } = calcularNivel(xp);
-    const progressoFuturo = ((xp - xpNivelAtual + newXP) / xpParaProximoNivel) * 100;
+    const progressoFuturo =
+      ((xp - xpNivelAtual + newXP) / xpParaProximoNivel) * 100;
     xpGain.textContent = `+${newXP} XP`;
     futureBar.style.width = `${progressoFuturo}%`;
     porcentagemSpan.textContent = `${Math.floor(progressoFuturo)}%`;
   } catch (error) {
-    console.error('Erro ao buscar dados do usuário para mudarXpGanha:', error);
+    console.error("Erro ao buscar dados do usuário para mudarXpGanha:", error);
   }
 }
 
 export function calcularXpPorTipoETempo(tipo, horas, minutos) {
   const xpMultipliers = {
-    "Ficha iniciante": 50, 
-    "Ficha intermediária": 100, 
-    "Ficha avançada": 150, 
+    "Ficha iniciante": 50,
+    "Ficha intermediária": 100,
+    "Ficha avançada": 150,
   };
 
   const multiplier = xpMultipliers[tipo] || 10;
@@ -63,7 +64,8 @@ export async function xpModalCheckin() {
     const userData = await ApiService.getUserData();
     const gymData = userData.gymData || {};
     const xp = gymData.profile?.xp || 0;
-    const { nivel, xpNivelAtual, xpProxNivel, xpParaProximoNivel } = calcularNivel(xp);
+    const { nivel, xpNivelAtual, xpProxNivel, xpParaProximoNivel } =
+      calcularNivel(xp);
     const progressoAtual = ((xp - xpNivelAtual) / xpParaProximoNivel) * 100;
     nivelSpan.textContent = `Nível ${nivel}`;
     xpLowLimit.textContent = `${xpNivelAtual} XP`;
@@ -72,14 +74,17 @@ export async function xpModalCheckin() {
     realBar.style.width = `${progressoAtual}%`;
     porcentagemSpan.textContent = `${Math.floor(progressoAtual)}%`;
   } catch (error) {
-    console.error('Erro ao buscar dados do usuário para xpModalCheckin:', error);
+    console.error(
+      "Erro ao buscar dados do usuário para xpModalCheckin:",
+      error
+    );
   }
 }
 
 // Executa ao carregar a página
-document.addEventListener("DOMContentLoaded", function(){
-  const level = new Level;
-})
+document.addEventListener("DOMContentLoaded", function () {
+  const level = new Level();
+});
 
 class Level {
   constructor() {
@@ -90,11 +95,11 @@ class Level {
     try {
       const userData = await ApiService.getUserData();
       this.gymData = userData.gymData || {};
-      this.levelContainer = document.querySelector('.level-container');
+      this.levelContainer = document.querySelector(".level-container");
       this.bindEvents();
       this.renderLevel();
     } catch (error) {
-      console.error('Erro ao inicializar level:', error);
+      console.error("Erro ao inicializar level:", error);
       this.gymData = {};
     }
   }
@@ -107,7 +112,7 @@ class Level {
     if (!this.gymData.level) {
       this.gymData.level = 1;
     }
-
+    if (!this.levelContainer) return;
     this.levelContainer.innerHTML = `
       <div class="level-item">
         <h3>Nível ${this.gymData.level}</h3>
@@ -121,7 +126,7 @@ class Level {
       if (!this.gymData.xp) {
         this.gymData.xp = 0;
       }
-      
+
       this.gymData.xp += xp;
       // Check for level up
       const newLevel = Math.floor(this.gymData.xp / 100) + 1;
@@ -129,11 +134,11 @@ class Level {
         this.gymData.level = newLevel;
         // You might want to trigger a level up notification here
       }
-      
+
       await ApiService.updateUserData({ gymData: this.gymData });
       await this.renderLevel();
     } catch (error) {
-      console.error('Erro ao adicionar XP:', error);
+      console.error("Erro ao adicionar XP:", error);
       throw error;
     }
   }

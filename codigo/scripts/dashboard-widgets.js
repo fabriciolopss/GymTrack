@@ -1,6 +1,4 @@
-function getGymAppData() {
-  return JSON.parse(localStorage.getItem("gymAppData"));
-}
+// Remover import ApiService from './services/api.js';
 
 function getBadgeClass(type) {
   if (!type) return "badge-iniciante";
@@ -40,8 +38,14 @@ function calcularDiasSeguidos(registered_trainings) {
   return maxSeq;
 }
 
-window.addEventListener("DOMContentLoaded", function () {
-  const data = getGymAppData();
+window.addEventListener("DOMContentLoaded", async function () {
+  let data;
+  try {
+    data = await window.ApiService.getUserData();
+  } catch (error) {
+    console.error("Erro ao buscar dados do usuário:", error);
+    return;
+  }
   if (!data) return;
 
   // Nome do usuário
@@ -180,7 +184,7 @@ window.addEventListener("DOMContentLoaded", function () {
   if (downloadBtn) {
     downloadBtn.addEventListener("click", function () {
       // Monta os dados do histórico
-      const gymData = getGymAppData();
+      const gymData = data;
       if (!gymData) return;
       const treinos = gymData.registered_trainings
         .slice()

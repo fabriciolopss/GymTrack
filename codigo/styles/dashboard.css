@@ -42,9 +42,10 @@
 }
 
 .card-title {
-  font-size: 1.2rem;
-  font-weight: bold;
+  font-size: 1.3rem;
+  font-weight: 600;
   margin-bottom: 10px;
+  color: #333;
 }
 
 .card-content {
@@ -331,6 +332,34 @@
   color: #1251a3;
 }
 .historico-nome-complemento {
+  color: #888;
+  font-weight: 400;
+}
+
+.row {
+  row-gap: 1.5rem;
+  column-gap: 0.5rem;
+}
+
+.col-md-4,
+.col-md-6,
+.col-lg-3,
+.col-lg-6,
+.col-12 {
+  margin-bottom: 1.5rem;
+}
+
+.resumo-metrica-amarelo {
+  background: #fffbe6 !important;
+}
+.resumo-metrica-lilas {
+  background: #f6f0ff !important;
+}
+.resumo-metrica-azul {
+  background: #eaf6ff !important;
+}
+.resumo-data-hoje {
+  font-size: 0.98rem;
   color: #888;
   font-weight: 400;
 }
