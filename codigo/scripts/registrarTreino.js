@@ -1,6 +1,6 @@
 import ApiService from './services/api.js';
 import { createNotification } from "./notifications.js";
-import { showToast } from "./utils/toast.js";
+import { showAlert } from "./utils/toast.js";
 
 lucide.createIcons();
 
@@ -171,7 +171,11 @@ class Registration {
                 (plan) => plan.id == submitPlanId
             );
             const selectedDay = selectedPlan?.days[submitDayTrainedId];
-            const xpGanho = this.calcularXpPorTipoETempo(selectedPlan.type, hours, minutes);
+            try{
+                const xpGanho = this.calcularXpPorTipoETempo(selectedPlan.type, hours, minutes);
+            }catch(error){
+                showAlert("Erro ao registrar o treino" , "error");
+            }
 
             const novoCheckin = {
                 training_id: parseInt(submitPlanId),
@@ -189,11 +193,7 @@ class Registration {
                 
                 await ApiService.updateUserData({ ...this.gymData });
 
-                showToast({
-                    message: "Treino salvo com sucesso!",
-                    background: "text-bg-success",
-                    delay: 4000,
-                });
+                showAlert("Treino registrado com sucesso", 'success');
 
                 await createNotification({
                     title: "Treino registrado com sucesso!", 
@@ -206,11 +206,7 @@ class Registration {
                 dateCheckin.value = new Date().toISOString().split("T")[0];
             } catch (error) {
                 console.error('Erro ao salvar treino:', error);
-                showToast({
-                    message: "Erro ao salvar treino. Tente novamente.",
-                    background: "text-bg-danger",
-                    delay: 4000,
-                });
+                showAlert("Erro ao registrar o treino" , "error");
             }
         });
 

@@ -21,19 +21,14 @@ class LayoutManager {
     // Define os itens da sidebar
     const sidebarItems = [
       {
-        redirectSessionName: 'perfil',
-        icon: 'user',
-        text: 'Perfil'
-      },
-      {
         redirectSessionName: 'social',
-        icon: 'users',
-        text: 'Social'
+        icon: 'home',
+        text: 'Home'
       },
       {
-        redirectSessionName: 'index',
-        icon: 'layout-dashboard',
-        text: 'Dashboard'
+        redirectSessionName: 'dashboard',
+        icon: 'chart-area',
+        text: 'Estatísticas'
       },
       {
         redirectSessionName: 'registrar-treino',
@@ -201,10 +196,7 @@ class LayoutManager {
 
     const basePath = pathParts.join("/");
 
-    const targetPath =
-      session === "index"
-        ? `${basePath}/index.html`
-        : `${basePath}/sections/${fileName}`;
+    const targetPath = `${basePath}/sections/${fileName}`;
 
     window.location.href = targetPath;
   }
@@ -222,6 +214,14 @@ class LayoutManager {
         <span class="nav-text">Sair</span>
     `;
 
+    const profileButton = document.createElement('button');
+    profileButton.className = 'btn btn-danger w-100 mt-2';
+    profileButton.style.cssText = 'background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); border: none; white-space: nowrap; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; font-weight: 600; border-radius: 0.5rem; box-shadow: 0 2px 4px rgba(0,0,0,0.1); transition: all 0.3s ease;';
+    profileButton.innerHTML = `
+        <i data-lucide="user"></i>
+        <span class="nav-text">Perfil</span>
+    `;
+
     logoutButton.addEventListener('click', () => {
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -230,6 +230,11 @@ class LayoutManager {
       window.location.href = 'login.html';
     });
 
+    profileButton.addEventListener('click', function(){
+      window.location.href ='perfil.html'
+    })
+
+    sidebarFooter.appendChild(profileButton);
     // Adiciona o botão após o botão de registrar treino
     sidebarFooter.appendChild(logoutButton);
   }
