@@ -273,7 +273,13 @@ function renderTreinoForm(treino) {
             <label for="titulo-treino" class="form-label fs-5 d-flex align-items-center gap-2"><i data-lucide="clipboard-list"></i>Título do treino:</label>
             <input id="titulo-treino" class="form-control form-control-lg mb-2" value="${treino.name}"/>
             <label for="categoria-treino" class="form-label d-flex align-items-center gap-2"><i data-lucide="tag"></i>Categoria:</label>
-            <input id="categoria-treino" class="form-control mb-2" value="${treino.category}"/>
+            <select id="categoria-treino" class="form-select mb-2">
+                <option hidden>Selecionar...</option>
+                <option value="Superiores" ${treino.category == "Superiores" ? "selected" : ""}>Superiores</option>
+                <option value="Inferiores" ${treino.category == "Inferiores" ? "selected" : ""}>Inferiores</option>
+                <option value="Cardio" ${treino.category == "Cardio" ? "selected" : ""}>Cardio</option>
+            </select>
+            
             <label for="selecao-nivel" class="form-label d-flex align-items-center gap-2"><i data-lucide="bar-chart-3"></i>Nível de dificuldade</label>
             <select id="selecao-nivel" class="form-select mb-2">
                 <option hidden>Selecionar...</option>
@@ -385,6 +391,11 @@ function validarDados() {
                 }
             }
         }
+    }
+
+    if(document.querySelector("#categoria-treino").value == "Selecionar...") {
+        alertaValidacao += `\t Selecione uma categoria de treino\n`;
+        valido = false;
     }
 
     if(document.querySelector("#selecao-nivel").value == "Selecionar...") {
