@@ -1,31 +1,37 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: 
+title: GymTrack
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Silva Neiva Amaro
+    given-names: Gabriel
+  - family-names: Caldeira Assis Xavier
+    given-names: Henrique
+  - family-names: Rocha Ferraz Gonçalves Rebula
+    given-names: Samuel
+  - family-names: Rocha Lopes
+    given-names: Fabrício
+  - family-names: Rocha Gonçalves de Souza
+    given-namaes: Gabriel
+  - name-suffix: Professor 
+    affiliation: PUC Minas
+    family-names: Silva Tavares
+    given-names: Cleiton
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: da Costa Silva
+    given-names: Luiz
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Hanne Soares de Andrade
+    given-names: Michele
 keywords:
-  - 
-  - 
-repository-code: 
+  - Academia
+  - Gestão de Treino
+  - Aplicação Web
+  - Registro de Treino 
+  - App de Academia
+  - Treino Personalizado
+repository-code: https://github.com/ICEI-PUC-Minas-PPLES-TI/plf-es-2025-1-ti1-0387100-gymtrack.git
 license: CC-BY-4.0
 version: 1.0.0
 date-released: 2022-07-14
