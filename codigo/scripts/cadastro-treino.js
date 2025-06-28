@@ -273,7 +273,13 @@ function renderTreinoForm(treino) {
             <label for="titulo-treino" class="form-label fs-5 d-flex align-items-center gap-2"><i data-lucide="clipboard-list"></i>Título do treino:</label>
             <input id="titulo-treino" class="form-control form-control-lg mb-2" value="${treino.name}"/>
             <label for="categoria-treino" class="form-label d-flex align-items-center gap-2"><i data-lucide="tag"></i>Categoria:</label>
-            <input id="categoria-treino" class="form-control mb-2" value="${treino.category}"/>
+            <select id="categoria-treino" class="form-select mb-2">
+                <option hidden>Selecionar...</option>
+                <option value="Superiores" ${treino.category == "Superiores" ? "selected" : ""}>Superiores</option>
+                <option value="Inferiores" ${treino.category == "Inferiores" ? "selected" : ""}>Inferiores</option>
+                <option value="Cardio" ${treino.category == "Cardio" ? "selected" : ""}>Cardio</option>
+            </select>
+            
             <label for="selecao-nivel" class="form-label d-flex align-items-center gap-2"><i data-lucide="bar-chart-3"></i>Nível de dificuldade</label>
             <select id="selecao-nivel" class="form-select mb-2">
                 <option hidden>Selecionar...</option>
@@ -360,6 +366,54 @@ function atualizarTreinoComInputs(treino) {
     });
 }
 
+let alertaValidacao = "Cadastro não realizado:\n";
+function validarDados() {
+    let valido = true;
+    for(let i = 0; i < treinoSelect.days.length; i++) {
+        if(document.querySelector(`#titulo-dia-${i}`).value.trim() == "") {
+            alertaValidacao += `\t Insira um título para o dia ${i+1}\n`;
+            valido = false;
+        }
+
+        if(treinoSelect.days[i].day.length == 0) {
+            alertaValidacao += `\t Adicione ao menos um exercício para o dia ${i+1}\n`;
+            valido = false;
+        } else {
+            for(let j = 0; j < treinoSelect.days[i].day.length; j++) {
+                if(
+                    document.querySelector(`#dia-${i}-nome-exercicio-${j}`).value.trim() == ""
+                    || document.querySelector(`#dia-${i}-series-exercicio-${j}`).value <= 0
+                    || document.querySelector(`#dia-${i}-rep-exercicio-${j}`).value <= 0
+                ) {
+                    alertaValidacao += `\t Dia ${i+1}: insira dados válidos para os exercícios cadastrados\n`;
+                    j = treinoSelect.days[i].day.length;
+                    valido = false;
+                }
+            }
+        }
+    }
+
+    if(document.querySelector("#categoria-treino").value == "Selecionar...") {
+        alertaValidacao += `\t Selecione uma categoria de treino\n`;
+        valido = false;
+    }
+
+    if(document.querySelector("#selecao-nivel").value == "Selecionar...") {
+        alertaValidacao += `\t Selecione um nível de dificuldade\n`;
+        valido = false;
+    }
+
+    if(
+        document.querySelector("#titulo-treino").value.trim() == ""
+        || document.querySelector("#categoria-treino").value.trim() == ""
+    ) {
+        alertaValidacao += `\t Não deixe espaços em branco\n`;
+        valido = false;
+    }
+
+    return valido;
+}
+
 async function criarFicha() {
   treinoSelect = criarNovoTreino();
 
@@ -415,6 +469,12 @@ function setupEventListeners() {
             alert('Dados do usuário não foram carregados. Tente novamente.');
             return;
         }
+
+        if(!validarDados()) {
+            alert(alertaValidacao);
+            alertaValidacao = "Cadastro não realizado:\n";
+            return;
+        }
         
         atualizarTreinoComInputs(treinoSelect);
         // Verifica se já existe um treino com esse id
@@ -454,6 +514,12 @@ function setupEventListeners() {
         // Garante que não existe outro treino com o mesmo nome
         if (gymApp.edited_trainings.some(t => t.name === treinoSelect.name)) {
             alert('Já existe uma ficha com esse nome.');
+            return;
+        }
+
+        if(!validarDados()) {
+            alert(alertaValidacao);
+            alertaValidacao = "Cadastro não realizado:\n";
             return;
         }
         gymApp.edited_trainings.push(treinoSelect);
