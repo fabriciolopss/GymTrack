@@ -379,7 +379,9 @@ function validarDados() {
                     || document.querySelector(`#dia-${i}-series-exercicio-${j}`).value <= 0
                     || document.querySelector(`#dia-${i}-rep-exercicio-${j}`).value <= 0
                 ) {
-                    alertaValidacao += `\t Insira dados válidos para o exercício ${j+1} do dia ${i+1}\n`;
+                    alertaValidacao += `\t Dia ${i+1}: insira dados válidos para os exercícios cadastrados\n`;
+                    j = treinoSelect.days[i].day.length;
+                    valido = false;
                 }
             }
         }
@@ -454,6 +456,12 @@ function setupEventListeners() {
         e.preventDefault();
         if (!gymApp || !gymApp.edited_trainings) {
             alert('Dados do usuário não foram carregados. Tente novamente.');
+            return;
+        }
+
+        if(!validarDados()) {
+            alert(alertaValidacao);
+            alertaValidacao = "Cadastro não realizado:\n";
             return;
         }
         
