@@ -457,8 +457,9 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .register {
-        width: 90%;
-        height: 95%;
+        min-width: auto !important;
+        width: 100%;
+        margin: 16px;
     }
 
     .form-body {
