@@ -257,7 +257,6 @@ class LayoutManager {
       { redirectSessionName: 'registrar-treino', icon: 'square-plus' },
       { redirectSessionName: 'consultar-fichas', icon: 'clipboard-list' },
       { redirectSessionName: 'progresso', icon: 'trending-up' },
-      { redirectSessionName: 'historico', icon: 'History' },
       { redirectSessionName: 'perfil', icon: 'user' }
     ];
 

@@ -80,6 +80,7 @@ class ProfileManager {
   }
 
   displayProfile(profile, isEditing = false) {
+    console.log(profile)
     const pessoal = profile.pessoal || {};
     const objetivos = profile.objetivos || {};
     const metadados = profile.metadados || {};
@@ -268,7 +269,7 @@ class ProfileManager {
                     <div>
                       <label class="form-label text-muted mb-1">XP Atual</label>
                       <p class="mb-0 fw-medium">
-                        <span class="badge bg-success">${metadados.xp || 0} XP</span>
+                        <span class="badge bg-success">${profile.xp || 0} XP</span>
                       </p>
                     </div>
                   </div>
@@ -325,7 +326,8 @@ class ProfileManager {
           data_cadastro: new Date().toISOString(),
           xp: 0,
           conquistas: []
-        }
+        },
+        xp: this.currentProfile.xp
       }
     };
   }

@@ -39,7 +39,6 @@ class Registration {
         try {
             const userData = await ApiService.getUserData();
             this.gymData = userData || {};
-            console.log(userData);
             this.setupFormEventListeners();
             // Inicializar a barra de progresso do nível
             await this.initializeLevelBar();
@@ -52,23 +51,17 @@ class Registration {
     async initializeLevelBar() {
         try {
             const xp = this.gymData.profile?.xp || 0;
-            console.log('XP do usuário:', xp);
-            console.log('Dados do usuário:', this.gymData);
             
             const { nivel, xpNivelAtual, xpProxNivel, xpParaProximoNivel } = this.calcularNivel(xp);
             const progressoAtual = ((xp - xpNivelAtual) / xpParaProximoNivel) * 100;
-            
-            console.log('Cálculo de nível:', { nivel, xpNivelAtual, xpProxNivel, xpParaProximoNivel, progressoAtual });
-            
+                        
             const nivelSpan = document.querySelector("#level");
             const realBar = document.querySelector(".real-progress-bar");
             const xpLowLimit = document.querySelector("#xp-low-limit");
             const xpHighLimit = document.querySelector("#xp-high-limit");
             const xpGain = document.querySelector("#xp-gain");
             const porcentagemSpan = document.querySelector("#xp-porcentagem");
-            
-            console.log('Elementos DOM encontrados:', { nivelSpan, realBar, xpLowLimit, xpHighLimit, xpGain, porcentagemSpan });
-            
+                        
             if (nivelSpan) nivelSpan.textContent = `Nível ${nivel}`;
             if (xpLowLimit) xpLowLimit.textContent = `${xpNivelAtual} XP`;
             if (xpHighLimit) xpHighLimit.textContent = `${xpProxNivel} XP`;
@@ -173,21 +166,18 @@ class Registration {
             const selectedDay = selectedPlan?.days[submitDayTrainedId];
             let xpGanho;
             try{
+                if(submitPlanId === "Selecionar o plano de treino realizado") throw new Error("Selecione um plano de treino antes")
+                if(submitDate === "") throw new Error("Data não pode estar vazia");
                 xpGanho = this.calcularXpPorTipoETempo(selectedPlan.type, hours, minutes);
-            }catch(error){
-                showAlert("Erro ao registrar o treino" , "error");
-            }
+                
 
-            const novoCheckin = {
-                training_id: parseInt(submitPlanId),
-                day_index: parseInt(submitDayTrainedId),
-                date: submitDate,
-                xpGain: xpGanho,
-                duration: { hours, minutes },
-            };
-
-            try {
-                // Update user data with new training and XP
+                const novoCheckin = {
+                    training_id: parseInt(submitPlanId),
+                    day_index: parseInt(submitDayTrainedId),
+                    date: submitDate,
+                    xpGain: xpGanho,
+                    duration: { hours, minutes },
+                };
                 this.gymData.profile.xp = (this.gymData.profile.xp || 0) + xpGanho;
                 this.gymData.registered_trainings = this.gymData.registered_trainings || [];
                 this.gymData.registered_trainings.push(novoCheckin);
@@ -205,10 +195,10 @@ class Registration {
                 // Reset form
                 form.reset();
                 dateCheckin.value = new Date().toISOString().split("T")[0];
-            } catch (error) {
-                console.error('Erro ao salvar treino:', error);
-                showAlert("Erro ao registrar o treino" , "error");
+            }catch(error){
+                showAlert(`Erro ao registrar o treino: ${error.message}` , "error");
             }
+
         });
 
         // Time input handlers
@@ -319,7 +309,6 @@ class Registration {
             if (next.button.children[0]) next.button.children[0].classList.add('active');
             
             this.selectedSection = sectionKey;
-            console.log(`Switched to: ${sectionKey}`);
         }, 200); // Metade do tempo da transição CSS
     }
 
@@ -401,7 +390,6 @@ class RunningTraining{
             // Estava no descanso, vai para próxima série ou próximo exercício
             const tempoUsado =  parseInt(this.trainingDay.day[this.currentExercise].descanso.split(" ")[0]) - this.parseTime(document.getElementById('time-display').innerText);
             this.trainingTime.push(tempoUsado);
-            console.log(tempoUsado);
             
             this.currentSeries++;
             if (this.currentSeries > exercise.series) {
@@ -428,7 +416,6 @@ class RunningTraining{
             this.startCountdown();
         }
         
-        console.log(this.trainingTime);
         this.updatePlayPauseIcon();
     }
 
@@ -460,7 +447,6 @@ class RunningTraining{
     // Timer decrescente para descanso
     startCountdown() {
         const exercise = this.trainingDay.day[this.currentExercise];
-        console.log(exercise);
         const descanso = parseInt(exercise.descanso.split(" ")[0]);
         this.timeLeft = descanso;
         this.tickIndex = 0;

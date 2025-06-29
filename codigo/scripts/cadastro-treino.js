@@ -1,5 +1,6 @@
 import ApiService from './services/api.js';
 import { createNotification, Notifications } from './notifications.js';
+import { showAlert } from './utils/toast.js';
 
 lucide.createIcons();
 
@@ -36,14 +37,6 @@ const semTreinos = document.querySelector("#sem-treinos");
 // Função para inicializar a página de cadastro de treino
 async function initializeCadastroTreino() {
     try {
-        // Verifica se o usuário está autenticado
-        if (!window.auth.isAuthenticated()) {
-            console.error('Usuário não autenticado');
-            alert('Você precisa estar logado para acessar esta página.');
-            window.location.href = 'login.html';
-            return;
-        }
-        
         // Busca os dados do usuário do webserver
         gymApp = await ApiService.getUserData();
         console.log(gymApp);
@@ -466,12 +459,12 @@ function setupEventListeners() {
     customBtn.addEventListener("click", async e => {
         e.preventDefault();
         if (!gymApp || !gymApp.edited_trainings) {
-            alert('Dados do usuário não foram carregados. Tente novamente.');
+            showAlert('Dados do usuário não foram carregados. Tente novamente.', 'error');
             return;
         }
 
         if(!validarDados()) {
-            alert(alertaValidacao);
+            showAlert(alertaValidacao, 'error');
             alertaValidacao = "Cadastro não realizado:\n";
             return;
         }
@@ -513,12 +506,12 @@ function setupEventListeners() {
         atualizarTreinoComInputs(treinoSelect);
         // Garante que não existe outro treino com o mesmo nome
         if (gymApp.edited_trainings.some(t => t.name === treinoSelect.name)) {
-            alert('Já existe uma ficha com esse nome.');
+            showAlert('Já existe uma ficha com esse nome.', 'error');
             return;
         }
 
         if(!validarDados()) {
-            alert(alertaValidacao);
+            showAlert(alertaValidacao, 'error');
             alertaValidacao = "Cadastro não realizado:\n";
             return;
         }
