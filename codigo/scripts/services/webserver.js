@@ -67,8 +67,8 @@ function verifyToken(token) {
 
 // Middleware para verificar autenticação
 function authenticateToken(req, res, next) {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // Bearer TOKEN
 
   if (!token) {
     return res.status(401).json({ error: "Token de acesso necessário" });
@@ -265,12 +265,12 @@ server.post("/login", async (req, res) => {
 // Get user data (protegida)
 server.get("/users/:id/data", authenticateToken, async (req, res) => {
   const userId = parseInt(req.params.id);
-  
+
   // Verifica se o usuário está tentando acessar seus próprios dados
   if (req.user.userId !== userId) {
     return res.status(403).json({ error: "Acesso negado" });
   }
-  
+
   const db = router.db;
   const user = db.get("users").find({ id: userId }).value();
 
@@ -278,18 +278,31 @@ server.get("/users/:id/data", authenticateToken, async (req, res) => {
     return res.status(404).json({ error: "Usuário não encontrado" });
   }
 
-  res.json(user.userData);
+  const allUsers = db.get("users").value();
+  const totalTrainings = allUsers.reduce((sum, u) => {
+    const trainings = u.userData?.registered_trainings || [];
+    return sum + trainings.length;
+  }, 0);
+  const userCount = allUsers.length;
+
+  const averageTrainingsPerUser =
+    userCount > 0 ? parseFloat((totalTrainings / userCount).toFixed(2)) : 0;
+
+  res.json({
+    ...user.userData,
+    media_treinos_por_usuario: averageTrainingsPerUser,
+  });
 });
 
 // Update user data (protegida)
 server.patch("/users/:id/data", authenticateToken, async (req, res) => {
   const userId = parseInt(req.params.id);
-  
+
   // Verifica se o usuário está tentando acessar seus próprios dados
   if (req.user.userId !== userId) {
     return res.status(403).json({ error: "Acesso negado" });
   }
-  
+
   const db = router.db;
   const user = db.get("users").find({ id: userId }).value();
 
@@ -305,21 +318,21 @@ server.patch("/users/:id/data", authenticateToken, async (req, res) => {
 
 server.post("/test-auth", (req, res) => {
   // Rota para testar se o token é válido
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1]; // Bearer TOKEN
 
   if (!token) {
-    return res.status(401).json({ 
-      valid: false, 
-      error: "Token de acesso necessário" 
+    return res.status(401).json({
+      valid: false,
+      error: "Token de acesso necessário",
     });
   }
 
   const decoded = verifyToken(token);
   if (!decoded) {
-    return res.status(403).json({ 
-      valid: false, 
-      error: "Token inválido ou expirado" 
+    return res.status(403).json({
+      valid: false,
+      error: "Token inválido ou expirado",
     });
   }
 
@@ -328,21 +341,21 @@ server.post("/test-auth", (req, res) => {
     valid: true,
     user: {
       userId: decoded.userId,
-      email: decoded.email
+      email: decoded.email,
     },
-    message: "Token válido"
+    message: "Token válido",
   });
 });
 
 // Add notification (protegida)
 server.post("/users/:id/notifications", authenticateToken, async (req, res) => {
   const userId = parseInt(req.params.id);
-  
+
   // Verifica se o usuário está tentando acessar seus próprios dados
   if (req.user.userId !== userId) {
     return res.status(403).json({ error: "Acesso negado" });
   }
-  
+
   const db = router.db;
   const user = db.get("users").find({ id: userId }).value();
 
@@ -362,37 +375,41 @@ server.post("/users/:id/notifications", authenticateToken, async (req, res) => {
 });
 
 // Delete notification (protegida)
-server.delete("/users/:id/notifications/:index", authenticateToken, async (req, res) => {
-  const userId = parseInt(req.params.id);
-  
-  // Verifica se o usuário está tentando acessar seus próprios dados
-  if (req.user.userId !== userId) {
-    return res.status(403).json({ error: "Acesso negado" });
+server.delete(
+  "/users/:id/notifications/:index",
+  authenticateToken,
+  async (req, res) => {
+    const userId = parseInt(req.params.id);
+
+    // Verifica se o usuário está tentando acessar seus próprios dados
+    if (req.user.userId !== userId) {
+      return res.status(403).json({ error: "Acesso negado" });
+    }
+
+    const notificationIndex = parseInt(req.params.index);
+    const db = router.db;
+    const user = db.get("users").find({ id: userId }).value();
+
+    if (!user) {
+      return res.status(404).json({ error: "Usuário não encontrado" });
+    }
+
+    user.userData.notifications.splice(notificationIndex, 1);
+    db.get("users").find({ id: userId }).assign(user).write();
+
+    res.json({ message: "Notificação removida com sucesso" });
   }
-  
-  const notificationIndex = parseInt(req.params.index);
-  const db = router.db;
-  const user = db.get("users").find({ id: userId }).value();
-
-  if (!user) {
-    return res.status(404).json({ error: "Usuário não encontrado" });
-  }
-
-  user.userData.notifications.splice(notificationIndex, 1);
-  db.get("users").find({ id: userId }).assign(user).write();
-
-  res.json({ message: "Notificação removida com sucesso" });
-});
+);
 
 // Register training (protegida)
 server.post("/users/:id/trainings", authenticateToken, async (req, res) => {
   const userId = parseInt(req.params.id);
-  
+
   // Verifica se o usuário está tentando acessar seus próprios dados
   if (req.user.userId !== userId) {
     return res.status(403).json({ error: "Acesso negado" });
   }
-  
+
   const db = router.db;
   const user = db.get("users").find({ id: userId }).value();
 
