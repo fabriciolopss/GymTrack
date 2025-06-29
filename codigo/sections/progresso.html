@@ -15,113 +15,11 @@
 </head>
 
 <body>
-
-
-    <div class="modal fade" id="checkinTreino" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <i class="fa-solid fa-dumbbell"></i>
-                    <h5 class="modal-title" id="exampleModalLabel">Registrar treino</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="form-checkin">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Plano de treino</label>
-                            <select required class="form-select" id="training-plans"
-                                aria-label="Default select example">
-                                <option selected>Selecionar o plano de treino realizado</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Treino realizado</label>
-                            <select class="form-select" id="training-days" aria-label="Default select example" disabled>
-                                <option selected>Selecionar dia do treino realizado</option>
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Data do treino</label>
-                            <input type="date" class="form-control" id="date-checkin">
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Tempo de treino</label>
-
-                            <div class="d-flex gap-3 mt-2">
-                                <div class="w-50">
-                                    <label for="hours-trained" class="form-label">Horas</label>
-                                    <div class="input-group">
-                                        <button class="btn btn-outline-secondary" id="decrement-hours" type="button">
-                                            <i class="fa-solid fa-minus"></i>
-                                        </button>
-                                        <input type="number" id="hours-trained" class="form-control text-center"
-                                            value="0" min="0" max="3">
-                                        <button class="btn btn-outline-secondary" id="increment-hours" type="button">
-                                            <i class="fa-solid fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="w-50">
-                                    <label for="minutes-trained" class="form-label">Minutos</label>
-                                    <div class="input-group">
-                                        <button class="btn btn-outline-secondary" id="decrement-minutes" type="button">
-                                            <i class="fa-solid fa-minus"></i>
-                                        </button>
-                                        <input type="number" id="minutes-trained" class="form-control text-center"
-                                            value="30" min="0" max="59">
-                                        <button class="btn btn-outline-secondary" id="increment-minutes" type="button">
-                                            <i class="fa-solid fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-                        <div class="xp-gain mb-3">
-                            <label class="form-label titulo-modal">Experiencia ganha</label>
-                            <div class="d-flex flex-row justify-content-between mb-2">
-                                <div class="d-flex flex-row align-items-center" data-bs-toggle="tooltip"
-                                    data-bs-placement="top"
-                                    title="O ganho de XP é baseado na duração do treino e no plano escolhido.">
-                                    <span id="xp-gain">+0 XP
-                                    </span>
-                                    <i class="fa-solid fa-circle-info ms-2 ">
-                                    </i>
-                                </div>
-                                <span id="xp-porcentagem">0%</span>
-                                <span id="level">Nível 0</span>
-                            </div>
-                            <div class="custom-progress-wrapper mb-1">
-                                <div class="real-progress-bar"></div>
-                                <div class="future-progress-bar"></div>
-                            </div>
-
-
-                            <div class="d-flex flex-row justify-content-between">
-                                <span id="xp-low-limit">1320XP</span>
-                                <span id="xp-high-limit">5000XP</span>
-                            </div>
-                        </div>
-
-
-                        <button type="submit" class="btn btn-primary">Registrar treino</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="content-wrapper">
         <aside class="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <img src="../images/logo.png" alt="GymApp Logo" class="logo-img">
+                    <img src="../images/logo.png" alt="GymApp Logo" class="logo-img" />
                 </div>
             </div>
             <div class="sidebar-toggle" id="sidebarToggle">
@@ -132,8 +30,7 @@
             <nav class="sidebar-nav">
                 <!-- Header items serão populados dinamicamente pelo layout.js -->
             </nav>
-            <div class="sidebar-footer">
-            </div>
+            <div class="sidebar-footer"></div>
         </aside>
         <main class="main-content">
             <div class="container-fluid">
@@ -191,10 +88,16 @@
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between align-items-center mb-2">
                                                 <button class="btn btn-outline-secondary btn-sm" id="cal-prev-mes"
-                                                    title="Mês anterior"><i class="fa fa-chevron-left"></i></button>
-                                                <h5 class="card-title mb-0" id="cal-mes-ano">Mês Ano</h5>
+                                                    title="Mês anterior">
+                                                    <i class="fa fa-chevron-left"></i>
+                                                </button>
+                                                <h5 class="card-title mb-0" id="cal-mes-ano">
+                                                    Mês Ano
+                                                </h5>
                                                 <button class="btn btn-outline-secondary btn-sm" id="cal-next-mes"
-                                                    title="Próximo mês"><i class="fa fa-chevron-right"></i></button>
+                                                    title="Próximo mês">
+                                                    <i class="fa fa-chevron-right"></i>
+                                                </button>
                                             </div>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered text-center mb-2"
@@ -219,13 +122,14 @@
                                             <div id="progresso-ranking" class="mb-3">
                                                 <!-- Ranking será preenchido pelo JS -->
                                             </div>
-                                            <div class="progress mb-2" style="height: 8px;">
+                                            <div class="progress mb-2" style="height: 8px">
                                                 <div class="progress-bar bg-primary" id="ranking-progress-bar"
                                                     style="width: 0%"></div>
                                             </div>
-                                            <div class="text-muted small" id="ranking-desafio">Desafio do Mês: <span
-                                                    id="desafio-mes"></span> <span class="float-end"
-                                                    id="desafio-status"></span></div>
+                                            <div class="text-muted small" id="ranking-desafio">
+                                                Desafio do Mês: <span id="desafio-mes"></span>
+                                                <span class="float-end" id="desafio-status"></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -322,10 +226,7 @@
         </div>
     </div>
 
-    </div>
-
-    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1055;"></div>
-    </div>
+    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1055"></div>
 
     <!-- Modal Nova Conquista -->
     <div class="modal fade" id="modalNovaConquista" tabindex="-1" aria-labelledby="modalNovaConquistaLabel"
@@ -333,7 +234,9 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalNovaConquistaLabel">Cadastrar nova conquista</h5>
+                    <h5 class="modal-title" id="modalNovaConquistaLabel">
+                        Cadastrar nova conquista
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <form id="form-nova-conquista">
@@ -348,24 +251,30 @@
                         </div>
                         <div class="mb-3">
                             <label for="valor-conquista" class="form-label">Valor necessário</label>
-                            <input type="number" class="form-control" id="valor-conquista" min="1" required>
+                            <input type="number" class="form-control" id="valor-conquista" min="1" required />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Experiência (XP) ao resgatar</label>
-                            <div class="form-control bg-light" id="xp-preview" readonly>0</div>
+                            <div class="form-control bg-light" id="xp-preview" readonly>
+                                0
+                            </div>
                         </div>
-                        <div class="mb-3" style="display: none;">
+                        <div class="mb-3" style="display: none">
                             <label for="nome-conquista" class="form-label">Nome da conquista</label>
-                            <input type="text" class="form-control" id="nome-conquista" maxlength="40">
+                            <input type="text" class="form-control" id="nome-conquista" maxlength="40" />
                         </div>
-                        <div class="mb-3" style="display: none;">
+                        <div class="mb-3" style="display: none">
                             <label for="descricao-conquista" class="form-label">Descrição</label>
                             <textarea class="form-control" id="descricao-conquista" maxlength="120"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Salvar conquista</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            Salvar conquista
+                        </button>
                     </div>
                 </form>
             </div>
@@ -378,7 +287,9 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTreinosDiaLabel">Treinos do dia</h5>
+                    <h5 class="modal-title" id="modalTreinosDiaLabel">
+                        Treinos do dia
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                 </div>
                 <div class="modal-body" id="treinos-dia-body">
@@ -400,7 +311,9 @@
     lucide.createIcons();
 
     document.addEventListener("DOMContentLoaded", function () {
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        const tooltipTriggerList = [].slice.call(
+            document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
         tooltipTriggerList.forEach(function (tooltipTriggerEl) {
             new bootstrap.Tooltip(tooltipTriggerEl);
         });
