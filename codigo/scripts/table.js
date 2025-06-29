@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", async function () {
       if (!training) return;
 
       const day = training.days[treino.day_index];
-      console.log(treino);
       if (!day) return;
 
       const h = treino.duration?.hours || 0;

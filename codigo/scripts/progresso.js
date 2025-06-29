@@ -75,9 +75,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     try {
         const userData = await ApiService.getUserData();
         const gymData = userData;
-        const profile = userData.profile || { metadados: {} };
-
-        console.log(gymData);
 
         preencherResumo(gymData);
         preencherConquistas(gymData);
@@ -457,7 +454,6 @@ async function preencherRanking(gymData) {
         }else{
             top5 = ranking.slice(0,5);
         }
-        console.log(userPosition);
         const rankingDiv = document.getElementById("progresso-ranking");
         let posUsuario = 0;
         rankingDiv.innerHTML = `

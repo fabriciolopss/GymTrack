@@ -350,7 +350,6 @@ async function loadUserData() {
           );
           const dia = ficha?.days?.[ultimoTreino.day_index];
           const duration = ultimoTreino.duration || { hours: 0, minutes: 30 };
-          console.log(new Date(ultimoTreino.date));
 
           const timeAgo = getTimeAgo(new Date(ultimoTreino.date));
           const category = ficha?.category || "Treino";

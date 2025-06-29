@@ -206,9 +206,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         submitBtn.disabled = false;
         submitBtn.textContent = "Finalizar Cadastro";
       }
-    } else {
-      console.log("Formulário inválido no último passo. Verifique os campos marcados.");
-    }
+    } 
   });
 
   // Remove a indicação de erro assim que o usuário corrige o campo

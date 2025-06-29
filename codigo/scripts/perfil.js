@@ -80,7 +80,6 @@ class ProfileManager {
   }
 
   displayProfile(profile, isEditing = false) {
-    console.log(profile)
     const pessoal = profile.pessoal || {};
     const objetivos = profile.objetivos || {};
     const metadados = profile.metadados || {};

@@ -39,7 +39,6 @@ async function initializeCadastroTreino() {
     try {
         // Busca os dados do usuário do webserver
         gymApp = await ApiService.getUserData();
-        console.log(gymApp);
         
         // Inicializa a interface após carregar os dados
         renderizarGridTreinos();
@@ -127,7 +126,6 @@ function rankTemplatesByCosine(templates, user, topN = 6) {
   }));
   scored.sort((a, b) => b.score - a.score);
 
-  console.log(scored);
   // 7. Retorna os topN templates
   return scored.slice(0, topN).map((item) => item.tpl);
 }

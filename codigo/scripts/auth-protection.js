@@ -44,7 +44,6 @@ class AuthProtection {
             if (window.auth && window.auth.isAuthenticated()) {
                 const isValid = await this.validateToken();
                 if (!isValid) {
-                    console.log('Token expirado durante a sessão, redirecionando para login');
                     this.redirectToLogin();
                 }
             }
@@ -71,21 +70,17 @@ class AuthProtection {
         // Se é uma página protegida, verifica autenticação
         if (this.protectedPages.includes(currentPage)) {
             if (!window.auth.isAuthenticated()) {
-                console.log('Usuário não autenticado, redirecionando para login');
                 this.redirectToLogin();
                 return;
             }
-            console.log('Usuário autenticado, página protegida acessível');
         }
         
         // Se é uma página pública (login/cadastro) e usuário já está logado, redireciona para dashboard
         if (this.publicPages.includes(currentPage)) {
             if (window.auth.isAuthenticated()) {
-                console.log('Usuário já autenticado, redirecionando para dashboard');
                 this.redirectToDashboard();
                 return;
             }
-            console.log('Usuário não autenticado, página pública acessível');
         }
     }
 
@@ -154,8 +149,6 @@ class AuthProtection {
             });
 
             if (!response.ok) {
-                // Token inválido ou expirado
-                console.log('Token inválido, fazendo logout');
                 this.forceLogout();
                 return false;
             }
@@ -176,7 +169,6 @@ class AuthProtection {
         
         if (window.auth) {
             window.auth.logout();
-            console.log("a");
         } else {
             localStorage.removeItem('token');
             localStorage.removeItem('userId');
