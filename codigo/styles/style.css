@@ -30,7 +30,7 @@ body {
   display: flex;
   flex-direction: row;
   padding: 0;
-  background-color: #F8F8FA;
+  background-color: #f8f8fa;
   background-size: cover;
   background-position: center;
   background-size: 60%;
@@ -184,7 +184,7 @@ body {
   transition: margin-left 0.3s ease;
 }
 
-.sidebar.collapsed+.main-content {
+.sidebar.collapsed + .main-content {
   margin-left: 80px;
 }
 
@@ -326,9 +326,9 @@ body {
 }
 
 .badge-avancado {
-  background-color: rgba(220, 53, 69, 0.1);
-  /* vermelho claro */
-  color: #dc3545;
+  background-color: rgba(161, 79, 206, 0.1);
+  /* roxo claro */
+  color: #a14fce;
 }
 
 .historico-wrapper {
@@ -433,7 +433,6 @@ body {
 }
 
 @media (max-width: 768px) {
-
   .dataTables_wrapper .dataTables_length,
   .dataTables_wrapper .dataTables_filter {
     text-align: left;
@@ -597,7 +596,7 @@ body {
 }
 
 .achievement-timeline::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;
@@ -612,16 +611,16 @@ body {
 }
 
 .achievement-item::before {
-  content: '';
+  content: "";
   position: absolute;
   left: -34px;
   top: 0;
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: #4caf50;
   border: 2px solid #fff;
-  box-shadow: 0 0 0 2px #4CAF50;
+  box-shadow: 0 0 0 2px #4caf50;
 }
 
 .achievement-item:last-child {

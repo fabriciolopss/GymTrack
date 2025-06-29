@@ -17,9 +17,9 @@ document.addEventListener("DOMContentLoaded", async function () {
       return parseDateBRtoISO(b.date) - parseDateBRtoISO(a.date);
     });
 
-    const tableBody = document.querySelector('#tabela-historico tbody');
+    const tableBody = document.querySelector("#tabela-historico tbody");
 
-    treinosOrdenados.forEach(treino => {
+    treinosOrdenados.forEach((treino) => {
       const training = gymData.edited_trainings[treino.training_id - 1];
       if (!training) return;
 
@@ -38,14 +38,12 @@ document.addEventListener("DOMContentLoaded", async function () {
       row.innerHTML = `
         <td>${parseDateBRtoISO(treino.date).toLocaleDateString("pt-BR")}</td>
         <td>${day.name}</td>
-        <td><span class="badge-custom ${typeToClass(training.type)}">${training.type}</span></td>
+        <td><span class="badge-custom ${typeToClass(training.type)}">${
+        training.type
+      }</span></td>
         <td>${training.category}</td>
         <td>${duracaoFormatada}</td>
         <td>+${treino.xpGain}</td>
-        <td>
-          <button class="btn btn-sm btn-primary editar-treino" data-id="${treino.id}">Editar</button>
-          <button class="btn btn-sm btn-danger deletar-treino" data-id="${treino.id}">Excluir</button>
-        </td>
       `;
       tableBody.appendChild(row);
     });
@@ -56,13 +54,17 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     function typeToClass(type) {
       switch (type) {
-        case "Ficha iniciante": return "badge-iniciante";
-        case "Ficha intermediária": return "badge-intermediario";
-        case "Ficha avançada": return "badge-avancado";
-        default: return "";
+        case "Ficha iniciante":
+          return "badge-iniciante";
+        case "Ficha intermediária":
+          return "badge-intermediario";
+        case "Ficha avançada":
+          return "badge-avancado";
+        default:
+          return "";
       }
     }
   } catch (error) {
-    console.error('Erro ao carregar histórico do webserver:', error);
+    console.error("Erro ao carregar histórico do webserver:", error);
   }
 });
