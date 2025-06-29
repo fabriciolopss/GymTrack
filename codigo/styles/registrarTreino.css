@@ -338,42 +338,6 @@
     transform: translateY(-1px);
 }
 
-/* Responsive Design for Exercise Header */
-@media (max-width: 768px) {
-    .exercise-header {
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .exercise-name {
-        font-size: 20px;
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .exercise-details {
-        flex-direction: column;
-        gap: 16px;
-    }
-
-    .repetitions-info,
-    .series-info {
-        justify-content: center;
-        width: 100%;
-    }
-
-    .form-body {
-        padding: 24px;
-    }
-
-    .form-header {
-        padding: 20px;
-    }
-
-    .form-title {
-        font-size: 20px;
-    }
-}
 
 /* Exercise Header Styles */
 .exercise-header {
@@ -457,8 +421,9 @@
 /* Responsive Design */
 @media (max-width: 768px) {
     .register {
-        width: 90%;
-        height: 95%;
+        min-width: auto !important;
+        width: 100%;
+        margin: 16px;
     }
 
     .form-body {
@@ -925,4 +890,74 @@ h2 {
     margin: 20px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(76, 175, 80, 0.1);
+}
+
+.container-hora {
+    width: 50% !important;
+}
+
+/* Responsive Design for Exercise Header */
+@media (max-width: 768px) {
+    .exercise-header {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .exercise-name {
+        font-size: 20px;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .exercise-details {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .repetitions-info,
+    .series-info {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .form-body {
+        padding: 24px;
+    }
+
+    .form-header {
+        padding: 20px;
+    }
+
+    .form-title {
+        font-size: 20px;
+    }
+
+    .menu-header {
+        flex-direction: column;
+    }
+
+    .menu-item {
+        justify-content: center;
+    }
+
+    .container-hora {
+        width: 100% !important;
+    }
+
+    .hora-wrapper {
+        flex-direction: column !important;
+    }
+
+    .real-time-wrapper {
+        flex-direction: column !important;
+    }
+
+}
+
+.hora-wrapper {
+    flex-direction: row;
+}
+
+.real-time-wrapper {
+    flex-direction: row;
 }

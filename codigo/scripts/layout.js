@@ -10,6 +10,7 @@ class LayoutManager {
     this.addEventListeners();
     this.initializeSidebar();
     this.addLogoutButton();
+    this.createTopHeaderNav();
   }
 
   populateSidebar() {
@@ -237,5 +238,59 @@ class LayoutManager {
     sidebarFooter.appendChild(profileButton);
     // Adiciona o botão após o botão de registrar treino
     sidebarFooter.appendChild(logoutButton);
+  }
+
+
+
+  createTopHeaderNav() {
+    // Remove se já existir
+    const oldHeader = document.querySelector('.top-header-nav');
+    if (oldHeader) oldHeader.remove();
+
+    const headerNav = document.createElement('div');
+    headerNav.className = 'top-header-nav';
+
+
+    const navItems = [
+      { redirectSessionName: 'social', icon: 'home' },
+      { redirectSessionName: 'dashboard', icon: 'chart-area' },
+      { redirectSessionName: 'registrar-treino', icon: 'square-plus' },
+      { redirectSessionName: 'consultar-fichas', icon: 'clipboard-list' },
+      { redirectSessionName: 'progresso', icon: 'trending-up' },
+      { redirectSessionName: 'perfil', icon: 'user' }
+    ];
+
+    navItems.forEach(item => {
+      const navItem = document.createElement('button');
+      navItem.className = 'nav-item';
+      navItem.setAttribute('data-section', item.redirectSessionName);
+      navItem.innerHTML = `
+        <span class="indicator"></span>
+        <i class="icon" data-lucide="${item.icon}"></i>
+      `;
+      navItem.addEventListener('click', () => {
+        document.querySelectorAll('.top-header-nav .nav-item').forEach(i => i.classList.remove('active'));
+        navItem.classList.add('active');
+        if (item.redirectSessionName === 'perfil') {
+          window.location.href = 'perfil.html';
+        } else {
+          this.redirectToSection(item.redirectSessionName);
+        }
+      });
+      headerNav.appendChild(navItem);
+    });
+
+    document.body.appendChild(headerNav);
+
+    // Ativa o item correto ao carregar a página
+    const currentPage = window.location.pathname.split('/').pop().replace('.html', '');
+    document.querySelectorAll('.top-header-nav .nav-item').forEach(item => {
+      if (item.getAttribute('data-section') === currentPage) {
+        item.classList.add('active');
+      }
+    });
+
+    // Recria os ícones do Lucide
+    if (window.lucide) window.lucide.createIcons();
   }
 }

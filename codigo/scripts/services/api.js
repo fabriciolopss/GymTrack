@@ -1,18 +1,18 @@
-const API_URL = 'https://ti1-webserver-production.up.railway.app';
+const API_URL = "https://ti1-webserver-production.up.railway.app";
 
 class ApiService {
   static async getUserData() {
     const userId = window.auth.getCurrentUserId();
-    if (!userId) throw new Error('Usuário não autenticado');
+    if (!userId) throw new Error("Usuário não autenticado");
 
     const response = await fetch(`${API_URL}/users/${userId}/data`, {
       headers: {
-        'Authorization': `Bearer ${window.auth.getToken()}`
-      }
+        Authorization: `Bearer ${window.auth.getToken()}`,
+      },
     });
 
     if (!response.ok) {
-      throw new Error('Erro ao obter dados do usuário');
+      throw new Error("Erro ao obter dados do usuário");
     }
 
     return response.json();
@@ -20,19 +20,19 @@ class ApiService {
 
   static async updateUserData(data) {
     const userId = window.auth.getCurrentUserId();
-    if (!userId) throw new Error('Usuário não autenticado');
+    if (!userId) throw new Error("Usuário não autenticado");
 
     const response = await fetch(`${API_URL}/users/${userId}/data`, {
-      method: 'PATCH',
+      method: "PATCH",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${window.auth.getToken()}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${window.auth.getToken()}`,
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     if (!response.ok) {
-      throw new Error('Erro ao atualizar dados do usuário');
+      throw new Error("Erro ao atualizar dados do usuário");
     }
 
     return response.json();
@@ -40,19 +40,19 @@ class ApiService {
 
   static async addNotification(notification) {
     const userId = window.auth.getCurrentUserId();
-    if (!userId) throw new Error('Usuário não autenticado');
+    if (!userId) throw new Error("Usuário não autenticado");
 
     const response = await fetch(`${API_URL}/users/${userId}/notifications`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${window.auth.getToken()}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${window.auth.getToken()}`,
       },
-      body: JSON.stringify(notification)
+      body: JSON.stringify(notification),
     });
 
     if (!response.ok) {
-      throw new Error('Erro ao adicionar notificação');
+      throw new Error("Erro ao adicionar notificação");
     }
 
     return response.json();
@@ -60,17 +60,20 @@ class ApiService {
 
   static async deleteNotification(index) {
     const userId = window.auth.getCurrentUserId();
-    if (!userId) throw new Error('Usuário não autenticado');
+    if (!userId) throw new Error("Usuário não autenticado");
 
-    const response = await fetch(`${API_URL}/users/${userId}/notifications/${index}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${window.auth.getToken()}`
+    const response = await fetch(
+      `${API_URL}/users/${userId}/notifications/${index}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${window.auth.getToken()}`,
+        },
       }
-    });
+    );
 
     if (!response.ok) {
-      throw new Error('Erro ao remover notificação');
+      throw new Error("Erro ao remover notificação");
     }
 
     return response.json();
@@ -78,19 +81,19 @@ class ApiService {
 
   static async registerTraining(training) {
     const userId = window.auth.getCurrentUserId();
-    if (!userId) throw new Error('Usuário não autenticado');
+    if (!userId) throw new Error("Usuário não autenticado");
 
     const response = await fetch(`${API_URL}/users/${userId}/trainings`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${window.auth.getToken()}`
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${window.auth.getToken()}`,
       },
-      body: JSON.stringify(training)
+      body: JSON.stringify(training),
     });
 
     if (!response.ok) {
-      throw new Error('Erro ao registrar treino');
+      throw new Error("Erro ao registrar treino");
     }
 
     return response.json();
@@ -99,11 +102,11 @@ class ApiService {
   static async getRanking() {
     const response = await fetch(`${API_URL}/ranking`, {
       headers: {
-        'Authorization': `Bearer ${window.auth.getToken()}`
-      }
+        Authorization: `Bearer ${window.auth.getToken()}`,
+      },
     });
     if (!response.ok) {
-      throw new Error('Erro ao obter ranking global');
+      throw new Error("Erro ao obter ranking global");
     }
     return response.json();
   }
@@ -137,4 +140,5 @@ class ApiService {
   }
 }
 
-export default ApiService; 
+export default ApiService;
+window.ApiService = ApiService;

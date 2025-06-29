@@ -782,3 +782,89 @@ body {
 .sidebar.collapsed .btn-danger i {
   margin: 0;
 }
+
+/* Header responsivo para mobile */
+.top-header-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 64px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1100;
+  border-radius: 0 0 20px 20px;
+  padding: 0 8px;
+  transition: top 0.3s;
+}
+
+.top-header-nav .nav-item {
+  flex: 1;
+  text-align: center;
+  color: #888;
+  font-size: 24px;
+  cursor: pointer;
+  transition: color 0.2s;
+  background: none;
+  border: none;
+  outline: none;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.top-header-nav .nav-item.active {
+  color: #222;
+}
+
+.top-header-nav .nav-item .icon {
+  display: block;
+  font-size: 28px;
+}
+
+.top-header-nav .nav-item .indicator {
+  display: block;
+  height: 4px;
+  width: 24px;
+  margin: 0 auto 0.2em;
+  border-radius: 2px;
+  background: #00cfc8;
+  opacity: 0;
+  transition: opacity 0.2s;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.top-header-nav .nav-item.active .indicator {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    display: none !important;
+  }
+
+  .top-header-nav {
+    display: flex !important;
+  }
+
+  .main-content {
+    margin-left: 0 !important;
+    padding: 0px;
+    padding-top: 72px !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .top-header-nav {
+    display: none !important;
+  }
+}

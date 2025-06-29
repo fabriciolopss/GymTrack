@@ -6,15 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../styles/style.css">
   <link rel="stylesheet" href="../styles/dashboard.css">
-  <title>GymTrack</title>
+  <title>GymTrack | Estatísticas</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="https://unpkg.com/lucide@latest"></script>
-  <link href="https://cdn.jsdelivr.net/npm/gridstack@7.2.3/dist/gridstack.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/gridstack@7.2.3/dist/gridstack-all.js"></script>
+  <script src="https://unpkg.com/packery@2/dist/packery.pkgd.min.js"></script>
+  <script src="https://unpkg.com/draggabilly@3/dist/draggabilly.pkgd.min.js"></script>
   <script src="https://kit.fontawesome.com/64b9a24b58.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../scripts/auth.js"></script>
+  <script src="../scripts/auth-protection.js"></script>
+  <link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="32x32" />
+  <link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="16x16" />
 </head>
 
 <body>
@@ -137,266 +140,18 @@
     </aside>
     <main class="main-content">
       <div class="dashboard-wrapper">
-        <div class="dashboard-header">
-          <p class="dashboard-subtitle">
-            Olá, <span id="user-name"></span>!
-          </p>
-          <p class="dashboard-title">
-            Veja abaixo o resumo dos seus treinos e conquistas recentes!
-          </p>
+        <!-- Toggle Button for Layout -->
+        <div class="d-flex justify-content-end mb-3 gap-2">
+          <button id="resetLayout" class="btn btn-outline-secondary btn-sm">
+            <i class="fa-solid fa-rotate me-2"></i>
+            Resetar Layout
+          </button>
         </div>
 
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card" style="border-radius: 1rem; padding: 1rem;">
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-3">
-                  <i class="fa-solid fa-clock me-2" style="font-size: 1.5rem;"></i>
-                  <h5 class="card-title mb-0" style="font-size: 1.5rem; font-weight: bold;">Resumo do progresso</h5>
-                </div>
-
-                <div class="d-flex justify-content-between mb-3 gap-2" style="overflow-x: auto; padding-bottom: 10px;">
-                  <!-- Dates - this should be dynamic in a real app -->
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                  </div>
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                  </div>
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                  </div>
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #e6f4ea; border: 1px solid #4CAF50;">
-                    <div style="font-size: 0.75rem; color: #4CAF50;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold; color: #4CAF50;">16</div>
-                  </div>
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                  </div>
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                  </div>
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                  </div>
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                  </div>
-                  <div class="text-center"
-                    style="min-width: 60px; padding: 5px; border-radius: 0.5rem; background-color: #f0f0f0;">
-                    <div style="font-size: 0.75rem; color: #6c757d;">MAIO</div>
-                    <div style="font-size: 1.25rem; font-weight: bold;">16</div>
-                  </div>
-                </div>
-
-                <p class="mb-4" style="font-size: 1.1rem; font-weight: 500;">Dia 16 de maio de 2025</p>
-
-                <div class="row">
-                  <div class="col-4">
-                    <div class="card text-center"
-                      style="background-color: #fff9c4; border-radius: 0.75rem; padding: 10px;">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div
-                          style="background-color: #ffeb3b; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
-                          <i class="fa-solid fa-fire" style="color: black;"></i>
-                        </div>
-                        <i class="fa-solid fa-ellipsis-v"></i>
-                      </div>
-
-                      <div class="d-flex align-items-center">
-                        <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">6</h2>
-                        <span style="font-size: 0.9rem; color: #6c757d;">dias sem falhar</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-4">
-                    <div class="card text-center"
-                      style="background-color: #e1bee7; border-radius: 0.75rem; padding: 10px;">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div
-                          style="background-color: #ce93d8; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
-                          <i class="fa-solid fa-dumbbell" style="color: black;"></i>
-                        </div>
-                        <i class="fa-solid fa-ellipsis-v"></i>
-                      </div>
-
-                      <div class="d-flex align-items-center">
-                        <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">36</h2>
-                        <span style="font-size: 0.9rem; color: #6c757d;">séries</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="col-4">
-                    <div class="card text-center"
-                      style="background-color: #b3e5fc; border-radius: 0.75rem; padding: 10px;">
-                      <div class="d-flex justify-content-between align-items-center">
-                        <div
-                          style="background-color: #81d4fa; border-radius: 50%; padding: 5px; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;">
-                          <i class="fa-solid fa-hourglass-half" style="color: black;"></i>
-                        </div>
-                        <i class="fa-solid fa-ellipsis-v"></i>
-                      </div>
-
-                      <div class="d-flex align-items-center">
-                        <h2 class="mt-2" style="font-weight: bold; font-size: 2.5rem;">120</h2>
-                        <span style="font-size: 0.9rem; color: #6c757d;">minutos</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card" style="border-radius: 1rem; padding: 1rem;">
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                  <i class="fa-solid fa-clock me-2" style="font-size: 1.5rem;"></i>
-                  <h5 class="card-title mb-0" style="font-size: 1.25rem; font-weight: bold;">Progresso de volume total
-                  </h5>
-                </div>
-                <div class="d-flex align-items-center mb-3">
-                  <select id="equipamentoVolumeSelect" class="form-select form-select-sm me-2"
-                    aria-label="Selecionar equipamento"
-                    style="width: auto; font-size: 1rem; font-weight: 500; border: none; background-color: transparent; padding-left: 0;">
-                    <!-- Options will be populated by JavaScript -->
-                  </select>
-                </div>
-                <canvas id="volumeChart"></canvas>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card" style="border-radius: 1rem; padding: 1rem;">
-              <div class="card-body">
-                <div class="d-flex align-items-center mb-2">
-                  <i class="fa-solid fa-chart-line me-2" style="font-size: 1.5rem;"></i>
-                  <h5 class="card-title mb-0" style="font-size: 1.25rem; font-weight: bold;">Progressão de carga</h5>
-                </div>
-                <div class="d-flex align-items-center mb-3">
-                  <select id="equipamentoCargaSelect" class="form-select form-select-sm me-2"
-                    aria-label="Selecionar equipamento"
-                    style="width: auto; font-size: 1rem; font-weight: 500; border: none; background-color: transparent; padding-left: 0;">
-                    <!-- Options will be populated by JavaScript -->
-                  </select>
-                </div>
-                <div class="row align-items-center">
-                  <div class="col-5">
-                    <p class="mb-1" style="font-size: 0.9rem; color: #6c757d;">Maior carga para esse exercício</p>
-                    <p class="mb-0" style="font-size: 3.5rem; font-weight: bold;">65<span
-                        style="font-size: 1.5rem; font-weight: normal; color: #6c757d;">kg</span></p>
-                  </div>
-                  <div class="col-7">
-                    <canvas id="progressaoCargaChart"></canvas>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+        <!-- Gridstack Container -->
+        <div class="row" id="grid">
+          <!-- Os widgets serão adicionados dinamicamente via JavaScript -->
         </div>
-        <!-- Dashboard Widgets -->
-        <div class="row g-4 dashboard-widgets-row">
-          <!-- Ficha Atual -->
-          <div class="col-lg-3 col-md-6">
-            <div class="dashboard-card ficha-card">
-              <div class="dashboard-card-title">Ficha atual</div>
-              <div class="ficha-img-wrapper">
-                <img
-                  src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Ficha atual" class="ficha-img">
-                <span class="ficha-status ficha-status-iniciante">Iniciante</span>
-              </div>
-              <div class="ficha-info">
-                <div class="ficha-tipo"></div>
-                <div class="ficha-duracao"><i class="fa-regular fa-clock"></i> 30 minutos</div>
-                <ul class="ficha-exercicios"></ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Última Ficha -->
-          <div class="col-lg-3 col-md-6">
-            <div class="dashboard-card ficha-card">
-              <div class="dashboard-card-title">Última ficha</div>
-              <div class="ficha-img-wrapper">
-                <img
-                  src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  alt="Última ficha" class="ficha-img">
-                <span class="ficha-status ficha-status-iniciante">Iniciante</span>
-              </div>
-              <div class="ficha-info">
-                <div class="ficha-tipo"></div>
-                <div class="ficha-duracao"><i class="fa-regular fa-clock"></i> 30 minutos</div>
-                <ul class="ficha-exercicios"></ul>
-              </div>
-            </div>
-          </div>
-
-          <!-- Distribuição de Treinos -->
-          <div class="col-lg-3 col-md-6">
-            <div class="dashboard-card distribuicao-card">
-              <div class="dashboard-card-title">Distribuição de treinos</div>
-              <canvas id="distribuicao-treinos" width="130" height="130"></canvas>
-              <div class="distribuicao-legenda" id="distribuicao-legenda"></div>
-              <div class="distribuicao-totais" id="distribuicao-totais"></div>
-            </div>
-          </div>
-
-          <!-- Perfil no GymTrack -->
-          <div class="col-lg-3 col-md-6">
-            <div class="dashboard-card perfil-card">
-              <div class="dashboard-card-title">Perfil no GymTrack</div>
-              <div class="perfil-xp-wrapper">
-                <canvas id="xp-progress" class="xp-circle"></canvas>
-                <div class="perfil-xp-porcentagem">
-                  <div class="perfil-nivel">Nível 14</div>
-                  <div class="perfil-porcentagem">85%</div>
-                  <div class="perfil-xp">100/400<small>XP</small></div>
-                </div>
-              </div>
-              <div class="perfil-stats">
-                <div><i class="fa-solid fa-fire"></i> <b class="dias-treino">7</b> dias de treino seguidos</div>
-                <div><i class="fa-solid fa-check"></i> <b class="total-treinos">21</b> no total</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Histórico de Treinos -->
-          <div class="col-lg-6 col-12">
-            <div class="dashboard-card historico-card">
-              <div class="dashboard-card-title">Histórico de treinos</div>
-              <ul class="historico-lista" id="historico-treinos"></ul>
-              <div class="historico-total"><b>42</b> treinos no registro</div>
-              <button class="historico-download"><i class="fa-solid fa-download"></i> Download</button>
-            </div>
-          </div>
-        </div>
-        <!-- /Dashboard Widgets -->
-
-        <div class="dashboard-body d-none">
-          <div class="grid-stack d-none">
-          </div>
-        </div>
-
       </div>
     </main>
   </div>
@@ -418,205 +173,11 @@
 
 </html>
 
+
 <script>
   lucide.createIcons();
   document.addEventListener("DOMContentLoaded", function () {
-    const initialData = {
-      notifications: [{
-        dateTime: new Date(), title: "Titulo", description: "Teste de descrição para a tarefa", type: "Creation",
-      },
-      {
-        dateTime: new Date("2025-05-09"), title: "Notificacao1", description: "Teste de descrição para a tarefa", type: "Creation",
-      },
-      {
-        dateTime: new Date("2025-05-06"), title: "Notificacao2", description: "Teste de descrição para a tarefa", type: "Creation",
-      },
-      {
-        dateTime: new Date("2025-05-06"), title: "Notificacao3", description: "Teste de descrição para a tarefa", type: "Creation"
-      },
-      {
-        dateTime: new Date("2025-05-04"), title: "Notificacao4", description: "Teste de descrição para a tarefa", type: "Creation"
-      }],
-      profile: {
-        name: "Fabricio",
-        xp: 1320,
-        achievements: [1, 2, 3]
-      },
-      registered_trainings: [
-        {
-          training_id: 1,
-          date: "2025-05-03",
-          day_index: 1,
-          duration: {
-            hours: 0,
-            minutes: 30
-          },
-          xpGain: 50,
-        },
-        {
-          training_id: 1,
-          date: "2025-05-03",
-          day_index: 2,
-          duration: {
-            hours: 1,
-            minutes: 30
-          },
-          xpGain: 100,
-        },
-      ],
-      default_trainings: {
-        ids: [1, 2, 3]
-      },
-      edited_trainings: [
-        {
-          id: 1,
-          name: "Treino de inferiores",
-          image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3ltfGVufDB8fDB8fHww",
-          category: "Pernas",
-          type: "Ficha iniciante",
-          days: [
-            {
-              id: 1,
-              xp: 100,
-              name: "Dia 1 - Gluteos e Posterior de Coxa",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            },
-            {
-              id: 2,
-              xp: 150,
-              name: "Dia 2 - Quadriceps e Panturrilha",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            }
-          ]
-        },
-        {
-          id: 2,
-          name: "Treino de superiores",
-          image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3ltfGVufDB8fDB8fHww",
-          category: "Superiores",
-          type: "Ficha intermediária",
-          days: [
-            {
-              id: 1,
-              xp: 50,
-              name: "Dia 1 - Costas",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            },
-            {
-              id: 2,
-              xp: 75,
-              name: "Dia 2 - Ombro",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            }
-          ]
-        },
-        {
-          id: 3,
-          image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3ltfGVufDB8fDB8fHww",
-          name: "Treino de seila",
-          category: "Superiores",
-          type: "Ficha intermediária",
-          days: [
-            {
-              id: 1,
-              xp: 50,
-              name: "Dia 1 - Costas",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            },
-            {
-              id: 2,
-              xp: 75,
-              name: "Dia 2 - Ombro",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            }
-          ]
-        },
-        {
-          id: 4,
-          name: "Treino 45",
-          image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3ltfGVufDB8fDB8fHww",
-          category: "Superiores",
-          type: "Ficha intermediária",
-          days: [
-            {
-              id: 1,
-              xp: 50,
-              name: "Dia 1 - Costas",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            },
-            {
-              id: 2,
-              xp: 75,
-              name: "Dia 2 - Ombro",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            }
-          ]
-        },
-        {
-          id: 5,
-          name: "Treino 90",
-          image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Z3ltfGVufDB8fDB8fHww",
-          category: "Superiores",
-          type: "Ficha intermediária",
-          days: [
-            {
-              id: 1,
-              xp: 50,
-              name: "Dia 1 - Costas",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            },
-            {
-              id: 2,
-              xp: 75,
-              name: "Dia 2 - Ombro",
-              day: [
-                { exercise: "Supino reto", series: 4, repetitions: "8-12" },
-                { exercise: "Supino inclinado", series: 4, repetitions: "8-12" },
-                { exercise: "Supino transversal", series: 4, repetitions: "8-12" }
-              ]
-            }
-          ]
-        }
-      ]
-    };
-    image.png
-
+    // Remover bloco initialData e linha image.png
   });
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -630,12 +191,9 @@
 
 <script src="../scripts/checkinModal.js" type="module"></script>
 <script src="../scripts/layout.js"></script>
-<script src="../scripts/dashboard.js"></script>
-<script src="../scripts/dashboard-widgets.js"></script>
 <script src="../scripts/notifications.js" type="module"></script>
-
+<script src="../scripts/dashboard.js" type="module"></script>
 <script src="../scripts/level.js" type="module"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-<script src="scripts/dashboard-charts.js"></script>

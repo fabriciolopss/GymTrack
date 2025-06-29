@@ -1,10 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Verifica se o usuário já está autenticado
-    if (window.auth.isAuthenticated()) {
-        window.location.href = 'social.html';
-        return;
-    }
-
     // Tab navigation
     const tabButtons = document.querySelectorAll('.tab-button');
     const forms = document.querySelectorAll('.form-content');

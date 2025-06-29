@@ -100,6 +100,32 @@ async function getCurrentUserData() {
     }
 }
 
+// Função para validar token no servidor
+async function validateToken() {
+    try {
+        const token = getToken();
+        if (!token) return false;
+
+        const response = await fetch(`${API_URL}/test-auth`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            return false;
+        }
+
+        const data = await response.json();
+        return data.valid;
+    } catch (error) {
+        console.error('Erro ao validar token:', error);
+        return false;
+    }
+}
+
 // Exporta as funções
 window.auth = {
     login,
@@ -108,5 +134,6 @@ window.auth = {
     isAuthenticated,
     getToken,
     getCurrentUserId,
-    getCurrentUserData
+    getCurrentUserData,
+    validateToken
 }; 
