@@ -1,5 +1,6 @@
 import ApiService from "./services/api.js";
 import { createNotification, Notifications } from "./notifications.js";
+import { showAlert } from './utils/toast.js';
 
 lucide.createIcons();
 
@@ -35,26 +36,18 @@ const semTreinos = document.querySelector("#sem-treinos");
 
 // Função para inicializar a página de cadastro de treino
 async function initializeCadastroTreino() {
-  try {
-    // Verifica se o usuário está autenticado
-    if (!window.auth.isAuthenticated()) {
-      console.error("Usuário não autenticado");
-      alert("Você precisa estar logado para acessar esta página.");
-      window.location.href = "login.html";
-      return;
+    try {
+        // Busca os dados do usuário do webserver
+        gymApp = await ApiService.getUserData();
+        console.log(gymApp);
+        
+        // Inicializa a interface após carregar os dados
+        renderizarGridTreinos();
+        setupEventListeners();
+    } catch (error) {
+        console.error('Erro ao carregar dados do usuário:', error);
+        alert('Erro ao carregar dados do usuário. Tente novamente.');
     }
-
-    // Busca os dados do usuário do webserver
-    gymApp = await ApiService.getUserData();
-    console.log(gymApp);
-
-    // Inicializa a interface após carregar os dados
-    renderizarGridTreinos();
-    setupEventListeners();
-  } catch (error) {
-    console.error("Erro ao carregar dados do usuário:", error);
-    alert("Erro ao carregar dados do usuário. Tente novamente.");
-  }
 }
 
 function rankTemplatesByCosine(templates, user, topN = 6) {
@@ -528,93 +521,87 @@ function setupEventListeners() {
     criarFicha();
   });
 
-  customBtn.addEventListener("click", async (e) => {
-    e.preventDefault();
-    if (!gymApp || !gymApp.edited_trainings) {
-      alert("Dados do usuário não foram carregados. Tente novamente.");
-      return;
-    }
-
-    if (!validarDados()) {
-      alert(alertaValidacao);
-      alertaValidacao = "Cadastro não realizado:\n";
-      return;
-    }
-
-    atualizarTreinoComInputs(treinoSelect);
-    // Verifica se já existe um treino com esse id
-    const idx = gymApp.edited_trainings.findIndex(
-      (t) => t.id === treinoSelect.id
-    );
-    if (idx !== -1) {
-      gymApp.edited_trainings[idx] = treinoSelect;
-      try {
-        await ApiService.updateUserData({
-          edited_trainings: gymApp.edited_trainings,
-        });
-
-        // Criar notificação de treino editado
-        try {
-          await createNotification({
-            title: "Treino Atualizado",
-            description: `O treino "${treinoSelect.name}" foi atualizado com sucesso!`,
-            type: "update",
-          });
-        } catch (notificationError) {
-          console.warn("Erro ao criar notificação:", notificationError);
+    customBtn.addEventListener("click", async e => {
+        e.preventDefault();
+        if (!gymApp || !gymApp.edited_trainings) {
+            showAlert('Dados do usuário não foram carregados. Tente novamente.', 'error');
+            return;
         }
 
-        renderizarGridTreinos();
-        limparFormulario();
-      } catch (error) {
-        alert("Erro ao salvar alterações no servidor.");
-      }
-    }
-  });
+        if(!validarDados()) {
+            showAlert(alertaValidacao, 'error');
+            alertaValidacao = "Cadastro não realizado:\n";
+            return;
+        }
+        
+        atualizarTreinoComInputs(treinoSelect);
+        // Verifica se já existe um treino com esse id
+        const idx = gymApp.edited_trainings.findIndex(t => t.id === treinoSelect.id);
+        if (idx !== -1) {
+            gymApp.edited_trainings[idx] = treinoSelect;
+            try {
+                await ApiService.updateUserData({ edited_trainings: gymApp.edited_trainings });
+                
+                // Criar notificação de treino editado
+                try {
+                    await createNotification({
+                        title: "Treino Atualizado",
+                        description: `O treino "${treinoSelect.name}" foi atualizado com sucesso!`,
+                        type: "update"
+                    });
+                } catch (notificationError) {
+                    console.warn('Erro ao criar notificação:', notificationError);
+                }
+                
+                renderizarGridTreinos();
+                limparFormulario();
+            } catch (error) {
+                alert('Erro ao salvar alterações no servidor.');
+            }
+        }
+    });
 
-  cadastrar.addEventListener("click", async (e) => {
-    e.preventDefault();
-    if (!gymApp || !gymApp.edited_trainings) {
-      alert("Dados do usuário não foram carregados. Tente novamente.");
-      return;
-    }
+    cadastrar.addEventListener("click", async e => {
+        e.preventDefault();
+        if (!gymApp || !gymApp.edited_trainings) {
+            alert('Dados do usuário não foram carregados. Tente novamente.');
+            return;
+        }
+        
+        atualizarTreinoComInputs(treinoSelect);
+        // Garante que não existe outro treino com o mesmo nome
+        if (gymApp.edited_trainings.some(t => t.name === treinoSelect.name)) {
+            showAlert('Já existe uma ficha com esse nome.', 'error');
+            return;
+        }
 
-    atualizarTreinoComInputs(treinoSelect);
-    // Garante que não existe outro treino com o mesmo nome
-    if (gymApp.edited_trainings.some((t) => t.name === treinoSelect.name)) {
-      alert("Já existe uma ficha com esse nome.");
-      return;
-    }
-
-    if (!validarDados()) {
-      alert(alertaValidacao);
-      alertaValidacao = "Cadastro não realizado:\n";
-      return;
-    }
-    gymApp.edited_trainings.push(treinoSelect);
-    try {
-      console.log(gymApp);
-      await ApiService.updateUserData({
-        edited_trainings: gymApp.edited_trainings,
-      });
-
-      // Criar notificação de treino criado
-      try {
-        await createNotification({
-          title: "Novo Treino Criado",
-          description: `O treino "${treinoSelect.name}" foi criado com sucesso!`,
-          type: "success",
-        });
-      } catch (notificationError) {
-        console.warn("Erro ao criar notificação:", notificationError);
-      }
-
-      renderizarGridTreinos();
-      limparFormulario();
-    } catch (error) {
-      alert("Erro ao salvar novo treino no servidor.");
-    }
-  });
+        if(!validarDados()) {
+            showAlert(alertaValidacao, 'error');
+            alertaValidacao = "Cadastro não realizado:\n";
+            return;
+        }
+        gymApp.edited_trainings.push(treinoSelect);
+        try {
+            console.log(gymApp);
+            await ApiService.updateUserData({ edited_trainings: gymApp.edited_trainings });
+            
+            // Criar notificação de treino criado
+            try {
+                await createNotification({
+                    title: "Novo Treino Criado",
+                    description: `O treino "${treinoSelect.name}" foi criado com sucesso!`,
+                    type: "success"
+                });
+            } catch (notificationError) {
+                console.warn('Erro ao criar notificação:', notificationError);
+            }
+            
+            renderizarGridTreinos();
+            limparFormulario();
+        } catch (error) {
+            alert('Erro ao salvar novo treino no servidor.');
+        }
+    });
 
   excluirFicha.addEventListener("click", async (e) => {
     e.preventDefault();

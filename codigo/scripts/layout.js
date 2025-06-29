@@ -291,13 +291,12 @@ class LayoutManager {
     headerNav.className = "top-header-nav";
 
     const navItems = [
-      { redirectSessionName: "social", icon: "home" },
-      { redirectSessionName: "dashboard", icon: "chart-area" },
-      { redirectSessionName: "registrar-treino", icon: "square-plus" },
-      { redirectSessionName: "consultar-fichas", icon: "clipboard-list" },
-      { redirectSessionName: "progresso", icon: "trending-up" },
-      { redirectSessionName: "historico", icon: "History" },
-      { redirectSessionName: "perfil", icon: "user" },
+      { redirectSessionName: 'social', icon: 'home' },
+      { redirectSessionName: 'dashboard', icon: 'chart-area' },
+      { redirectSessionName: 'registrar-treino', icon: 'square-plus' },
+      { redirectSessionName: 'consultar-fichas', icon: 'clipboard-list' },
+      { redirectSessionName: 'progresso', icon: 'trending-up' },
+      { redirectSessionName: 'perfil', icon: 'user' }
     ];
 
     navItems.forEach((item) => {

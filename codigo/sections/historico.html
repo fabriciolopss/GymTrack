@@ -1,40 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../styles/style.css" />
-    <link rel="stylesheet" href="../styles/dashboard.css" />
-    <title>Document</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      defer
-    ></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/dashboard.css">
+    <title>GymTrack | Histórico</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="../scripts/auth.js"></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/gridstack@7.2.3/dist/gridstack.min.css"
-      rel="stylesheet"
-    />
+    <script src="../scripts/auth-protection.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/gridstack@7.2.3/dist/gridstack.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/gridstack@7.2.3/dist/gridstack-all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link
-      href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.min.css"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.bootstrap5.min.css"
-      rel="stylesheet"
-    />
-    <script
-      src="https://kit.fontawesome.com/64b9a24b58.js"
-      crossorigin="anonymous"
-    ></script>
+    <link href="https://cdn.datatables.net/2.0.0/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/3.0.0/css/responsive.bootstrap5.min.css" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/64b9a24b58.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/2.0.0/js/dataTables.bootstrap5.min.js"></script>
@@ -43,108 +27,93 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
-  </head>
+    <link rel="icon" type="image/png" href="../images/favicon-16x16.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="../images/favicon-32x32.png" sizes="16x16" />
+</head>
 
-  <body>
+<body>
     <div class="content-wrapper">
-      <aside class="sidebar">
-        <div class="sidebar-header">
-          <div class="logo">
-            <img src="../images/logo.png" alt="GymApp Logo" class="logo-img" />
-          </div>
-        </div>
-        <div class="sidebar-toggle" id="sidebarToggle">
-          <div class="toggle-icon">
-            <i class="fas fa-chevron-left"></i>
-          </div>
-        </div>
-        <nav class="sidebar-nav">
-          <!-- Header items serão populados dinamicamente pelo layout.js -->
-        </nav>
-        <div class="sidebar-footer"></div>
-      </aside>
-      <main class="main-content">
-        <div id="main-content">
-          <div class="container-fluid py-4 historico-wrapper">
-            <div class="card shadow-sm">
-              <div class="card-body">
-                <div
-                  class="d-flex justify-content-between align-items-center mb-4"
-                >
-                  <h4 class="mb-0">Histórico de Treinos</h4>
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <img src="../images/logo.png" alt="GymApp Logo" class="logo-img" />
                 </div>
-                <div class="table-responsive">
-                  <table
-                    id="tabela-historico"
-                    class="table table-hover dt-responsive nowrap w-100"
-                  >
-                    <thead>
-                      <tr>
-                        <th>
-                          <i class="fa-solid fa-calendar-days me-1"></i>Data
-                        </th>
-                        <th>
-                          <i class="fa-solid fa-dumbbell me-1"></i>Membros
-                        </th>
-                        <th>
-                          <i class="fa-solid fa-clipboard-list me-1"></i>Tipo de
-                          Treino
-                        </th>
-                        <th><i class="fa-solid fa-tags me-1"></i>Categoria</th>
-                        <th><i class="fa-regular fa-clock me-1"></i>Duração</th>
-                        <th>
-                          <i class="fa-solid fa-wand-magic-sparkles"></i>XP
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody></tbody>
-                  </table>
-                </div>
-              </div>
             </div>
-          </div>
+            <div class="sidebar-toggle" id="sidebarToggle">
+                <div class="toggle-icon">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <!-- Header items serão populados dinamicamente pelo layout.js -->
+            </nav>
+            <div class="sidebar-footer"></div>
+        </aside>
+        <main class="main-content">
+            <div id="main-content">
+                <div class="container-fluid py-4 historico-wrapper">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h4 class="mb-0">Histórico de Treinos</h4>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="tabela-historico" class="table table-hover dt-responsive nowrap w-100">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <i class="fa-solid fa-calendar-days me-1"></i>Data
+                                            </th>
+                                            <th>
+                                                <i class="fa-solid fa-dumbbell me-1"></i>Membros
+                                            </th>
+                                            <th>
+                                                <i class="fa-solid fa-clipboard-list me-1"></i>Tipo de
+                                                Treino
+                                            </th>
+                                            <th><i class="fa-solid fa-tags me-1"></i>Categoria</th>
+                                            <th><i class="fa-regular fa-clock me-1"></i>Duração</th>
+                                            <th>
+                                                <i class="fa-solid fa-wand-magic-sparkles"></i>XP
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast-template" class="toast align-items-center border-0 text-white d-none" role="alert"
+        aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body">Mensagem padrão</div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                aria-label="Close"></button>
         </div>
-      </main>
     </div>
 
-    <div
-      id="toast-template"
-      class="toast align-items-center border-0 text-white d-none"
-      role="alert"
-      aria-live="assertive"
-      aria-atomic="true"
-    >
-      <div class="d-flex">
-        <div class="toast-body">Mensagem padrão</div>
-        <button
-          type="button"
-          class="btn-close btn-close-white me-2 m-auto"
-          data-bs-dismiss="toast"
-          aria-label="Close"
-        ></button>
-      </div>
-    </div>
+    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 1055"></div>
+</body>
 
-    <div
-      id="toast-container"
-      class="position-fixed top-0 end-0 p-3"
-      style="z-index: 1055"
-    ></div>
-  </body>
 </html>
 
 <script>
-  lucide.createIcons();
+    lucide.createIcons();
 
-  document.addEventListener("DOMContentLoaded", function () {
-    const tooltipTriggerList = [].slice.call(
-      document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    );
-    tooltipTriggerList.forEach(function (tooltipTriggerEl) {
-      new bootstrap.Tooltip(tooltipTriggerEl);
+    document.addEventListener("DOMContentLoaded", function () {
+        const tooltipTriggerList = [].slice.call(
+            document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        );
+        tooltipTriggerList.forEach(function (tooltipTriggerEl) {
+            new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+        new LayoutManager();
     });
-    new LayoutManager();
-  });
 </script>
 
 <script src="../scripts/layout.js"></script>

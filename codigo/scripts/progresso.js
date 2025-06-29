@@ -85,7 +85,6 @@ document.addEventListener("DOMContentLoaded", async function () {
         preencherCalendario(gymData);
         preencherRanking(gymData);
         preencherHistoricoConquistas(gymData);
-        preencherSocialFeatures(gymData);
         preencherDicasPersonalizadas(gymData);
 
         document.getElementById("form-nova-conquista").addEventListener("submit", function (e) {
@@ -215,7 +214,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 saveGymData(gymData);
                 preencherConquistas(gymData);
                 preencherHistoricoConquistas(gymData);
-                preencherSocialFeatures(gymData);
                 alert("Conquista resgatada! XP adicionado ao seu perfil.");
             }
         };
@@ -529,52 +527,7 @@ function preencherHistoricoConquistas(gymData) {
     }).join('');
 }
 
-function preencherSocialFeatures(gymData) {
-    const gruposLista = document.getElementById("grupos-lista");
-    const recentAchievements = document.getElementById("recent-achievements");
-    
-    // Grupos de treino
-    const grupos = gymData.training_groups || [];
-    if (grupos.length === 0) {
-        gruposLista.innerHTML = `
-            <div class="text-center text-muted py-3">
-                <p>Nenhum grupo de treino encontrado.</p>
-                <button class="btn btn-sm btn-outline-primary" onclick="criarNovoGrupo()">
-                    Criar Primeiro Grupo
-                </button>
-            </div>
-        `;
-    } else {
-        gruposLista.innerHTML = grupos.map(g => `
-            <div class="grupo-item">
-                <div class="grupo-nome">${g.nome}</div>
-                <div class="grupo-membros">${g.membros.length} membros</div>
-            </div>
-        `).join('');
-    }
 
-    // Conquistas recentes da comunidade
-    const conquistasRecentes = gymData.community_achievements || [];
-    if (conquistasRecentes.length === 0) {
-        recentAchievements.innerHTML = `
-            <div class="text-center text-muted py-3">
-                <p>Nenhuma conquista recente na comunidade.</p>
-            </div>
-        `;
-    } else {
-        recentAchievements.innerHTML = conquistasRecentes.map(c => `
-            <div class="achievement-card">
-                <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>${c.usuario}</strong>
-                        <div class="small text-muted">${c.conquista}</div>
-                    </div>
-                    <span class="badge bg-success">+${c.xp} XP</span>
-                </div>
-            </div>
-        `).join('');
-    }
-}
 
 function preencherDicasPersonalizadas(gymData) {
     const tipsContainer = document.getElementById("personalized-tips");
