@@ -192,6 +192,8 @@ class Registration {
                     type: "Creation"
                 });
 
+                this.initializeLevelBar();
+
                 // Reset form
                 form.reset();
                 dateCheckin.value = new Date().toISOString().split("T")[0];

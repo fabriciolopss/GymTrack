@@ -228,7 +228,8 @@ function createTemplatePreview(template) {
   template.days.forEach((day) => {
     html += `<div class='mb-2'><strong><i data-lucide="calendar"></i> ${day.name}</strong><ul class='mb-1 ms-3'>`;
     day.day.forEach((ex) => {
-      html += `<li><i data-lucide="dumbbell" style='width:1em;height:1em;'></i> ${ex.exercise} <span class='text-muted small'>(${ex.series}x ${ex.repetitions})</span></li>`;
+      const restInfo = ex.rest ? ` | ${ex.rest}s descanso` : '';
+      html += `<li><i data-lucide="dumbbell" style='width:1em;height:1em;'></i> ${ex.exercise} <span class='text-muted small'>(${ex.series}x ${ex.repetitions}${restInfo})</span></li>`;
     });
     html += `</ul></div>`;
   });
@@ -329,6 +330,7 @@ function renderTreinoForm(treino) {
                     <input class="form-control form-control-sm flex-grow-1" type="text" id="dia-${diaIdx}-nome-exercicio-${exIdx}" value="${ex.exercise}" placeholder="Nome do exercício">
                     <input class="form-control form-control-sm" style="max-width:80px" type="number" id="dia-${diaIdx}-series-exercicio-${exIdx}" value="${ex.series}" placeholder="Séries">
                     <input class="form-control form-control-sm" style="max-width:80px" type="number" id="dia-${diaIdx}-rep-exercicio-${exIdx}" value="${ex.repetitions}" placeholder="Repetições">
+                    <input class="form-control form-control-sm" style="max-width:100px" type="number" id="dia-${diaIdx}-descanso-exercicio-${exIdx}" value="${ex.descanso ? parseInt(ex.descanso.split(" ")[0]) || '' : ''}" placeholder="Descanso (seg)">
                     <button class="btn btn-outline-danger btn-sm delete-ex d-flex align-items-center gap-1" data-dia="${diaIdx}" data-ex="${exIdx}"><i data-lucide="trash-2"></i></button>
                 </div>
             `;
@@ -351,6 +353,7 @@ function renderTreinoForm(treino) {
         exercise: "Novo exercício",
         series: "",
         repetitions: "",
+        descanso: "",
       });
       renderTreinoForm(treino);
     });
@@ -403,6 +406,9 @@ function atualizarTreinoComInputs(treino) {
       ex.repetitions = document.getElementById(
         `dia-${diaIdx}-rep-exercicio-${exIdx}`
       ).value;
+      ex.descanso = document.getElementById(
+        `dia-${diaIdx}-descanso-exercicio-${exIdx}`
+      ).value;
     });
   });
 }
@@ -435,6 +441,13 @@ function validarDados() {
             i + 1
           }: insira dados válidos para os exercícios cadastrados\n`;
           j = treinoSelect.days[i].day.length;
+          valido = false;
+        }
+        
+        // Validação do campo de descanso (opcional, mas se preenchido deve ser positivo)
+        const descansoValue = document.querySelector(`#dia-${i}-descanso-exercicio-${j}`).value;
+        if (descansoValue !== "" && descansoValue < 0) {
+          alertaValidacao += `\t Dia ${i + 1}: o tempo de descanso deve ser um valor positivo\n`;
           valido = false;
         }
       }
@@ -582,7 +595,6 @@ function setupEventListeners() {
         }
         gymApp.edited_trainings.push(treinoSelect);
         try {
-            console.log(gymApp);
             await ApiService.updateUserData({ edited_trainings: gymApp.edited_trainings });
             
             // Criar notificação de treino criado
@@ -815,6 +827,12 @@ window.excluirTreino = function (index) {
 
 // Função para limpar formulário e voltar ao grid
 function limparFormulario() {
+  // Remove apenas o menu de templates se existir
+  const templateMenu = document.querySelector(".mb-4 .card.p-3.shadow-sm");
+  if (templateMenu) {
+    templateMenu.closest(".mb-4").remove();
+  }
+  
   interfaceDados.innerHTML = "";
   customBtn.classList.add("d-none");
   cancelarBtn.classList.add("d-none");

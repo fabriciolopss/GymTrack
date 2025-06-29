@@ -438,7 +438,7 @@ class SocialFeed {
   async loadUserData() {
     try {
       const userData = await ApiService.getUserData();
-      document.getElementById('xp-user').innerText = userData.profile.xp;
+      document.getElementById('xp-user').innerText = userData.profile.xp || 0;
       document.getElementById('user-name').innerText = userData.profile.pessoal.nome || 'Usuário';
     } catch (error) {
       console.error('Erro ao carregar dados do usuário:', error);
