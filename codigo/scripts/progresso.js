@@ -24,7 +24,9 @@ function generateConquistaDetails(tipo, valor) {
     let nome = '';
     let descricao = '';
 
-    const numericValor = typeof valor === 'number' && !isNaN(valor) ? valor : 0;
+    // Garantir que valor seja um número válido
+    const numericValor = typeof valor === 'number' && !isNaN(valor) ? valor : 
+                        (typeof valor === 'string' ? parseInt(valor) || 0 : 0);
 
     if (tipo === "treinos") {
         nome = `${numericValor} Treinos Completos`;
@@ -35,7 +37,12 @@ function generateConquistaDetails(tipo, valor) {
     } else if (tipo === "minutos") {
         nome = `${numericValor} Minutos de Treino`;
         descricao = `Acumule ${numericValor} minutos de treino.`;
+    } else {
+        // Fallback para tipos desconhecidos
+        nome = `Conquista Personalizada`;
+        descricao = `Complete esta conquista personalizada.`;
     }
+    
     return { nome, descricao };
 }
 
@@ -84,7 +91,20 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("form-nova-conquista").addEventListener("submit", function (e) {
             e.preventDefault();
             const tipo = document.getElementById("tipo-conquista").value;
-            const valor = parseInt(document.getElementById("valor-conquista").value);
+            const valorInput = document.getElementById("valor-conquista").value;
+            const valor = parseInt(valorInput);
+            
+            // Validações para evitar campos null
+            if (!tipo || tipo.trim() === '') {
+                alert('Por favor, selecione um tipo de conquista.');
+                return;
+            }
+            
+            if (isNaN(valor) || valor <= 0) {
+                alert('Por favor, insira um valor válido maior que zero.');
+                return;
+            }
+            
             const xp = calcularXpConquista(tipo, valor);
             const { nome, descricao } = generateConquistaDetails(tipo, valor);
             const id = `custom_${tipo}_${valor}_${Date.now()}`;
@@ -108,6 +128,9 @@ document.addEventListener("DOMContentLoaded", async function () {
         document.getElementById("tipo-conquista").addEventListener("change", atualizarXpPreview);
         document.getElementById("valor-conquista").addEventListener("input", atualizarXpPreview);
 
+        // Salvar a referência do evento padrão ANTES de definir as funções de edição
+        const defaultNovaConquistaSubmit = document.getElementById("form-nova-conquista").onsubmit;
+
         window.editarConquistaCustom = function(id) {
             let conquistasCustom = gymData.profile.metadados.conquistas || [];
             const c = conquistasCustom.find(c => c.id === id);
@@ -123,7 +146,20 @@ document.addEventListener("DOMContentLoaded", async function () {
                 conquistasCustom = conquistasCustom.filter(x => x.id !== id);
 
                 const tipo = document.getElementById("tipo-conquista").value;
-                const valor = parseInt(document.getElementById("valor-conquista").value);
+                const valorInput = document.getElementById("valor-conquista").value;
+                const valor = parseInt(valorInput);
+                
+                // Validações para evitar campos null
+                if (!tipo || tipo.trim() === '') {
+                    alert('Por favor, selecione um tipo de conquista.');
+                    return;
+                }
+                
+                if (isNaN(valor) || valor <= 0) {
+                    alert('Por favor, insira um valor válido maior que zero.');
+                    return;
+                }
+                
                 const xp = calcularXpConquista(tipo, valor);
                 const { nome, descricao } = generateConquistaDetails(tipo, valor);
                 const newId = `custom_${tipo}_${valor}_${Date.now()}`;
@@ -148,6 +184,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
                 preencherConquistas(gymData);
 
+                // Restaurar o evento padrão
                 document.getElementById("form-nova-conquista").onsubmit = defaultNovaConquistaSubmit;
             };
 
@@ -163,8 +200,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             preencherConquistas(gymData);
         };
 
-        const defaultNovaConquistaSubmit = document.getElementById("form-nova-conquista").onsubmit;
-
         window.resgatarConquistaCustom = function(id) {
             let conquistasCustom = gymData.profile.metadados.conquistas || [];
             const idx = conquistasCustom.findIndex(c => c.id === id);
@@ -174,17 +209,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                 conquistasCustom[idx].resgatada = true;
                 conquistasCustom[idx].dataResgate = new Date().toISOString();
                 
-                // Adicionar à lista de conquistas recentes da comunidade
-                if (!gymData.community_achievements) gymData.community_achievements = [];
-                gymData.community_achievements.unshift({
-                    usuario: 'Você',
-                    conquista: conquistasCustom[idx].nome,
-                    xp: conquistasCustom[idx].xp,
-                    data: new Date().toISOString()
-                });
                 
-                // Manter apenas as 5 conquistas mais recentes
-                gymData.community_achievements = gymData.community_achievements.slice(0, 5);
                 
                 gymData.profile.metadados.conquistas = conquistasCustom;
                 saveGymData(gymData);
@@ -278,7 +303,6 @@ function preencherConquistas(gymData) {
         let btnEditar = '';
         let btnExcluir = '';
         if (!c.resgatada) {
-            btnEditar = `<button class='btn btn-outline-secondary btn-sm me-1' title='Editar' onclick='editarConquistaCustom(\"${c.id}\")'><i class='fa fa-edit'></i></button>`;
             btnExcluir = `<button class='btn btn-outline-danger btn-sm' title='Excluir' onclick='excluirConquistaCustom(\"${c.id}\")'><i class='fa fa-trash'></i></button>`;
         }
         if (c.conquistada && !c.resgatada) {
@@ -287,7 +311,7 @@ function preencherConquistas(gymData) {
         const progresso = calcularProgressoConquista(c, gymData);
         col.innerHTML = `<div class=\"card h-100 ${c.resgatada ? 'border-success' : c.conquistada ? 'border-primary' : ''}\">
             <div class=\"card-body\">
-                <div class='d-flex justify-content-end mb-2'>${btnEditar}${btnExcluir}</div>
+                <div class='d-flex justify-content-end mb-2'>${btnExcluir}</div>
                 ${c.resgatada ? '<span class=\"badge bg-success mb-2\">Resgatada</span>' : c.conquistada ? '<span class=\"badge bg-primary mb-2\">Disponível</span>' : ''}
                 <h6 class=\"card-title\">${c.nome}</h6>
                 <p class=\"card-text\">${c.descricao}</p>
@@ -629,4 +653,3 @@ function encontrarHorarioMaisFrequente(horarios) {
     return Object.entries(frequencia)
         .sort((a, b) => b[1] - a[1])[0][0];
 }
-

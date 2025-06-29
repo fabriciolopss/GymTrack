@@ -8,9 +8,9 @@ body {
 }
 
 .card {
-  border-radius: 1rem;
+  border-radius: 16px !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, .05);
-  padding: 1rem;
+  padding: 24px;
   background: #fff;
   margin-bottom: 1rem;
   height: 100%;
@@ -36,4 +36,330 @@ canvas {
 .card-content {
   margin-top: 1rem;
   color: #888;
+}
+
+
+.card-info-text-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.card-info-main-text {
+  font-size: 48px;
+  color: black;
+  font-weight: 600;
+}
+
+.card-info-second-text {
+  padding: 4px 12px;
+  background-color: #f5f9fb;
+  border-radius: 10px;
+}
+
+.info-description {
+  font-size: 24px;
+  color: black;
+}
+
+.card-header-info {
+  display: flex;
+  align-items: center;
+
+}
+
+.header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background-color: #f5f9fb;
+  border-radius: 50%;
+  color: #888;
+}
+
+.lucide-info {
+  color: #888;
+}
+
+.conquista-galeria-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.conquista-galeria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.conquista-item {
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+.conquista-item.ativa {
+  filter: none;
+  opacity: 1;
+}
+
+.conquista-item:hover {
+  transform: scale(1.1);
+}
+
+.ficha-carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding-top: 0.5rem;
+  width: 100%;
+}
+
+.ficha-carousel-track {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.ficha-carousel-item {
+  width: 100%;
+  background: #f7f7f7;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  transition: all 0.4s ease;
+  animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.ficha-carousel-item.slide-out {
+  animation: slideOut 0.3s ease-in forwards;
+}
+
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+.ficha-carousel-item.slide-out[style*="reverse"] {
+  animation: slideOutReverse 0.3s ease-in forwards;
+}
+
+@keyframes slideOutReverse {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+}
+
+.ficha-carousel-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.ficha-icon {
+  margin-right: 0.75rem;
+  font-size: 1.4rem;
+  color: #444;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ficha-nome {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.ficha-categoria {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  color: #666;
+}
+
+.carousel-btn:hover {
+  background: #f0f0f0;
+  transform: translateY(-50%) scale(1.05);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.carousel-btn:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.left-btn {
+  left: -8px;
+}
+
+.right-btn {
+  right: -8px;
+}
+
+.ultima-atividade-card {
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.atividade-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.atividade-icon {
+  font-size: 2rem;
+  color: #5A67D8;
+}
+
+.atividade-titulo {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.atividade-subtitulo {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.atividade-detalhes {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #444;
+  border-top: 1px solid #ddd;
+  padding-top: 0.5rem;
+}
+
+.detalhe-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.25rem;
+  vertical-align: middle;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .header-responsivity {
+    flex-direction: row !important;
+    gap: 1rem;
+  }
+}
+
+#grid>div {
+  opacity: 0;
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+#grid>div:nth-child(1) {
+  animation-delay: 0s;
+}
+
+#grid>div:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+#grid>div:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+#grid>div:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+#grid>div:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+#grid>div:nth-child(6) {
+  animation-delay: 0.5s;
+}
+
+#grid>div:nth-child(7) {
+  animation-delay: 0.6s;
+}
+
+#grid>div:nth-child(8) {
+  animation-delay: 0.7s;
+}
+
+#grid>div:nth-child(9) {
+  animation-delay: 0.8s;
+}
+
+#grid>div:nth-child(10) {
+  animation-delay: 0.9s;
+}
+
+#grid>div:nth-child(11) {
+  animation-delay: 0.9s;
 }
