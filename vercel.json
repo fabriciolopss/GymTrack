@@ -1,8 +1,0 @@
-{
-    "rewrites": [
-        {
-            "source": "/",
-            "destination": "/codigo/sections/login.html"
-        }
-    ]
-}
