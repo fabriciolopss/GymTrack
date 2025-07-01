@@ -2,7 +2,7 @@
     "rewrites": [
         {
             "source": "/",
-            "destination": "/sections/login.html"
+            "destination": "/codigo/sections/login.html"
         }
     ]
 }
