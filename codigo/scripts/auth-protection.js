@@ -13,12 +13,12 @@ class AuthProtection {
             'social.html',
             'historico.html',
             'consultar-fichas.html',
-            'cadastro-treino.html'
+            'cadastro-treino.html',
+            'cadastro.html'
         ];
         
         this.publicPages = [
             'login.html',
-            'cadastro.html'
         ];
         
         this.tokenValidationInterval = null;
