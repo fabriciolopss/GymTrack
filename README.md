@@ -1,19 +1,23 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=18966378&assignment_repo_type=AssignmentRepo)
-# Nome do projeto
+# GymTrack
 
-Escreva um ou dois parágrafo resumindo o objetivo do seu projeto.
+O objetivo principal do projeto é a criação de uma ferramenta digital que seja ao mesmo tempo simples e acessível, permitindo que os usuários façam um registro detalhado e acompanhem sua evolução nos treinos. Para garantir que os usuários se mantenham engajados e motivados a longo prazo, A aplicação irá incorporar recursos visuais que facilitem a clara visualização dos resultados, utilizando elementos de gamificação para tornar o acompanhamento do progresso mais interativo e recompensador. Este feedback visual é essencial para que o usuário perceba seu progresso e se sinta encorajado a continuar.
+
+Além do acompanhamento, o projeto visa capacitar os usuários a terem mais autonomia sobre sua jornada fitness. A ferramenta incentivará a autogestão da rotina de treinos, oferecendo suporte para que cada pessoa possa organizar e planejar suas atividades de maneira independente. Para assegurar a máxima utilidade e relevância, o projeto também buscará integrar a aplicação ao ambiente das academias, alinhando suas funcionalidades com as necessidades específicas dos alunos e criando uma experiência mais conectada e eficiente.
 
 ## Alunos integrantes da equipe
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
+* Fabrício Rocha Lopes
+* Gabriel Silva Neiva Amaro
+* Gabriel Rocha Gonçalves de Souza
+* Henrique Caldeira Assis Xavier
+* Samuel Rocha Ferraz Gonçalves Rebula
 
 ## Professores responsáveis
 
-* Nome completo do professor 1
-* Nome completo do professor 2
+* Cleiton Silva Tavares
+* Luiz Henrique da Costa Silva
+* Michelle Hanne Soares de Andrade
 
 
 
