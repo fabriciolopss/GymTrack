@@ -894,32 +894,142 @@ body {
     transform: scale(1.2);
 }
 
-/* Responsive Adjustments */
+/* Mobile Responsive Design */
 @media (max-width: 768px) {
+    .login-wrapper {
+        flex-direction: column;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .login-left {
+        flex: 1;
+        margin: 0;
+        padding: 20px;
+        height: 100vh;
+        width: 100%;
+        justify-content: center;
+    }
+
     .login-right {
-        padding: 1rem;
+        display: none;
     }
 
     .feature-carousel {
-        max-width: 100%;
-    }
-
-    .progress-stats {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .carousel-arrow {
         display: none;
+    }
+
+    .title-name {
+        font-size: 36px;
+    }
+
+    .title-logo {
+        font-size: 18px;
+    }
+
+    .subtitle-name {
+        font-size: 20px;
+    }
+
+    .login-input {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .form-tabs {
+        margin-bottom: 20px;
+    }
+
+    .tab-button {
+        padding: 12px 20px;
+        font-size: 14px;
+    }
+
+    .login-button {
+        font-size: 18px;
+        padding: 14px 8px;
     }
 }
 
 @media (max-width: 480px) {
-    .progress-stats {
-        grid-template-columns: 1fr;
+    .login-left {
+        padding: 16px;
     }
 
-    .time-inputs {
+    .title-name {
+        font-size: 32px;
+    }
+
+    .title-logo {
+        font-size: 16px;
+    }
+
+    .subtitle-name {
+        font-size: 18px;
+    }
+
+    .logo-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .logo-branca {
+        width: 80px;
+    }
+
+    .form-tabs {
         flex-direction: column;
+        gap: 10px;
+    }
+
+    .tab-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .login-input {
+        padding: 14px;
+        margin-bottom: 16px;
+    }
+
+    .login-input input {
+        font-size: 14px;
+    }
+
+    .login-button {
+        font-size: 16px;
+        padding: 12px 8px;
+    }
+}
+
+@media (max-width: 360px) {
+    .login-left {
+        padding: 12px;
+    }
+
+    .title-name {
+        font-size: 28px;
+    }
+
+    .title-logo {
+        font-size: 14px;
+    }
+
+    .subtitle-name {
+        font-size: 16px;
+    }
+
+    .login-input {
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+
+    .login-input i {
+        font-size: 20px;
+    }
+
+    .login-input input {
+        font-size: 13px;
     }
 }
 
